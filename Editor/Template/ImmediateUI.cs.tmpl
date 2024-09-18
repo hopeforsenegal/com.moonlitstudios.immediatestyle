@@ -1,0 +1,67 @@
+﻿/*Code generated*/
+using System;
+using MoonlitSystem.UI.Immediate;
+
+internal static class {name}Skeleton
+{
+    // ReSharper disable IdentifierTypo
+    // ReSharper disable InconsistentNaming
+
+    {id_names_and_values}
+
+    // ReSharper restore InconsistentNaming
+    // ReSharper restore IdentifierTypo
+
+    internal struct Events
+    {
+        internal struct {name}Event
+        {
+            {button_events}
+        }
+
+        internal {name}Event {name};
+    }
+
+    internal struct VisibleContent
+    {
+        internal struct {name}Visible
+        {
+            internal bool IsShow;
+        }
+
+        internal {name}Visible {name};
+    }
+
+    public static VisibleContent Visible;
+    public static Events m_Events = default;
+
+    public static void ShowModal()
+    {
+        m_Events.{name}.Open = true;
+    }
+
+    public static void ShowingModal()
+    {        
+        if (Visible.{name}.IsShow) {
+            {root_canvas_group}
+            {has_root_mapping}
+            
+            {canvas_groups}
+            {texts}
+            {images}
+            {buttons}
+            {toggles}
+        }
+    }
+
+    public static void UpdatingModal()
+    {
+        if (m_Events.{name}.Open) {
+            Visible.{name}.IsShow = true;
+        }
+        {additional_events}
+        if (m_Events.{name}.Close) {
+            Visible.{name} = default;
+        }
+    }
+}
