@@ -44,9 +44,9 @@ You can instead do
 
 None of that working? Honestly just grab the repo from out of a zip and just toss it in to your project like you would any other script.
 
-## APIs
-There's some useful APIs for speeding up the multiplayer testing workflow.
-Here's a basic example: 
+## Examples
+Please look at Style Comparisons for more elaborate examples that are setup like the real world.
+The following is a basic example: 
 ```
 protected void Update()
 {
