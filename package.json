@@ -1,0 +1,20 @@
+{
+  "name": "com.moonlitstudios.immediatestyle",
+  "version": "1.0.0",
+  "displayName": "Immediate Style",
+  "description": "Immediate Style is a convenient style wrapper around Unity's UI components. All the benefits of an Immediate Mode UI but without having to give up the power of the Unity Editor. Layout out your UI in the typical Unity way and then, using code generation, immediately start coding their behaviors.",
+  "unity": "2018.1",
+  "unityRelease": "0b5",
+  "keywords": [
+    "package",
+    "unity",
+    "ui",
+    "immediate",
+    "easy"
+  ],
+  "author": {
+    "name": "Kamau Vassall",
+    "url": "https://moonlitstudios.us/"
+  },
+  "type": "library"
+}
