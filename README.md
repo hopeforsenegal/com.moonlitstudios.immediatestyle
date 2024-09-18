@@ -45,7 +45,7 @@ You can instead do
 None of that working? Honestly just grab the repo from out of a zip and just toss it in to your project like you would any other script.
 
 ## Examples
-Please look at Style Comparisons for more elaborate examples that are setup like the real world.
+Please look at Style Comparisons folder for more elaborate examples that are setup like the real world.
 The following is a basic example: 
 ```
 protected void Update()
@@ -59,7 +59,7 @@ protected void Update()
 	}
 }
 ```
-Check out the examples folder and scene to see all the API end points in action. (If there is something you want to try we are hoping that it is comprehensive enough to already have it because we believe UI should be that easy! So let us know if we fell short)
+The StyleComparison folder (and scenes) is your best bet to get your hands dirty. (If there is something you want to try we are hoping that it is comprehensive enough to already have it because we believe UI should be that easy! So let us know if we fell short)
 
 ## How does it work?
 We just map all the components in the Start function into a Dictionary by a GUID. Then we just set a bool denoting they were interacted with that frame. It really is that simple and makes UI that much more easy to deal with. No more registering/unregistering callbacks in Awake/Start and having scattered logic across 20 files.

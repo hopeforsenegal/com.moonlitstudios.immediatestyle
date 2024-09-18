@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
-using MoonlitSystem.Util;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -370,7 +369,7 @@ namespace MoonlitSystem.UI.Immediate
                     IsMouseUp = element.UIBehaviour.IsMouseUp,
                     IsHovering = element.UIBehaviour.IsMouseHovering,
                     IsDragging = element.UIBehaviour.IsDragging,
-                    Position = element.UIBehaviour.transform.position.xy(),
+                    Position = new Vector2(element.UIBehaviour.transform.position.x, element.UIBehaviour.transform.position.y),
                 };
             }
             return default;
@@ -379,7 +378,7 @@ namespace MoonlitSystem.UI.Immediate
         // In order to appear over other UI elements it must be the last sibling. So plan accordingly.
         public static void FollowCursor(Transform transform)
         {
-            transform.position = VecExt.CpyWithZ(Input.mousePosition, 10f);
+            transform.position = CpyWithZ(Input.mousePosition, 10f);
             transform.SetAsLastSibling();
         }
 
@@ -592,6 +591,13 @@ namespace MoonlitSystem.UI.Immediate
                 if (Input.GetKeyDown(k))
                     return true;
             return false;
+        }
+
+        internal static Vector3 CpyWithZ(Vector3 subject, float value)
+        {
+            var copy = subject;
+            copy.z = value;
+            return copy;
         }
     }
 }

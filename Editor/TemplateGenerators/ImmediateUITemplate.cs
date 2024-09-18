@@ -10,6 +10,14 @@ namespace Editor.TemplateGenerators
 {
     public static class ImmediateUITemplate
     {
+        public static string ToTitleCase(this string str)
+        {
+            if (!string.IsNullOrEmpty(str) && str.Length > 1) {
+                return char.ToUpperInvariant(str[0]) + str.Substring(1);
+            }
+            return str;
+        }
+        
         public static class Name
         {
             private static string TemplatePackagePath => "Packages/com.moonlitstudios.system/Editor/Template";

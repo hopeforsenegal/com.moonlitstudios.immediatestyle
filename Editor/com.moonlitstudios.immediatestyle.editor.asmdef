@@ -1,5 +1,9 @@
 {
     "name": "com.moonlitstudios.immediatestyle.editor",
+    "rootNamespace": "",
+    "references": [
+        "GUID:6ec555a78b6ed4644b068f8f04440bda"
+    ],
     "includePlatforms": [
         "Editor"
     ],
