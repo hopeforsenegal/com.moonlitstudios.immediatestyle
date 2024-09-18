@@ -68,19 +68,19 @@ We just map all the components in the Start function into a Dictionary by a GUID
 Feel free to just ask us on [Discord](https://discord.gg/8y87EEaftE). It's always better to have a real conversation and we can also screenshare. Its also not hard to reach us through our various other socials 
 
 ## Support this project 
-Please please please!! Star this project! If you truly get empowered in any way by this project please give [our games](https://linktr.ee/moonlit_games) a shot (and drop 5 star reviews there too!).
+Please please please!! Star this project! If you truly get empowered in any way by this project please give [our games](https://linktr.ee/moonlit_games) a shot (and drop 5 star reviews there too!). Each of these games are powered by this framework (I'll update this section to incllude additional games as they use this)
 
-[Caribbean Dominoes | Apple](https://apps.apple.com/us/app/caribbean-dominoes/id1588590418)
+![icon512](https://github.com/user-attachments/assets/85141dc9-110e-4a8d-b684-6c9a686c278b)
+[Apple](https://apps.apple.com/us/app/caribbean-dominoes/id1588590418)
+[Android](https://play.google.com/store/apps/details?id=com.MoonlitStudios.CaribbeanDominoes)
 
-[Caribbean Dominoes | Android](https://play.google.com/store/apps/details?id=com.MoonlitStudios.CaribbeanDominoes)
+![appIcon](https://github.com/user-attachments/assets/4266f475-ac9b-4176-9f97-985b8e1025ce)
+[Apple](https://apps.apple.com/us/app/solitaire-islands/id6478837950)
+[Android](https://play.google.com/store/apps/details?id=com.MoonlitStudios.SolitaireIslands)
 
-[Solitaire Islands | Apple](https://apps.apple.com/us/app/solitaire-islands/id6478837950)
-
-[Solitaire Islands | Android](https://play.google.com/store/apps/details?id=com.MoonlitStudios.SolitaireIslands)
-
-[Ludi Classic | Apple](https://apps.apple.com/us/app/ludi-classic/id1536964897)
-
-[Ludi Classic | Android](https://play.google.com/store/apps/details?id=com.MoonlitStudios.Ludi)
+![app_icon](https://github.com/user-attachments/assets/13ba91c7-53b4-4469-bdd0-9f0598048a28)
+[Apple](https://apps.apple.com/us/app/ludi-classic/id1536964897)
+[Android](https://play.google.com/store/apps/details?id=com.MoonlitStudios.Ludi)
 
 
 Last but not least, drop some follows on the following socials if you want to keep updated on the latest happenings 😊
