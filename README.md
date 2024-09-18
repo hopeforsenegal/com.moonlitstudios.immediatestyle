@@ -36,13 +36,13 @@ You can instead do
   "dependencies": {
 	...
 
-    	"com.moonlitstudios.immediatestyle": "https://github.com/hopeforsenegal/ImmediateStyle",
+    	"com.moonlitstudios.immediatestyle": "https://github.com/hopeforsenegal/com.moonlitstudios.immediatestyle.git",
 
 	...
   }
 ```
 
-None of that working? Honestly just grab the repo from out of a zip and just toss it in to your project like you would any other script.
+None of that working? *Honestly just grab the repo from out of a zip* and just toss it in to your project like you would any other script.
 
 ## Examples
 Please look at Style Comparisons folder for more elaborate examples that are setup like the real world.
@@ -62,7 +62,7 @@ protected void Update()
 The StyleComparison folder (and scenes) is your best bet to get your hands dirty. (If there is something you want to try we are hoping that it is comprehensive enough to already have it because we believe UI should be that easy! So let us know if we fell short)
 
 ## How does it work?
-We just map all the components in the Start function into a Dictionary by a GUID. Then we just set a bool denoting they were interacted with that frame. It really is that simple and makes UI that much more easy to deal with. No more registering/unregistering callbacks in Awake/Start and having scattered logic across 20 files.
+We just map all the components (in the Awake/Start function) into a Dictionary by a GUID. Then we just set a bool denoting they were interacted with that frame. It really is that simple and makes UI that much more easy to deal with. No more registering/unregistering callbacks in Awake/Start and having scattered logic across 20 files. In fact you don't even have to type because we code gen the ui usage code for you.
 
 ## Need Help or want to chat?
 Feel free to just ask us on [Discord](https://discord.gg/8y87EEaftE). It's always better to have a real conversation and we can also screenshare. Its also not hard to reach us through our various other socials 
