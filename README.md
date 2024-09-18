@@ -15,7 +15,8 @@ You can instead do
 
 <br>
 
- --- AD GIF here showing the project in action ---
+<img width="1457" alt="Screenshot 2024-09-17 at 10 59 22 PM" src="https://github.com/user-attachments/assets/9c660dce-0f4c-4bd3-a0d6-ddac30b2390f">
+
 <p align="center">
 <b>Create actions to user input without creating Classes or Callbacks - FASTER and more Minimal
 </b>
@@ -41,6 +42,7 @@ You can instead do
   }
 ```
 
+None of that working? Honestly just grab the repo from out of a zip and just toss it in to your project like you would any other script.
 
 ## APIs
 There's some useful APIs for speeding up the multiplayer testing workflow.
