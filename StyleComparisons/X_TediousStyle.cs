@@ -1,8 +1,5 @@
-using System;
 using System.Collections.Generic;
-using MoonlitSystem.Attributes;
 using MoonlitSystem.UI;
-using MoonlitSystem.Util;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -20,8 +17,8 @@ namespace Editing.BotEditor.StyleComparisons
         public InputField inputField;
         public DragDrop dragDrop, dragDrop2;
         public DragDrop s1, s2, s3, s4;
-        [Sprite] public Sprite left;
-        [Sprite] public Sprite right;
+        public Sprite left;
+        public Sprite right;
         public Slider slider;
         public Dropdown dropdown;
         public Image dropdownImage;
@@ -47,6 +44,7 @@ namespace Editing.BotEditor.StyleComparisons
             dropdown.options.Add(new Dropdown.OptionData($"Color: {colors[1]}"));
             dropdown.options.Add(new Dropdown.OptionData($"Color: {colors[2]}"));
             dropdown.onValueChanged.AddListener(OnDropdownSelection);
+            dropdownImage.color = colors[0];
             swappables.AddRange(new[] { s1, s2, s3, s4 });
             image.enabled = false; // we want to start off as not showing anything (like the other example)
             text.text = $"-> {value}";

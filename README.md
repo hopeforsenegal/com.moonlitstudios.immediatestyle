@@ -87,7 +87,7 @@ Last but not least, drop some follows on the following socials if you want to ke
 
 https://www.twitch.tv/caribbeandominoes
 
-https://www.facebook.com/CaribbeanDominoes/
+https://www.facebook.com/CaribbeanDominoes
 
 https://x.com/moonlit_studios
 

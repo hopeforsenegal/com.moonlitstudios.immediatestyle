@@ -85,9 +85,9 @@ namespace Editor.Editors
         public static Choice RenderButtons()
         {
             if (GUILayout.Button("Copy ID")) return Choice.CopyID;
-            if (GUILayout.Button("Copy Code")) return Choice.CopyCode;
-            if (GUILayout.Button("Regenerate Random ID")) return Choice.RegenerateRandomID;
-            if (GUILayout.Button("Use Game Object Name as ID")) return Choice.UseGameObjectNameID;
+            if (GUILayout.Button("Regenerate ID")) return Choice.RegenerateRandomID;
+            if (GUILayout.Button("Game Object Name as ID")) return Choice.UseGameObjectNameID;
+            if (GUILayout.Button("Copy Element's Events")) return Choice.CopyCode;
             return default;
         }
     }
@@ -182,13 +182,14 @@ namespace Editor.Editors
 
             Choice choice = default;
             if (GUILayout.Button("Copy ID")) choice = Choice.CopyID;
-            if (GUILayout.Button("Copy Code")) choice = Choice.CopyCode;
-            if (GUILayout.Button("Regenerate Data")) choice = Choice.RegenerateRandomID;
-            if (GUILayout.Button("File Template")) choice = Choice.FileTemplate;
+            if (GUILayout.Button("Regenerate ID")) choice = Choice.RegenerateRandomID;
+            if (GUILayout.Button("Copy Element's Events")) choice = Choice.CopyCode;
+            GUILayout.Label("w/ Children");
             using (new HorizontalScope()) {
-                if (GUILayout.Button("Element Template")) choice = Choice.ElementTemplate;
-                if (GUILayout.Button("For-Loop Template")) choice = Choice.ForLoopTemplate;
+                if (GUILayout.Button("Copy For-Loop")) choice = Choice.ForLoopTemplate;
+                if (GUILayout.Button("Copy Individual")) choice = Choice.ElementTemplate;
             }
+            if (GUILayout.Button("Generate File With Events")) choice = Choice.FileTemplate;
 
             if (choice == Choice.CopyID) {
                 var statements = string.Empty;

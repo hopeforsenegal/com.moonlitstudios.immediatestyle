@@ -17,10 +17,11 @@ namespace Editor.TemplateGenerators
             }
             return str;
         }
-        
+
         public static class Name
         {
-            private static string TemplatePackagePath => "Packages/com.moonlitstudios.system/Editor/Template";
+            static readonly string packageName = "com.moonlitstudios.immediatestyle";
+            private static string TemplatePackagePath => $"Packages/{packageName}/Editor/Template";
             internal const string ScreenExtension = "ImmediateUI";
             internal const string ElementsExtension = "ImmediateUIElement";
             internal const string AssetsPath = "Assets";

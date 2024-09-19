@@ -1,18 +1,15 @@
 using System.Collections.Generic;
-using MoonlitSystem.AdView;
-using MoonlitSystem.Attributes;
 using MoonlitSystem.UI;
 using MoonlitSystem.UI.Immediate;
-using MoonlitSystem.Util;
-using UnityEditor;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace Editing.BotEditor.StyleComparisons
 {
     public class X_ImmediateStyle : MonoBehaviour
     {
-        [Sprite] public Sprite left;
-        [Sprite] public Sprite right;
+        public Sprite left;
+        public Sprite right;
         int value;
         Sprite valueSprite;
         bool valueToggle;
