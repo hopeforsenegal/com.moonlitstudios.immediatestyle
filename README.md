@@ -1,15 +1,15 @@
 # ImmediateStyle 
 [![License](https://img.shields.io/badge/license-MIT-green)](https://github.com/hopeforsenegal/immediatestyle/blob/master/LICENSE.md)
 
-ImmediateStyle is a convenient style wrapper around Unity's UI components. All the benefits of an Immediate Mode UI but without having to give up the power of the Unity Editor. Layout out your UI in the typical Unity way and then, using code generation, immediately start coding their behaviors.
+ImmediateStyle is a convenient style wrapper around Unity's UI components. All the benefits of an Immediate Mode UI but without having to give up the power of the Unity Editor. Layout your UI in the typical Unity way and then, using code generation, immediately start coding their behaviors.
 
-Allows you to interact with Unity UI GameObjects in an Immediate Style (like an [Immediate Mode](https://caseymuratori.com/blog_0001))
+Allows you to interact with Unity UI GameObjects in an Immediate Style (like an [Immediate Mode GUI](https://caseymuratori.com/blog_0001))
 
-Why do 
+Why do the following
 
 ```    rightButton.onClick.AddListener(RaiseValue);```
 
-You can instead do
+when you can simply do
 
 ```    if(ImmediateStyle.Button(CanvasLeftd414).IsMouseDown){}```
 
@@ -18,20 +18,20 @@ You can instead do
 <img width="1457" alt="Screenshot 2024-09-17 at 10 59 22 PM" src="https://github.com/user-attachments/assets/9c660dce-0f4c-4bd3-a0d6-ddac30b2390f">
 
 <p align="center">
-<b>Create actions to user input without creating Classes or Callbacks - FASTER and more Minimal
+<b>Respond to actions of user input without creating Enitre Classes or Writing Function Callbacks - Be FASTER and more Minimal
 </b>
 <br>
 </p>
 
 ## Features
-1. Instead of coding manually and then creating your Unity UI Components, we instead create your Unity UI Components and then code generate (No more missing reference exceptions)
-2. Code gen tools to make sure you only spend time coding functionality or doing layout. No more wasting times setting references in the inspector.
-3. Works with every existing Unity UI component and is compatible with existing Classes, callbacks, and inspector sent callbacks
-4. Has a new component called DragAndDrop that is useful for Pills and other UI functionality.
+1. Instead of coding manually and then creating your Unity UI Components, we instead create your Unity UI Components and then code generate (No more missing reference exceptions).
+2. Use Code gen tools to make sure you only spend time coding functionality or doing layout. No more wasting time setting up references in the inspector.
+3. Works with every existing Unity UI component and is compatible with existing Classes, Callbacks, and Inspector Callbacks.
+4. Has a new component called *DragAndDrop* that is useful for Pills and other more advanced UI functionality.
 
 ## Installation
 
-- Add this GitHub URL to your package manager or in your 'manifest.json' add
+- Add this GitHub URL to your package manager or, instead, in your 'manifest.json' add
 ```
   "dependencies": {
 	...
@@ -42,10 +42,10 @@ You can instead do
   }
 ```
 
-None of that working? *Honestly just grab the repo from out of a zip* and just toss it in to your project like you would any other script.
+None of that working? *Honestly, just grab the repo from out of the zip* and just toss it in to your project like you would any other script.
 
 ## Examples
-Please look at Style Comparisons folder for more elaborate examples that are setup like the real world.
+Please look at [Style Comparisons](https://github.com/hopeforsenegal/com.moonlitstudios.immediatestyle/blob/main/StyleComparisons) folder for more elaborate examples that are setup like the real world. (or specifically [Immediate Example](https://github.com/hopeforsenegal/com.moonlitstudios.immediatestyle/blob/main/StyleComparisons/ImmediateExample.cs) to hop right into a code example) 
 The following is a basic example: 
 ```
 protected void Update()
@@ -59,16 +59,16 @@ protected void Update()
 	}
 }
 ```
-The StyleComparison folder (and scenes) is your best bet to get your hands dirty. (If there is something you want to try we are hoping that it is comprehensive enough to already have it because we believe UI should be that easy! So let us know if we fell short)
+The [Style Comparisons](https://github.com/hopeforsenegal/com.moonlitstudios.immediatestyle/blob/main/StyleComparisons) folder (and scenes) is your best bet to get your hands dirty. (If there is something you want to try, we are hoping that the examples are comprehensive enough to already have it. We believe UI should be that easy! So let us know if we fell short)
 
 ## How does it work?
-We just map all the components (in the Awake/Start function) into a Dictionary by a GUID. Then we just set a bool denoting they were interacted with that frame. It really is that simple and makes UI that much more easy to deal with. No more registering/unregistering callbacks in Awake/Start and having scattered logic across 20 files. In fact you don't even have to type because we code gen the ui usage code for you.
+We just map all the components (in the Awake/Start function) into a Dictionary by a GUID. Then we just set a bool denoting they were interacted with that frame. It really is that simple and makes UI that much more easy to deal with. No more registering/unregistering callbacks in Awake/Start and having scattered logic across 20 files/classes/functions. In fact you don't even have to type that much because we code gen the UI usage code for you.
 
 ## Need Help or want to chat?
-Feel free to just ask us on [Discord](https://discord.gg/8y87EEaftE). It's always better to have a real conversation and we can also screenshare. Its also not hard to reach us through our various other socials 
+Feel free to just drop us a line on [Discord](https://discord.gg/8y87EEaftE). It's always better to have a real conversation and we can also screenshare there. It's also not hard to reach us through our various other socials.
 
 ## Support this project 
-Please please please!! Star this project! If you truly get empowered in any way by this project please give [our games](https://linktr.ee/moonlit_games) a shot (and drop 5 star reviews there too!). Each of these games are powered by this framework (I'll update this section to incllude additional games as they use this)
+Please please please!! Star this project! If you truly feel empowered at all by this project please give [our games](https://linktr.ee/moonlit_games) a shot (and drop 5 star reviews there too!). Each of these games are powered by this framework (I'll update this section to include additional games as they start to use this project)
 
 ![icon512](https://github.com/user-attachments/assets/85141dc9-110e-4a8d-b684-6c9a686c278b)
 [Apple](https://apps.apple.com/us/app/caribbean-dominoes/id1588590418)
