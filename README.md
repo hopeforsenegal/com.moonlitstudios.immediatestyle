@@ -1,9 +1,9 @@
 # ImmediateStyle 
 [![License](https://img.shields.io/badge/license-MIT-green)](https://github.com/hopeforsenegal/immediatestyle/blob/master/LICENSE.md)
 
-ImmediateStyle is a convenient style wrapper around Unity's UI components. All the benefits of an Immediate Mode UI but without having to give up the power of the Unity Editor. Layout your UI in the typical Unity way and then, using code generation, immediately start coding their behaviors.
+ImmediateStyle is a convenient style wrapper around Unity's UI components. All the benefits of an Immediate Mode GUI but without having to give up the power of the Unity Editor Layout System. Layout your UI in the typical Unity way and then, using code generation, immediately start coding response behaviors.
 
-Allows you to interact with Unity UI GameObjects in an Immediate Style (like an [Immediate Mode GUI](https://caseymuratori.com/blog_0001))
+This allows you to interact with Unity UI GameObjects in an Immediate *Style* (similar in API form to an [Immediate Mode GUI](https://caseymuratori.com/blog_0001))
 
 Why do the following
 
@@ -27,12 +27,12 @@ when you can simply do
 1. Instead of coding manually and then creating your Unity UI Components, we instead create your Unity UI Components and then code generate (No more missing reference exceptions).
 2. Use Code gen tools to make sure you only spend time coding functionality or doing layout. No more wasting time setting up references in the inspector.
 3. Works with every existing Unity UI component and is compatible with existing Classes, Callbacks, and Inspector Callbacks.
-4. Has a new component called *DragAndDrop* that is useful for Pills and other more advanced UI functionality.
+4. Has a new component called **DragAndDrop** that is useful for Pills and other more advanced UI functionality.
 
 ## Installation
 
 - Add this GitHub URL to your package manager or, instead, in your 'manifest.json' add
-```
+```json
   "dependencies": {
 	...
 
@@ -42,12 +42,12 @@ when you can simply do
   }
 ```
 
-None of that working? *Honestly, just grab the repo from out of the zip* and just toss it in to your project like you would any other script.
+None of that working? **Honestly, just grab the repo from out of the zip** and just toss it in to your project like you would any other script.
 
 ## Examples
 Please look at [Style Comparisons](https://github.com/hopeforsenegal/com.moonlitstudios.immediatestyle/blob/main/StyleComparisons) folder for more elaborate examples that are setup like the real world. (or specifically [Immediate Example](https://github.com/hopeforsenegal/com.moonlitstudios.immediatestyle/blob/main/StyleComparisons/ImmediateExample.cs) to hop right into a code example) 
 The following is a basic example: 
-```
+```cs
 protected void Update()
 {
 	ImmediateStyle.SetColor(Color.Red);
