@@ -71,7 +71,7 @@ protected void Start()
 }
 ```
 
-The following is a basic example of using the **DragAndDrop** component in a callback way  **(you can still do it the Immediate Style way but we provide this way additionally as to not force you to do it "OUR WAY")**: 
+The following is a basic example of using the **DragAndDrop** component in a *callback way*  **(you can still do it the Immediate Style way but we provide this way additionally as to not force you to do it "OUR WAY")**: 
 ```cs
 protected void Start()
 {
