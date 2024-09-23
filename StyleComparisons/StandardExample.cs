@@ -3,6 +3,11 @@ using UnityEngine.UI;
 
 namespace Editing.BotEditor.StyleComparisons
 {
+    // This follows the standard way of handling UI. 
+    // For the ImmediateStyle UI code with the same functionality see 'ImmediateExample.cs'
+    // For the design way people write UI code with the same functionality see 'DesignExample.cs'
+    // Compare and contrast to see what works best and is faster for iteration
+
     public class StandardExample : MonoBehaviour
     {
         public Button left, right;
