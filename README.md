@@ -81,7 +81,9 @@ protected void Start()
 
 ## How does it work?
 For **Element**, we just map all the components (in the Awake/Start function) into a Dictionary by a GUID. Then we just set a bool denoting they were interacted with that frame. It really is that simple and makes UI that much more easy to deal with. No more registering/unregistering callbacks in Awake/Start and having scattered logic across 20 files/classes/functions. In fact you don't even have to type that much because we code gen the UI usage code for you.
+
 For **Reference** , we basically just call `FindObjectOfType<>` under the hood. We Debug.Assert for conveinece so you can be alerted right away if you deleted the GameObject from the inspector (normally you wouldn't know you had a missing reference until the component got used sometime later). We then just check for the matching GUID. In a nutshell it is faster/better than `GameObject.Find` since you can't have conflicting names, we only search by component type, and we do a convenient assert.
+
 For **DragAndDrop**, we just simply make the gameobject that is clicked on follow the cursor (conditionally).
 
 ## Need Help or want to chat?
