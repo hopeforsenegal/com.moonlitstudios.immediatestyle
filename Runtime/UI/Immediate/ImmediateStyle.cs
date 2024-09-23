@@ -8,206 +8,6 @@ namespace MoonlitSystem.UI.Immediate
     [SuppressMessage("ReSharper", "ConditionIsAlwaysTrueOrFalse")]
     public class ImmediateStyle : MonoBehaviour
     {
-        // ReSharper disable NotAccessedField.Global
-        public struct ButtonData
-        {
-            public bool IsMouseHovering { get; internal set; }
-            public bool IsMouseDown { get; internal set; }
-            public bool IsMousePressed { get; internal set; }
-        }
-
-        public struct ToggleData
-        {
-            public bool IsOn { get; internal set; }
-            public bool IsClicked { get; internal set; }
-        }
-
-        public struct DragDropData
-        {
-            public Vector2 Position { get; internal set; }
-            public bool IsDragging { get; internal set; }
-            public bool IsMouseUp { get; internal set; }
-            public bool IsHovering { get; internal set; }
-        }
-
-        public struct InputFieldData
-        {
-            public bool HasClicked { get; internal set; }
-            public bool HasSubmitted { get; internal set; }
-        }
-
-        public struct SliderData
-        {
-            public float Value { get; internal set; }
-        }
-
-        public struct DropdownData
-        {
-            public bool HasSubmitted { get; internal set; }
-            public int Index { get; internal set; }
-        }
-
-        // ReSharper restore NotAccessedField.Global
-
-        private readonly Dictionary<string, ElementCanvasGroup> m_InteractCanvasGroups = new Dictionary<string, ElementCanvasGroup>();
-        private readonly Dictionary<string, ElementText> m_InteractTexts = new Dictionary<string, ElementText>();
-        private readonly Dictionary<string, ElementImage> m_InteractImages = new Dictionary<string, ElementImage>();
-        private readonly Dictionary<string, ElementButton> m_InteractButtons = new Dictionary<string, ElementButton>();
-        private readonly Dictionary<string, ElementToggle> m_InteractToggles = new Dictionary<string, ElementToggle>();
-        private readonly Dictionary<string, ElementDragDrop> m_InteractDragDrops = new Dictionary<string, ElementDragDrop>();
-        private readonly Dictionary<string, ElementInputField> m_InteractInputFields = new Dictionary<string, ElementInputField>();
-        private readonly Dictionary<string, ElementSlider> m_InteractSliders = new Dictionary<string, ElementSlider>();
-        private readonly Dictionary<string, ElementDropdown> m_InteractDropdowns = new Dictionary<string, ElementDropdown>();
-
-        private readonly HashSet<string> m_RootMappings = new HashSet<string>();
-        private bool m_HasSetColor;
-        private Color m_Color;
-        private static ImmediateStyleProjectSettings ImmediateStyleProjectSettings;
-
-        private static ImmediateStyle Instance
-        {
-            get;
-            set;
-        }
-
-        protected void Awake()
-        {
-            if (Instance == null) {
-                Instance = this;
-                Instance.m_Color = Color.white; // default color
-                // Load in project settings
-                ImmediateStyleProjectSettings = ImmediateStyleProjectSettings.LoadInstance();
-                DontDestroyOnLoad(gameObject);
-            } else if (Instance != this) {
-                Destroy(gameObject);
-            }
-        }
-
-        protected void OnValidate()
-        {
-            var allRoots = FindObjectsOfType<ElementRootMapping>();
-            var uniqueIds = new HashSet<string>();
-            // if we have an exception then one of our roots have the same name
-            foreach (var item in allRoots) {
-                if (uniqueIds.Contains(item.ID)) {
-                    Debug.LogError($"You have a {nameof(ElementRootMapping)} with the same ID '{item.ID}'. Ignore if you have not made each Prefab or clone unique yet.");
-                    return;
-                }
-                uniqueIds.Add(item.ID);
-            }
-        }
-
-        protected void OnDestroy()
-        {
-            if (Instance != this) return;
-            Instance = null;
-        }
-
-        protected void LateUpdate()
-        {
-            /*** 
-             * For all these components
-             * 1. Update the interactability of these components
-             * 2. Then reset the state (marked for display)
-             */
-            foreach (var entry in m_InteractButtons) {
-                var button = entry.Value.Button;
-                if (entry.Value.ElementData.MarkedForDisplay != button.enabled) {
-                    button.enabled = entry.Value.ElementData.MarkedForDisplay;
-                }
-                // Instead of having an issue with this... just split your button and image up (they can live on the same game object)
-                var image = entry.Value.Image;
-                if (image != null && entry.Value.ElementData.MarkedForDisplay != image.enabled) {
-                    image.enabled = entry.Value.ElementData.MarkedForDisplay;
-                }
-
-                entry.Value.ElementData.MarkedForDisplay = false;
-                entry.Value.IsClicked = false;
-            }
-            foreach (var entry in m_InteractCanvasGroups) {
-                var behavior = entry.Value.CanvasGroup;
-                var isOn = entry.Value.ElementData.MarkedForDisplay;
-                if (entry.Value.ElementData.MarkedForDisplay) {
-                    behavior.blocksRaycasts = isOn;
-                    behavior.interactable = isOn;
-                    if (!entry.Value.ElementData.SpecialSauce) {
-                        behavior.alpha = isOn ? 1f : 0f;
-                    }
-                } else {
-                    behavior.alpha = isOn ? 1f : 0f;
-                    behavior.blocksRaycasts = isOn;
-                    behavior.interactable = isOn;
-                }
-
-                entry.Value.ElementData.MarkedForDisplay = false;
-            }
-            foreach (var entry in m_InteractImages) {
-                var behavior = entry.Value.Image;
-                if (entry.Value.ElementData.MarkedForDisplay != behavior.enabled) {
-                    behavior.enabled = entry.Value.ElementData.MarkedForDisplay;
-                }
-
-                entry.Value.ElementData.MarkedForDisplay = false;
-            }
-            foreach (var entry in m_InteractTexts) {
-                var behavior = entry.Value.Text;
-                if (entry.Value.ElementData.MarkedForDisplay != behavior.enabled) {
-                    behavior.enabled = entry.Value.ElementData.MarkedForDisplay;
-                }
-
-                entry.Value.ElementData.MarkedForDisplay = false;
-            }
-            foreach (var entry in m_InteractToggles) {
-                var behavior = entry.Value.UIBehaviour;
-                if (entry.Value.ElementData.MarkedForDisplay != behavior.gameObject.activeInHierarchy) {
-                    behavior.gameObject.SetActive(entry.Value.ElementData.MarkedForDisplay);
-                }
-
-                entry.Value.ElementData.MarkedForDisplay = false;
-                entry.Value.IsClicked = false;
-            }
-
-            foreach (var entry in m_InteractDragDrops) {
-                var behavior = entry.Value.UIBehaviour;
-                if (entry.Value.ElementData.MarkedForDisplay != behavior.enabled) {
-                    behavior.enabled = entry.Value.ElementData.MarkedForDisplay;
-                }
-
-                entry.Value.ElementData.MarkedForDisplay = false;
-                // it handles its own isClicked
-            }
-
-            foreach (var entry in m_InteractInputFields) {
-                var behavior = entry.Value.UIBehaviour;
-                if (entry.Value.ElementData.MarkedForDisplay != behavior.enabled) {
-                    behavior.enabled = entry.Value.ElementData.MarkedForDisplay;
-                }
-
-                entry.Value.ElementData.MarkedForDisplay = false;
-                entry.Value.HasSubmitted = false;
-                entry.Value.HasClicked = false;
-            }
-
-            foreach (var entry in m_InteractSliders) {
-                var behavior = entry.Value.UIBehaviour;
-                if (entry.Value.ElementData.MarkedForDisplay != behavior.enabled) {
-                    behavior.enabled = entry.Value.ElementData.MarkedForDisplay;
-                }
-
-                entry.Value.ElementData.MarkedForDisplay = false;
-                entry.Value.IsMouseUp = false;
-            }
-            foreach (var entry in m_InteractDropdowns) {
-                var behavior = entry.Value.UIBehaviour;
-                if (entry.Value.ElementData.MarkedForDisplay != behavior.enabled) {
-                    behavior.enabled = entry.Value.ElementData.MarkedForDisplay;
-                }
-
-                entry.Value.ElementData.MarkedForDisplay = false;
-                entry.Value.HasSubmitted = false;
-            }
-        }
-
         public static ButtonData Button(string id)
         {
             var hasElement = Instance.m_InteractButtons.TryGetValue(id, out var element);
@@ -229,7 +29,6 @@ namespace MoonlitSystem.UI.Immediate
             }
             return default;
         }
-
 
         public static ButtonData Button(string id, out Button button)
         {
@@ -480,6 +279,206 @@ namespace MoonlitSystem.UI.Immediate
         {
             Instance.m_HasSetColor = false;
             Instance.m_Color = Color.white;
+        }
+
+        // ReSharper disable NotAccessedField.Global
+        public struct ButtonData
+        {
+            public bool IsMouseHovering { get; internal set; }
+            public bool IsMouseDown { get; internal set; }
+            public bool IsMousePressed { get; internal set; }
+        }
+
+        public struct ToggleData
+        {
+            public bool IsOn { get; internal set; }
+            public bool IsClicked { get; internal set; }
+        }
+
+        public struct DragDropData
+        {
+            public Vector2 Position { get; internal set; }
+            public bool IsDragging { get; internal set; }
+            public bool IsMouseUp { get; internal set; }
+            public bool IsHovering { get; internal set; }
+        }
+
+        public struct InputFieldData
+        {
+            public bool HasClicked { get; internal set; }
+            public bool HasSubmitted { get; internal set; }
+        }
+
+        public struct SliderData
+        {
+            public float Value { get; internal set; }
+        }
+
+        public struct DropdownData
+        {
+            public bool HasSubmitted { get; internal set; }
+            public int Index { get; internal set; }
+        }
+
+        // ReSharper restore NotAccessedField.Global
+
+        private readonly Dictionary<string, ElementCanvasGroup> m_InteractCanvasGroups = new Dictionary<string, ElementCanvasGroup>();
+        private readonly Dictionary<string, ElementText> m_InteractTexts = new Dictionary<string, ElementText>();
+        private readonly Dictionary<string, ElementImage> m_InteractImages = new Dictionary<string, ElementImage>();
+        private readonly Dictionary<string, ElementButton> m_InteractButtons = new Dictionary<string, ElementButton>();
+        private readonly Dictionary<string, ElementToggle> m_InteractToggles = new Dictionary<string, ElementToggle>();
+        private readonly Dictionary<string, ElementDragDrop> m_InteractDragDrops = new Dictionary<string, ElementDragDrop>();
+        private readonly Dictionary<string, ElementInputField> m_InteractInputFields = new Dictionary<string, ElementInputField>();
+        private readonly Dictionary<string, ElementSlider> m_InteractSliders = new Dictionary<string, ElementSlider>();
+        private readonly Dictionary<string, ElementDropdown> m_InteractDropdowns = new Dictionary<string, ElementDropdown>();
+
+        private readonly HashSet<string> m_RootMappings = new HashSet<string>();
+        private bool m_HasSetColor;
+        private Color m_Color;
+        private static ImmediateStyleProjectSettings ImmediateStyleProjectSettings;
+
+        private static ImmediateStyle Instance
+        {
+            get;
+            set;
+        }
+
+        protected void Awake()
+        {
+            if (Instance == null) {
+                Instance = this;
+                Instance.m_Color = Color.white; // default color
+                // Load in project settings
+                ImmediateStyleProjectSettings = ImmediateStyleProjectSettings.LoadInstance();
+                DontDestroyOnLoad(gameObject);
+            } else if (Instance != this) {
+                Destroy(gameObject);
+            }
+        }
+
+        protected void OnValidate()
+        {
+            var allRoots = FindObjectsOfType<ElementRootMapping>();
+            var uniqueIds = new HashSet<string>();
+            // if we have an exception then one of our roots have the same name
+            foreach (var item in allRoots) {
+                if (uniqueIds.Contains(item.ID)) {
+                    Debug.LogError($"You have a {nameof(ElementRootMapping)} with the same ID '{item.ID}'. Ignore if you have not made each Prefab or clone unique yet.");
+                    return;
+                }
+                uniqueIds.Add(item.ID);
+            }
+        }
+
+        protected void OnDestroy()
+        {
+            if (Instance != this) return;
+            Instance = null;
+        }
+
+        protected void LateUpdate()
+        {
+            /*** 
+             * For all these components
+             * 1. Update the interactability of these components
+             * 2. Then reset the state (marked for display)
+             */
+            foreach (var entry in m_InteractButtons) {
+                var button = entry.Value.Button;
+                if (entry.Value.ElementData.MarkedForDisplay != button.enabled) {
+                    button.enabled = entry.Value.ElementData.MarkedForDisplay;
+                }
+                // Instead of having an issue with this... just split your button and image up (they can live on the same game object)
+                var image = entry.Value.Image;
+                if (image != null && entry.Value.ElementData.MarkedForDisplay != image.enabled) {
+                    image.enabled = entry.Value.ElementData.MarkedForDisplay;
+                }
+
+                entry.Value.ElementData.MarkedForDisplay = false;
+                entry.Value.IsClicked = false;
+            }
+            foreach (var entry in m_InteractCanvasGroups) {
+                var behavior = entry.Value.CanvasGroup;
+                var isOn = entry.Value.ElementData.MarkedForDisplay;
+                if (entry.Value.ElementData.MarkedForDisplay) {
+                    behavior.blocksRaycasts = isOn;
+                    behavior.interactable = isOn;
+                    if (!entry.Value.ElementData.SpecialSauce) {
+                        behavior.alpha = isOn ? 1f : 0f;
+                    }
+                } else {
+                    behavior.alpha = isOn ? 1f : 0f;
+                    behavior.blocksRaycasts = isOn;
+                    behavior.interactable = isOn;
+                }
+
+                entry.Value.ElementData.MarkedForDisplay = false;
+            }
+            foreach (var entry in m_InteractImages) {
+                var behavior = entry.Value.Image;
+                if (entry.Value.ElementData.MarkedForDisplay != behavior.enabled) {
+                    behavior.enabled = entry.Value.ElementData.MarkedForDisplay;
+                }
+
+                entry.Value.ElementData.MarkedForDisplay = false;
+            }
+            foreach (var entry in m_InteractTexts) {
+                var behavior = entry.Value.Text;
+                if (entry.Value.ElementData.MarkedForDisplay != behavior.enabled) {
+                    behavior.enabled = entry.Value.ElementData.MarkedForDisplay;
+                }
+
+                entry.Value.ElementData.MarkedForDisplay = false;
+            }
+            foreach (var entry in m_InteractToggles) {
+                var behavior = entry.Value.UIBehaviour;
+                if (entry.Value.ElementData.MarkedForDisplay != behavior.gameObject.activeInHierarchy) {
+                    behavior.gameObject.SetActive(entry.Value.ElementData.MarkedForDisplay);
+                }
+
+                entry.Value.ElementData.MarkedForDisplay = false;
+                entry.Value.IsClicked = false;
+            }
+
+            foreach (var entry in m_InteractDragDrops) {
+                var behavior = entry.Value.UIBehaviour;
+                if (entry.Value.ElementData.MarkedForDisplay != behavior.enabled) {
+                    behavior.enabled = entry.Value.ElementData.MarkedForDisplay;
+                }
+
+                entry.Value.ElementData.MarkedForDisplay = false;
+                // it handles its own isClicked
+            }
+
+            foreach (var entry in m_InteractInputFields) {
+                var behavior = entry.Value.UIBehaviour;
+                if (entry.Value.ElementData.MarkedForDisplay != behavior.enabled) {
+                    behavior.enabled = entry.Value.ElementData.MarkedForDisplay;
+                }
+
+                entry.Value.ElementData.MarkedForDisplay = false;
+                entry.Value.HasSubmitted = false;
+                entry.Value.HasClicked = false;
+            }
+
+            foreach (var entry in m_InteractSliders) {
+                var behavior = entry.Value.UIBehaviour;
+                if (entry.Value.ElementData.MarkedForDisplay != behavior.enabled) {
+                    behavior.enabled = entry.Value.ElementData.MarkedForDisplay;
+                }
+
+                entry.Value.ElementData.MarkedForDisplay = false;
+                entry.Value.IsMouseUp = false;
+            }
+            foreach (var entry in m_InteractDropdowns) {
+                var behavior = entry.Value.UIBehaviour;
+                if (entry.Value.ElementData.MarkedForDisplay != behavior.enabled) {
+                    behavior.enabled = entry.Value.ElementData.MarkedForDisplay;
+                }
+
+                entry.Value.ElementData.MarkedForDisplay = false;
+                entry.Value.HasSubmitted = false;
+            }
         }
 
         internal static void Register<T>(T element, ElementRootMapping elementRootMapping) where T : MonoBehaviour
