@@ -46,7 +46,7 @@ when you can simply do
 None of that working? **Honestly, just grab the repo from out of the zip** and just toss it in to your project like you would any other script.
 
 ## Examples
-Please look at [Style Comparisons](https://github.com/hopeforsenegal/com.moonlitstudios.immediatestyle/blob/main/StyleComparisons) folder for more elaborate examples that are setup like the real world. (or specifically [Immediate Example](https://github.com/hopeforsenegal/com.moonlitstudios.immediatestyle/blob/main/StyleComparisons/ImmediateExample.cs) to hop right into a code example) 
+Please look at the [Style Comparisons](https://github.com/hopeforsenegal/com.moonlitstudios.immediatestyle/blob/main/StyleComparisons) folder for more elaborate examples that are setup like the real world. (or specifically [Immediate Example](https://github.com/hopeforsenegal/com.moonlitstudios.immediatestyle/blob/main/StyleComparisons/ImmediateExample.cs) to hop right into a code example) 
 The following is a basic example of using the **Element** component: 
 ```cs
 protected void Update()
