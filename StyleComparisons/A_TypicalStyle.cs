@@ -5,7 +5,10 @@ using UnityEngine.UI;
 
 namespace Editing.BotEditor.StyleComparisons
 {
-    public class X_TediousStyle : MonoBehaviour
+    // This follows the standard way of handling UI. For the ImmediateStyle UI code with the same functionality see 'X_ImmediateStyle.cs'
+    // Compare and contrast to see what works best and is faster for iteration
+
+    public class A_TypicalStyle : MonoBehaviour
     {
         public Toggle canvasToggle;
         public CanvasGroup canvasGroup;

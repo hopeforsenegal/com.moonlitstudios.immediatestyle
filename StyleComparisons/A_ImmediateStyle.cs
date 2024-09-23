@@ -2,11 +2,13 @@ using System.Collections.Generic;
 using MoonlitSystem.UI;
 using MoonlitSystem.UI.Immediate;
 using UnityEngine;
-using UnityEngine.UI;
 
 namespace Editing.BotEditor.StyleComparisons
 {
-    public class X_ImmediateStyle : MonoBehaviour
+    // This follows the ImmediateStyle of handling UI. For the standard way people write UI code with the same functionality see 'X_TypicalStyle.cs'
+    // Compare and contrast to see what works best and is faster for iteration
+
+    public class A_ImmediateStyle : MonoBehaviour
     {
         public Sprite left;
         public Sprite right;

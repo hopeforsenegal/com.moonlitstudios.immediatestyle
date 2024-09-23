@@ -995,7 +995,7 @@ GameObject:
   - component: {fileID: 1867643751}
   - component: {fileID: 1867643750}
   m_Layer: 0
-  m_Name: CanvasGroup
+  m_Name: CanvasGroup <-Generate Code
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
