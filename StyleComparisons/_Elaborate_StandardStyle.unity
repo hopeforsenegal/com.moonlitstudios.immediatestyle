@@ -336,7 +336,6 @@ MonoBehaviour:
   OnReleased:
     m_PersistentCalls:
       m_Calls: []
-  FollowMouseCursor: 1
 --- !u!114 &215768976
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -662,7 +661,6 @@ MonoBehaviour:
   OnReleased:
     m_PersistentCalls:
       m_Calls: []
-  FollowMouseCursor: 1
 --- !u!114 &514623489
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1359,7 +1357,6 @@ MonoBehaviour:
   OnReleased:
     m_PersistentCalls:
       m_Calls: []
-  FollowMouseCursor: 1
 --- !u!114 &817139854
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2503,7 +2500,6 @@ MonoBehaviour:
   OnReleased:
     m_PersistentCalls:
       m_Calls: []
-  FollowMouseCursor: 1
 --- !u!114 &1171737840
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2676,7 +2672,6 @@ MonoBehaviour:
   OnReleased:
     m_PersistentCalls:
       m_Calls: []
-  FollowMouseCursor: 1
 --- !u!114 &1199046791
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2769,7 +2764,6 @@ MonoBehaviour:
   OnReleased:
     m_PersistentCalls:
       m_Calls: []
-  FollowMouseCursor: 1
 --- !u!114 &1209052842
 MonoBehaviour:
   m_ObjectHideFlags: 0

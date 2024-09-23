@@ -16,7 +16,9 @@ namespace MoonlitSystem.UI
         , IDragHandler
     {
         public UnityEvent<DragDrop> OnReleased;
-        public bool FollowMouseCursor = false;
+        // We expect this behavior if we were a standard Unity component. However ImmediateStyle defaults to overriding this to be off.
+        // See 'ImmediateStyleProjectSettings.followCursorRetained' for more details and/or to change this for ImmediateStyle.
+        internal bool FollowMouseCursor = true;
         public Vector3 PinnedPosition { get; set; }
 
         public RectTransform RectTransform { get; private set; }
