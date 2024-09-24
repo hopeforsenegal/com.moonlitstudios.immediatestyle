@@ -5,7 +5,8 @@ using UnityEngine.UI;
 
 namespace MoonlitSystem.UI.Immediate
 {
-    [SuppressMessage("ReSharper", "ConditionIsAlwaysTrueOrFalse")]
+    // Just add a single ImmediateStyle singleton to your scene to use all the following methods
+
     public class ImmediateStyle : MonoBehaviour
     {
         public static ButtonData Button(string id)
@@ -483,7 +484,7 @@ namespace MoonlitSystem.UI.Immediate
 
         internal static void Register<T>(T element, ElementRootMapping elementRootMapping) where T : MonoBehaviour
         {
-            Debug.Assert(Instance, $"No {nameof(ImmediateStyle)} within the scene");
+            Debug.Assert(Instance, $"No GameObject with {nameof(ImmediateStyle)} Singleton Component is within the scene!");
             if (elementRootMapping == null) {
                 InnerRegister(element, string.Empty);
             } else {
