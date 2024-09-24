@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
-using MoonlitSystem.Strings;
+using System.Text;
 using UnityEditor;
 using UnityEngine;
 
@@ -17,11 +17,17 @@ namespace Editor.TemplateGenerators
             }
             return str;
         }
+        public static string RemoveChars(this string s, IEnumerable<char> separators)
+        {
+            var sb = new StringBuilder(s);
+            foreach (var c in separators) { sb.Replace(c.ToString(), ""); }
+            return sb.ToString();
+        }
 
         public static class Name
         {
-            static readonly string packageName = "com.moonlitstudios.immediatestyle";
-            private static string TemplatePackagePath => $"Packages/{packageName}/Editor/Template";
+            private const string PackageName = "com.moonlitstudios.immediatestyle";
+            private static string TemplatePackagePath => $"Packages/{PackageName}/Editor/Template";
             internal const string ScreenExtension = "ImmediateUI";
             internal const string ElementsExtension = "ImmediateUIElement";
             internal const string AssetsPath = "Assets";
@@ -112,7 +118,7 @@ namespace Editor.TemplateGenerators
 
             // No DragDrops
             // We don't file or element create DragDrop because anything using it
-            // typically does so in a foor loop with a root mapping. Meaning that it must be done seperately anyways.
+            // typically does so in a for loop with a root mapping. Meaning that it must be done separately anyways.
             // we might handle this in the future the day we come up on this issue.
         }
 

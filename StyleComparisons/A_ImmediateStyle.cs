@@ -18,9 +18,9 @@ namespace Editing.BotEditor.StyleComparisons
         int radioIndex;
         string tempInputText;
         string resultText;
-        private Color[] colors = { Color.red, Color.black, Color.green };
+        private readonly Color[] colors = { Color.red, Color.black, Color.green };
         private int dropdownIndex;
-        void Update()
+        protected void Update()
         {
             const string CanvasCanvasGroupDropdownLegacy55fc = "/Canvas/CanvasGroup/Dropdown (Legacy)55fc";
             const string CanvasCanvasGroupDropDownImage40d6 = "/Canvas/CanvasGroup/DropDownImage40d6";
@@ -72,15 +72,15 @@ namespace Editing.BotEditor.StyleComparisons
                 }
 
                 var components = new List<DragDrop>(); // @swappable dragdrop
-                for (int i = 0; i < 4; i++) {
+                for (var i = 0; i < 4; i++) {
                     ImmediateStyle.DragDrop($"swap{i}" + CanvasCanvasGroupSwappablesSwap1be93, out var swappable);
                     components.Add(swappable);
                     if (swappable.IsDragging) ImmediateStyle.FollowCursor(swappable.transform);
                 }
-                for (int i = 0; i < 4; i++) {
+                for (var i = 0; i < 4; i++) {
                     var swappable = components[i];
                     if (!swappable.IsMouseUp) continue; // We can only do one of these in a frame anyways
-                    for (int j = 0; j < 4; j++) {
+                    for (var j = 0; j < 4; j++) {
                         if (i == j) continue;
                         var swappable2 = components[j];
                         if (RectTransformUtility.RectangleContainsScreenPoint(swappable2.RectTransform, swappable.transform.position)) {

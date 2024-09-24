@@ -13,7 +13,7 @@ namespace Editing.BotEditor.StyleComparisons
         public Button left, right;
         public Text text;
         int value;
-        void Start()
+        protected void Start()
         {
             Debug.Assert(left != null, "Fancy message", gameObject);
             Debug.Assert(right != null);
@@ -22,7 +22,7 @@ namespace Editing.BotEditor.StyleComparisons
             right.onClick.AddListener(RaiseValue);
             text.text = $"-> {value}";
         }
-        void OnDestroy()
+        protected void OnDestroy()
         {
             left.onClick.RemoveListener(LowerValue);
             right.onClick.RemoveListener(RaiseValue);

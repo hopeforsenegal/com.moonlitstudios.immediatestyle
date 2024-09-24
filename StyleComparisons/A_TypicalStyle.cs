@@ -26,8 +26,8 @@ namespace Editing.BotEditor.StyleComparisons
         public Dropdown dropdown;
         public Image dropdownImage;
         int value;
-        List<DragDrop> swappables = new List<DragDrop>();
-        private Color[] colors = { Color.red, Color.black, Color.green };
+        private readonly List<DragDrop> swappables = new List<DragDrop>();
+        private readonly Color[] colors = { Color.red, Color.black, Color.green };
         void Start()
         {
             canvasToggle.onValueChanged.AddListener(ToggleTheCanvasGroup);

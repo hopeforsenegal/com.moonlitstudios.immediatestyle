@@ -335,7 +335,7 @@ namespace MoonlitSystem.UI.Immediate
         private readonly HashSet<string> m_RootMappings = new HashSet<string>();
         private bool m_HasSetColor;
         private Color m_Color;
-        private static ImmediateStyleProjectSettings ImmediateStyleProjectSettings;
+        private static ImmediateStyleProjectSettings sImmediateStyleProjectSettings;
 
         private static ImmediateStyle Instance
         {
@@ -349,7 +349,7 @@ namespace MoonlitSystem.UI.Immediate
                 Instance = this;
                 Instance.m_Color = Color.white; // default color
                 // Load in project settings
-                ImmediateStyleProjectSettings = ImmediateStyleProjectSettings.LoadInstance();
+                sImmediateStyleProjectSettings = ImmediateStyleProjectSettings.LoadInstance();
                 DontDestroyOnLoad(gameObject);
             } else if (Instance != this) {
                 Destroy(gameObject);
@@ -546,8 +546,8 @@ namespace MoonlitSystem.UI.Immediate
                         // in this special case we do some overriding to make things a bit more consistent
                         // but basically is a way of forcing all the DragAndDrop components to have a unified setting if you want.
                         // And, conversely, also allows us to default DragAndDrop to have FollowMouseCursor = true as default which makes sense inside Unity
-                        if (ImmediateStyleProjectSettings.followCursorRetained != ImmediateStyleProjectSettings.FollowCursorRetained.NoOverride) {
-                            dd.UIBehaviour.FollowMouseCursor = ImmediateStyleProjectSettings.followCursorRetained == ImmediateStyleProjectSettings.FollowCursorRetained.OverrideFollowCursor;
+                        if (sImmediateStyleProjectSettings.followCursorRetained != ImmediateStyleProjectSettings.FollowCursorRetained.NoOverride) {
+                            dd.UIBehaviour.FollowMouseCursor = sImmediateStyleProjectSettings.followCursorRetained == ImmediateStyleProjectSettings.FollowCursorRetained.OverrideFollowCursor;
                         }
                     }
                     break;

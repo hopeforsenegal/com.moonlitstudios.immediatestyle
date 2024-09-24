@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using MoonlitSystem.Strings;
 using UnityEngine;
 
 namespace MoonlitSystem.UI.Immediate
@@ -11,7 +10,7 @@ namespace MoonlitSystem.UI.Immediate
 
         public void Reset()
         {
-            ID = StringUtil.RandomString(new[] { 'a', 's', 'd', 'f' }, 4);
+            ID = RandomUtil.RandomString(new[] { 'a', 's', 'd', 'f' }, 4);
         }
 
         public static ElementRootMapping GetFirstParentOrAssert(MonoBehaviour component)

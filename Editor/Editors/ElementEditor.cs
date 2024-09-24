@@ -1,6 +1,5 @@
 ﻿using System;
 using MoonlitSystem.UI.Immediate;
-using MoonlitSystem.Strings;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
@@ -10,11 +9,18 @@ using System.Collections.Generic;
 using Editor.TemplateGenerators;
 using System.Linq;
 using MoonlitSystem.UI;
+using System.Text;
 
 namespace Editor.Editors
 {
     public static class Builder
     {
+        public static string RemoveChars(this string s, IEnumerable<char> separators)
+        {
+            var sb = new StringBuilder(s);
+            foreach (var c in separators) { sb.Replace(c.ToString(), ""); }
+            return sb.ToString();
+        }
         private static string CleanString(string str)
         {
             return str.RemoveChars(new[] { '/', '(', ')', ' ' });

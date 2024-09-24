@@ -3,7 +3,7 @@ using UnityEngine.UI;
 
 namespace Editing.BotEditor.StyleComparisons
 {
-    // This follows the design way of handling UI (and exists mostly inside the Unity Scene with calling the methods in `On Click`)
+    // This follows the design way (Inspector Callbacks on Game objects) of handling UI (and exists mostly inside the Unity Scene with calling the methods in `On Click`)
     // For the ImmediateStyle UI code with the same functionality see 'ImmediateExample.cs'
     // For the standard way people write UI code with the same functionality see 'StandardExample.cs'
     // Compare and contrast to see what works best and is faster for iteration
@@ -13,7 +13,7 @@ namespace Editing.BotEditor.StyleComparisons
         public Text text;
         int value;
 
-        private void Start()
+        protected void Start()
         {
             Debug.Assert(text != null, "Fancy message", gameObject);
             text.text = $"-> {value}";

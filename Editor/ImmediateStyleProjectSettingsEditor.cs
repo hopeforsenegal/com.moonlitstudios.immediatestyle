@@ -9,22 +9,22 @@ namespace Editor
     {
         public const string MenuLocationInProjectSettings = "Project/ImmediateStyle"; //@copied manually
 
-        private SerializedObject _projectSettings;
-        private SerializedProperty _followCursorRetained;
+        private SerializedObject m_ProjectSettings;
+        private SerializedProperty m_FollowCursorRetained;
 
         private ImmediateStyleSettingsProvider(string path, SettingsScope scope = SettingsScope.Project) : base(path, scope) { }
 
         public override void OnActivate(string searchContext, VisualElement rootElement)
         {
-            _projectSettings = ImmediateStyleProjectSettings.GetSerializedSettings();
-            _followCursorRetained = _projectSettings.FindProperty(nameof(ImmediateStyleProjectSettings.followCursorRetained));
+            m_ProjectSettings = ImmediateStyleProjectSettings.GetSerializedSettings();
+            m_FollowCursorRetained = m_ProjectSettings.FindProperty(nameof(ImmediateStyleProjectSettings.followCursorRetained));
         }
 
         public override void OnGUI(string searchContext)
         {
-            EditorGUILayout.PropertyField(_followCursorRetained, new GUIContent("Change ImmediateStyle Follow cursor default behaviour for DragAndDrop."));
+            EditorGUILayout.PropertyField(m_FollowCursorRetained, new GUIContent("Change ImmediateStyle Follow cursor default behaviour for DragAndDrop."));
 
-            _projectSettings.ApplyModifiedProperties();
+            m_ProjectSettings.ApplyModifiedProperties();
         }
 
         [SettingsProvider]

@@ -11,7 +11,7 @@ namespace Editing.BotEditor.StyleComparisons
     public class ImmediateExample : MonoBehaviour
     {
         int value;
-        void Update()
+        protected void Update()
         {
             const string CanvasLeftd414 = "/Canvas/Leftd414";
             const string CanvasRight3c3e = "/Canvas/Right3c3e";

@@ -1,5 +1,4 @@
 using System;
-using MoonlitSystem.Strings;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -68,7 +67,7 @@ namespace MoonlitSystem.UI.Immediate
 
         public static void SetupElementData(ElementData elementData, Transform transform)
         {
-            var randomId = StringUtil.RandomString(new[] { 'a', 'b', 'c', 'd', 'e', 'f', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0' }, 4);
+            var randomId = RandomUtil.RandomString(new[] { 'a', 'b', 'c', 'd', 'e', 'f', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0' }, 4);
             elementData.ID = GetGameObjectFullPathHierarchy(transform) + randomId;
         }
 
