@@ -144,7 +144,7 @@ namespace Editor.Editors
                     var (constantStatement, _) = Builder.BuildConstantStatement(id);
                     statements += constantStatement + Environment.NewLine;
                 }
-                PathUtil.ClipboardText = statements;
+                Util.ClipboardText = statements;
             } else if (choice == Choice.CopyCode) {
                 var constantStatements = string.Empty;
                 var elementStatements = string.Empty;
@@ -156,7 +156,7 @@ namespace Editor.Editors
                     constantStatements += constantStatement + Environment.NewLine;
                     elementStatements += elementStatement + Environment.NewLine;
                 }
-                PathUtil.ClipboardText = constantStatements + elementStatements;
+                Util.ClipboardText = constantStatements + elementStatements;
             } else if (choice == Choice.RegenerateRandomID) {
                 foreach (var t in targets) {
                     var element = (ElementButton)t;
@@ -205,7 +205,7 @@ namespace Editor.Editors
                     var (constantStatement, _) = Builder.BuildConstantStatement(id);
                     statements += constantStatement + Environment.NewLine;
                 }
-                PathUtil.ClipboardText = statements;
+                Util.ClipboardText = statements;
             } else if (choice == Choice.CopyCode) {
                 var constantStatements = string.Empty;
                 var elementStatements = string.Empty;
@@ -217,7 +217,7 @@ namespace Editor.Editors
                     constantStatements += constantStatement + Environment.NewLine;
                     elementStatements += elementStatement + Environment.NewLine;
                 }
-                PathUtil.ClipboardText = constantStatements + elementStatements;
+                Util.ClipboardText = constantStatements + elementStatements;
             } else if (choice == Choice.RegenerateRandomID) {
                 foreach (var t in targets) {
                     var element = (ElementCanvasGroup)t;
@@ -330,7 +330,7 @@ namespace Editor.Editors
                 }
 
                 var code = ImmediateUITemplate.BuildString(buildParams, ImmediateUITemplate.Name.ElementsExtension);
-                PathUtil.ClipboardText = code;
+                Util.ClipboardText = code;
             } else if (choice == Choice.ForLoopTemplate) {
                 var element = (ElementCanvasGroup)target;
                 ImmediateUITemplate.BuildParams buildParams;
@@ -385,7 +385,7 @@ namespace Editor.Editors
                 }
 
                 var code = ImmediateUITemplate.BuildString(buildParams, ImmediateUITemplate.Name.ElementsExtension);
-                PathUtil.ClipboardText = code;
+                Util.ClipboardText = code;
             }
         }
     }
@@ -417,7 +417,7 @@ namespace Editor.Editors
                     var (constantStatement, _) = Builder.BuildConstantStatement(id);
                     statements += constantStatement + Environment.NewLine;
                 }
-                PathUtil.ClipboardText = statements;
+                Util.ClipboardText = statements;
             } else if (choice == Choice.CopyCode) {
                 var constantStatements = string.Empty;
                 var elementStatements = string.Empty;
@@ -429,7 +429,7 @@ namespace Editor.Editors
                     constantStatements += constantStatement + Environment.NewLine;
                     elementStatements += elementStatement + Environment.NewLine;
                 }
-                PathUtil.ClipboardText = constantStatements + elementStatements;
+                Util.ClipboardText = constantStatements + elementStatements;
             } else if (choice == Choice.RegenerateRandomID) {
                 foreach (var t in targets) {
                     var element = (ElementImage)t;
@@ -473,7 +473,7 @@ namespace Editor.Editors
                     var (constantStatement, _) = Builder.BuildConstantStatement(id);
                     statements += constantStatement + Environment.NewLine;
                 }
-                PathUtil.ClipboardText = statements;
+                Util.ClipboardText = statements;
             } else if (choice == Choice.CopyCode) {
                 var constantStatements = string.Empty;
                 var elementStatements = string.Empty;
@@ -485,7 +485,7 @@ namespace Editor.Editors
                     constantStatements += constantStatement + Environment.NewLine;
                     elementStatements += elementStatement + Environment.NewLine;
                 }
-                PathUtil.ClipboardText = constantStatements + elementStatements;
+                Util.ClipboardText = constantStatements + elementStatements;
             } else if (choice == Choice.RegenerateRandomID) {
                 foreach (var t in targets) {
                     var element = (ElementToggle)t;
@@ -523,7 +523,7 @@ namespace Editor.Editors
                     var (constantStatement, _) = Builder.BuildConstantStatement(id);
                     statements += constantStatement + Environment.NewLine;
                 }
-                PathUtil.ClipboardText = statements;
+                Util.ClipboardText = statements;
             } else if (choice == Choice.CopyCode) {
                 var constantStatements = string.Empty;
                 var elementStatements = string.Empty;
@@ -535,7 +535,7 @@ namespace Editor.Editors
                     constantStatements += constantStatement + Environment.NewLine;
                     elementStatements += elementStatement + Environment.NewLine;
                 }
-                PathUtil.ClipboardText = constantStatements + elementStatements;
+                Util.ClipboardText = constantStatements + elementStatements;
             } else if (choice == Choice.RegenerateRandomID) {
                 foreach (var t in targets) {
                     var element = (ElementDragDrop)t;
@@ -573,7 +573,7 @@ namespace Editor.Editors
                     var (constantStatement, _) = Builder.BuildConstantStatement(id);
                     statements += constantStatement + Environment.NewLine;
                 }
-                PathUtil.ClipboardText = statements;
+                Util.ClipboardText = statements;
             } else if (choice == Choice.CopyCode) {
                 var constantStatements = string.Empty;
                 var elementStatements = string.Empty;
@@ -585,7 +585,7 @@ namespace Editor.Editors
                     constantStatements += constantStatement + Environment.NewLine;
                     elementStatements += elementStatement + Environment.NewLine;
                 }
-                PathUtil.ClipboardText = constantStatements + elementStatements;
+                Util.ClipboardText = constantStatements + elementStatements;
             } else if (choice == Choice.RegenerateRandomID) {
                 foreach (var t in targets) {
                     var element = (ElementText)t;
@@ -624,7 +624,7 @@ namespace Editor.Editors
                     var (constantStatement, _) = Builder.BuildConstantStatement(id);
                     statements += constantStatement + Environment.NewLine;
                 }
-                PathUtil.ClipboardText = statements;
+                Util.ClipboardText = statements;
             } else if (choice == Choice.CopyCode) {
                 var constantStatements = string.Empty;
                 var elementStatements = string.Empty;
@@ -636,7 +636,7 @@ namespace Editor.Editors
                     constantStatements += constantStatement + Environment.NewLine;
                     elementStatements += elementStatement + Environment.NewLine;
                 }
-                PathUtil.ClipboardText = constantStatements + elementStatements;
+                Util.ClipboardText = constantStatements + elementStatements;
             } else if (choice == Choice.RegenerateRandomID) {
                 foreach (var t in targets) {
                     var element = (ElementInputField)t;
@@ -674,7 +674,7 @@ namespace Editor.Editors
                     var (constantStatement, _) = Builder.BuildConstantStatement(id);
                     statements += constantStatement + Environment.NewLine;
                 }
-                PathUtil.ClipboardText = statements;
+                Util.ClipboardText = statements;
             } else if (choice == Choice.CopyCode) {
                 var constantStatements = string.Empty;
                 var elementStatements = string.Empty;
@@ -686,7 +686,7 @@ namespace Editor.Editors
                     constantStatements += constantStatement + Environment.NewLine;
                     elementStatements += elementStatement + Environment.NewLine;
                 }
-                PathUtil.ClipboardText = constantStatements + elementStatements;
+                Util.ClipboardText = constantStatements + elementStatements;
             } else if (choice == Choice.RegenerateRandomID) {
                 foreach (var t in targets) {
                     var element = (ElementSlider)t;
@@ -725,7 +725,7 @@ namespace Editor.Editors
                     var (constantStatement, _) = Builder.BuildConstantStatement(id);
                     statements += constantStatement + Environment.NewLine;
                 }
-                PathUtil.ClipboardText = statements;
+                Util.ClipboardText = statements;
             } else if (choice == Choice.CopyCode) {
                 var constantStatements = string.Empty;
                 var elementStatements = string.Empty;
@@ -737,7 +737,7 @@ namespace Editor.Editors
                     constantStatements += constantStatement + Environment.NewLine;
                     elementStatements += elementStatement + Environment.NewLine;
                 }
-                PathUtil.ClipboardText = constantStatements + elementStatements;
+                Util.ClipboardText = constantStatements + elementStatements;
             } else if (choice == Choice.RegenerateRandomID) {
                 foreach (var t in targets) {
                     var element = (ElementDropdown)t;
@@ -812,7 +812,7 @@ namespace Editor.Editors
                     var (constantStatement, _) = Builder.BuildConstantStatement(id);
                     statements += constantStatement + Environment.NewLine;
                 }
-                PathUtil.ClipboardText = statements;
+                Util.ClipboardText = statements;
             } else if (choice == Choice.CopyCode) {
                 var statements = string.Empty;
                 foreach (var t in targets) {
@@ -832,7 +832,7 @@ namespace Editor.Editors
                         var elementStatement = Builder.BuildReferenceStatement(constant);
                         statements += constantStatement + Environment.NewLine + elementStatement;
                     }
-                    PathUtil.ClipboardText = statements + Environment.NewLine;
+                    Util.ClipboardText = statements + Environment.NewLine;
                 }
             } else if (choice == Choice.RegenerateRandomID) {
                 foreach (var t in targets) {
