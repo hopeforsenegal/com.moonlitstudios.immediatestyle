@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -455,6 +454,7 @@ namespace MoonlitSystem.UI.Immediate
                 var behavior = entry.Value.UIBehaviour;
                 if (entry.Value.ElementData.MarkedForDisplay != behavior.enabled) {
                     behavior.enabled = entry.Value.ElementData.MarkedForDisplay;
+                    behavior.interactable = entry.Value.ElementData.MarkedForDisplay; 
                 }
 
                 entry.Value.ElementData.MarkedForDisplay = false;

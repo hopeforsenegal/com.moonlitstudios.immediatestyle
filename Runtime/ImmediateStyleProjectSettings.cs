@@ -6,19 +6,11 @@ namespace MoonlitSystem
 {
     public class ImmediateStyleProjectSettings : ScriptableObject
     {
-        private const string MenuLocationInProjectSettings = "Project/ImmediateStyle"; //@copied manually
-
         private const string ImmediateStyleSettingsResDir = "Assets/ImmediateStyle/Resources";
         private const string ImmediateStyleSettingsFile = "ImmediateStyleSettings";
         private const string ImmediateStyleSettingsFileExtension = ".asset";
 
-        [MenuItem("Moonlit/ImmediateStyle/Settings", priority = 0)]
-        private static void SendToProjectSettings()
-        {
-            SettingsService.OpenProjectSettings(MenuLocationInProjectSettings);
-        }
-
-        internal static ImmediateStyleProjectSettings LoadInstance()
+        public static ImmediateStyleProjectSettings LoadInstance()
         {
             var instance = Resources.Load<ImmediateStyleProjectSettings>(ImmediateStyleSettingsFile);
 
@@ -26,17 +18,14 @@ namespace MoonlitSystem
                 Directory.CreateDirectory(ImmediateStyleSettingsResDir);
                 var assetPath = Path.Combine(ImmediateStyleSettingsResDir, ImmediateStyleSettingsFile + ImmediateStyleSettingsFileExtension);
                 instance = CreateInstance<ImmediateStyleProjectSettings>();
-                AssetDatabase.CreateAsset(instance, assetPath);
                 instance.followCursorRetained = FollowCursorRetained.OverrideNoFollowCursor; // @default
+#if UNITY_EDITOR
+                AssetDatabase.CreateAsset(instance, assetPath);
                 AssetDatabase.SaveAssets();
+#endif
             }
 
             return instance;
-        }
-
-        public static SerializedObject GetSerializedSettings()
-        {
-            return new SerializedObject(LoadInstance());
         }
 
         public enum FollowCursorRetained { NoOverride, OverrideFollowCursor, OverrideNoFollowCursor }

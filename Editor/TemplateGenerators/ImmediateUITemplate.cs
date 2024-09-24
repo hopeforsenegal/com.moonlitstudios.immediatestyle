@@ -174,7 +174,7 @@ namespace Editor.TemplateGenerators
             if (!string.IsNullOrWhiteSpace(build.ElementRootMapping_ID)) {
 
                 var elementRootMappingID = build.ElementRootMapping_ID;
-                while (char.IsDigit(elementRootMappingID[elementRootMappingID.Length - 1])) {
+                while (elementRootMappingID.Length > 0 && char.IsDigit(elementRootMappingID[elementRootMappingID.Length - 1])) {
                     elementRootMappingID = elementRootMappingID.Remove(elementRootMappingID.Length - 1);
                 }
                 code = code.Replace("{has_root_mapping}", $"const string elementrootmapping =  \"{elementRootMappingID}\";");

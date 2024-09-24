@@ -13,7 +13,7 @@ namespace Editing.BotEditor.StyleComparisons
         public Button left, right;
         public Text text;
         int value;
-        protected void Start()
+        protected void Awake()
         {
             Debug.Assert(left != null, "Fancy message", gameObject);
             Debug.Assert(right != null);

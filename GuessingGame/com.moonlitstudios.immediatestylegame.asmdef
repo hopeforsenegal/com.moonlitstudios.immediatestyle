@@ -1,0 +1,16 @@
+{
+    "name": "com.moonlitstudios.immediatestylegame",
+    "rootNamespace": "MoonlitSystem",
+    "references": [
+        "GUID:6ec555a78b6ed4644b068f8f04440bda"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

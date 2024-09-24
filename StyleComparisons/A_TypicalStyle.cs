@@ -28,7 +28,7 @@ namespace Editing.BotEditor.StyleComparisons
         int value;
         private readonly List<DragDrop> swappables = new List<DragDrop>();
         private readonly Color[] colors = { Color.red, Color.black, Color.green };
-        void Start()
+        protected void Start()
         {
             canvasToggle.onValueChanged.AddListener(ToggleTheCanvasGroup);
             leftButton.onClick.AddListener(LowerValue);
@@ -53,7 +53,7 @@ namespace Editing.BotEditor.StyleComparisons
             text.text = $"-> {value}";
             inputFieldResult.text = string.Empty; // We want to clear the text that is in it on start (like the other example)
         }
-        void Update()
+        protected void Update()
         {
             var textColor = Color.white;
             if (toggles[1].isOn) textColor = Color.green;

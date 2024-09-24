@@ -7,7 +7,7 @@ namespace Editor
 {
     public class ImmediateStyleSettingsProvider : SettingsProvider
     {
-        public const string MenuLocationInProjectSettings = "Project/ImmediateStyle"; //@copied manually
+        public const string MenuLocationInProjectSettings = "Project/ImmediateStyle";
 
         private SerializedObject m_ProjectSettings;
         private SerializedProperty m_FollowCursorRetained;
@@ -16,7 +16,7 @@ namespace Editor
 
         public override void OnActivate(string searchContext, VisualElement rootElement)
         {
-            m_ProjectSettings = ImmediateStyleProjectSettings.GetSerializedSettings();
+            m_ProjectSettings = new SerializedObject(ImmediateStyleProjectSettings.LoadInstance());  // GetSerializedSettings();
             m_FollowCursorRetained = m_ProjectSettings.FindProperty(nameof(ImmediateStyleProjectSettings.followCursorRetained));
         }
 
@@ -25,6 +25,12 @@ namespace Editor
             EditorGUILayout.PropertyField(m_FollowCursorRetained, new GUIContent("Change ImmediateStyle Follow cursor default behaviour for DragAndDrop."));
 
             m_ProjectSettings.ApplyModifiedProperties();
+        }
+
+        [MenuItem("Moonlit/ImmediateStyle/Settings", priority = 0)]
+        private static void SendToProjectSettings()
+        {
+            SettingsService.OpenProjectSettings(MenuLocationInProjectSettings);
         }
 
         [SettingsProvider]
