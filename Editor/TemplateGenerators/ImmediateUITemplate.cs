@@ -37,9 +37,17 @@ namespace Editor.TemplateGenerators
 
         private static class Builder
         {
-            private static string CleanString(string str)
+            public static string CleanString(string str)
             {
-                return str.RemoveChars(new[] { '/', '(', ')', ' ' });
+                return str.RemoveChars(new[] { '-', '<', '/', '(', ')', ' ' });
+            }
+            public static string NameWithoutTypeOtherwiseJustType(string str, string type)
+            {
+                var gameObjectName = str.Replace(type, "");
+                gameObjectName = CleanString(gameObjectName);
+                if (string.IsNullOrWhiteSpace(gameObjectName)) gameObjectName = type;
+                if (int.TryParse(gameObjectName, out var number)) gameObjectName = $"{type}{number}";
+                return gameObjectName;
             }
             public static string BuildConstantStatement(string id)
             {
@@ -73,6 +81,24 @@ namespace Editor.TemplateGenerators
             {
                 return $"ImmediateStyle.Text({constant}, \"Placeholder\");";    // Use placeholder so we can see the text right away
             }
+            internal static string BuildSliderStatement(string constant)
+            {
+                return $"ImmediateStyle.Slider({constant});";
+            }
+            internal static object BuildDragDropStatement(string constant)
+            {
+                return @$"ImmediateStyle.DragDrop({constant}, out var component);
+if(component.IsDragging) ImmediateStyle.FollowCursor(component.transform);
+";
+            }
+            internal static object BuildDropdownStatement(string constant)
+            {
+                return $"ImmediateStyle.Dropdown({constant}, new[] {{ new UnityEngine.UI.Dropdown.OptionData(\"\")}});";
+            }
+            internal static string BuildInputFieldStatement(string constant)
+            {
+                return $"ImmediateStyle.InputField({constant}, new[] {{KeyCode.Return, KeyCode.KeypadEnter}}, ref text);";
+            }
             public static string BuildEvent(string eventName)
             {
                 return $"internal bool {eventName.ToTitleCase()};";
@@ -90,6 +116,13 @@ namespace Editor.TemplateGenerators
                 var buttonStatement = BuildToggleStatement(constant);
                 buttonStatement = buttonStatement.Replace(";", "");
                 return $"m_Events.{name}.{eventName} = {buttonStatement}.IsClicked || m_Events.{name}.{eventName};";
+            }
+            internal static string BuildInputFieldsReadEvent(string name, string buttonID, string eventName)
+            {
+                var constant = BuildConstantStatement(buttonID);
+                var statement = BuildInputFieldStatement(constant);
+                statement = statement.Replace(";", "");
+                return $"m_Events.{name}.{eventName} = {statement}.HasSubmitted || m_Events.{name}.{eventName};";
             }
             public static string BuildUseEvent(string name, string eventName)
             {
@@ -113,6 +146,10 @@ namespace Editor.TemplateGenerators
             public ElementInfo[] Toggles;
             public ElementInfo[] Texts;
             public ElementInfo[] Images;
+            public ElementInfo[] Sliders;
+            public ElementInfo[] InputFields;
+            public ElementInfo[] DragDrops;
+            public ElementInfo[] Dropdowns;
             public ElementInfo[] CanvasGroups;
             internal bool ForLoop;
 
@@ -129,7 +166,7 @@ namespace Editor.TemplateGenerators
             var code = File.ReadAllText(templatePath);
 
             {
-                code = code.Replace("{name}", build.RootCanvasGroup.GameObject_Name);
+                code = code.Replace("{name}", Builder.CleanString(build.RootCanvasGroup.GameObject_Name));
             }
             {
                 var allData = new List<ElementInfo>();
@@ -137,6 +174,10 @@ namespace Editor.TemplateGenerators
                 allData.AddRange(build.Toggles);
                 allData.AddRange(build.Texts);
                 allData.AddRange(build.Images);
+                allData.AddRange(build.Sliders);
+                allData.AddRange(build.InputFields);
+                allData.AddRange(build.DragDrops);
+                allData.AddRange(build.Dropdowns);
                 allData.AddRange(build.CanvasGroups);
                 allData.Add(build.RootCanvasGroup);
 
@@ -156,10 +197,26 @@ namespace Editor.TemplateGenerators
             {
                 var buttonNames = "";
                 buttonNames += Builder.BuildEvent("Open") + Environment.NewLine;
+                buttonNames += Builder.BuildEvent("Close") + Environment.NewLine;
                 foreach (var button in build.Buttons) {
-                    buttonNames += Builder.BuildEvent(button.GameObject_Name.Replace("Button", "")) + Environment.NewLine;
+                    var gameObjectName = Builder.NameWithoutTypeOtherwiseJustType(button.GameObject_Name, "Button");
+                    buttonNames += Builder.BuildEvent(gameObjectName) + Environment.NewLine;
                 }
                 code = code.Replace("{button_events}", buttonNames);
+
+                var toggleNames = "";
+                foreach (var toggle in build.Toggles) {
+                    var gameObjectName = Builder.NameWithoutTypeOtherwiseJustType(toggle.GameObject_Name, "Toggle");
+                    toggleNames += Builder.BuildEvent(gameObjectName) + Environment.NewLine;
+                }
+                code = code.Replace("{toggle_events}", toggleNames);
+
+                var inputFieldNames = "";
+                foreach (var inputField in build.InputFields) {
+                    var gameObjectName = Builder.NameWithoutTypeOtherwiseJustType(inputField.GameObject_Name, "InputField");
+                    inputFieldNames += Builder.BuildEvent(gameObjectName) + Environment.NewLine;
+                }
+                code = code.Replace("{inputfield_events}", inputFieldNames);
             }
 
             if (build.ForLoop) {
@@ -172,7 +229,6 @@ namespace Editor.TemplateGenerators
 
             var extraConstant = "";
             if (!string.IsNullOrWhiteSpace(build.ElementRootMapping_ID)) {
-
                 var elementRootMappingID = build.ElementRootMapping_ID;
                 while (elementRootMappingID.Length > 0 && char.IsDigit(elementRootMappingID[elementRootMappingID.Length - 1])) {
                     elementRootMappingID = elementRootMappingID.Remove(elementRootMappingID.Length - 1);
@@ -221,7 +277,8 @@ namespace Editor.TemplateGenerators
             {
                 var buttons = "";
                 foreach (var button in build.Buttons) {
-                    buttons += Builder.BuildButtonReadEvent(build.RootCanvasGroup.GameObject_Name, button.Element_ID, button.GameObject_Name.Replace("Button", "")) + Environment.NewLine;
+                    var gameObjectName = Builder.NameWithoutTypeOtherwiseJustType(button.GameObject_Name, "Button");
+                    buttons += Builder.BuildButtonReadEvent(Builder.CleanString(build.RootCanvasGroup.GameObject_Name), button.Element_ID, gameObjectName) + Environment.NewLine;
                 }
                 code = code.Replace("{buttons}", buttons);
 
@@ -240,7 +297,8 @@ namespace Editor.TemplateGenerators
             {
                 var toggles = "";
                 foreach (var toggle in build.Toggles) {
-                    toggles += Builder.BuildToggleReadEvent(build.RootCanvasGroup.GameObject_Name, toggle.Element_ID, toggle.GameObject_Name.Replace("Toggle", "")) + Environment.NewLine;
+                    var gameObjectName = Builder.NameWithoutTypeOtherwiseJustType(toggle.GameObject_Name, "Toggle");
+                    toggles += Builder.BuildToggleReadEvent(Builder.CleanString(build.RootCanvasGroup.GameObject_Name), toggle.Element_ID, gameObjectName) + Environment.NewLine;
                 }
                 code = code.Replace("{toggles}", toggles);
 
@@ -257,12 +315,63 @@ namespace Editor.TemplateGenerators
                 code = code.Replace("{toggles_no_event}", buttonsNoEvent);
             }
             {
+                var components = "";
+                foreach (var inputField in build.InputFields) {
+                    var gameObjectName = Builder.NameWithoutTypeOtherwiseJustType(inputField.GameObject_Name, "InputField");
+                    components += Builder.BuildInputFieldsReadEvent(Builder.CleanString(build.RootCanvasGroup.GameObject_Name), inputField.Element_ID, gameObjectName) + Environment.NewLine;
+                }
+                code = code.Replace("{inputfields}", components);
+
+                var buttonsNoEvent = "";
+                foreach (var button in build.InputFields) {
+
+                    var constant = Builder.BuildConstantStatement(extraConstant + button.Element_ID);
+                    var buttonStatement = Builder.BuildInputFieldStatement(constant);
+                    buttonStatement = buttonStatement.Replace(";", "");
+                    buttonStatement = $"{ buttonStatement}.HasSubmitted;";
+
+                    buttonsNoEvent += buttonStatement + Environment.NewLine;
+                }
+                code = code.Replace("{inputfields_no_event}", buttonsNoEvent);
+            }
+            {
                 var additionalEvents = "";
                 foreach (var button in build.Buttons) {
                     if (button.GameObject_Name.Contains("Close")) continue;
-                    additionalEvents += Builder.BuildUseEvent(build.RootCanvasGroup.GameObject_Name, button.GameObject_Name.Replace("Button", ""));
+                    additionalEvents += Builder.BuildUseEvent(Builder.CleanString(build.RootCanvasGroup.GameObject_Name), button.GameObject_Name.Replace("Button", ""));
+                }
+                foreach (var inputField in build.InputFields) {
+                    var gameObjectName = Builder.NameWithoutTypeOtherwiseJustType(inputField.GameObject_Name, "InputField");
+                    additionalEvents += Builder.BuildUseEvent(Builder.CleanString(build.RootCanvasGroup.GameObject_Name), gameObjectName);
                 }
                 code = code.Replace("{additional_events}", additionalEvents);
+            }
+            {
+                var components = "";
+                foreach (var text in build.Sliders) {
+                    var constant = Builder.BuildConstantStatement(extraConstant + text.Element_ID);
+                    var elementStatement = Builder.BuildSliderStatement(constant);
+                    components += elementStatement + Environment.NewLine;
+                }
+                code = code.Replace("{sliders}", components);
+            }
+            {
+                var components = "";
+                foreach (var text in build.DragDrops) {
+                    var constant = Builder.BuildConstantStatement(extraConstant + text.Element_ID);
+                    var elementStatement = Builder.BuildDragDropStatement(constant);
+                    components += elementStatement + Environment.NewLine;
+                }
+                code = code.Replace("{dragdrop}", components);
+            }
+            {
+                var components = "";
+                foreach (var text in build.Dropdowns) {
+                    var constant = Builder.BuildConstantStatement(extraConstant + text.Element_ID);
+                    var elementStatement = Builder.BuildDropdownStatement(constant);
+                    components += elementStatement + Environment.NewLine;
+                }
+                code = code.Replace("{dropdown}", components);
             }
 
             return code;
@@ -272,7 +381,7 @@ namespace Editor.TemplateGenerators
         {
             var path = Path.Combine(Application.dataPath, Name.AssetsPath);
             path = path.Substring(0, path.Length - Path.GetFileName(path).Length);
-            path = path + build.RootCanvasGroup.GameObject_Name + ".cs";
+            path = path + Builder.CleanString(build.RootCanvasGroup.GameObject_Name) + ".cs";
 
             var code = BuildString(build, Name.ScreenExtension);
 

@@ -547,8 +547,8 @@ namespace MoonlitSystem.UI.Immediate
                         Debug.Assert(!Instance.m_InteractDragDrops.ContainsKey(id), $"Duplicate entry found for id '{id}'");
                         Instance.m_InteractDragDrops[id] = dd;
                         // in this special case we do some overriding to make things a bit more consistent
-                        // but basically is a way of forcing all the DragAndDrop components to have a unified setting if you want.
-                        // And, conversely, also allows us to default DragAndDrop to have FollowMouseCursor = true as default which makes sense inside Unity
+                        // but basically is a way of forcing all the DragDrop components to have a unified setting if you want.
+                        // And, conversely, also allows us to default DragDrop to have FollowMouseCursor = true as default which makes sense inside Unity
                         if (sImmediateStyleProjectSettings.followCursorRetained != ImmediateStyleProjectSettings.FollowCursorRetained.NoOverride) {
                             dd.UIBehaviour.FollowMouseCursor = sImmediateStyleProjectSettings.followCursorRetained == ImmediateStyleProjectSettings.FollowCursorRetained.OverrideFollowCursor;
                         }

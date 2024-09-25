@@ -30,7 +30,7 @@ namespace MoonlitSystem
 
         public enum FollowCursorRetained { NoOverride, OverrideFollowCursor, OverrideNoFollowCursor }
 
-        // DragAndDrop components by default follow cursor (in order to be consistent with a typical Unity UI Component). 
+        // DragDrop components by default follow cursor (in order to be consistent with a typical Unity UI Component). 
         // However if that component is engaged with the ImmediateStyle we override them to all not follow cursor. (so you have to explicitly call ImmediateStyle.FollowCursor)
         // But of course here you can change that in case you want to prescribe a different default
 

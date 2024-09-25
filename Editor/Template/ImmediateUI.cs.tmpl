@@ -1,22 +1,20 @@
 ﻿/*Code generated*/
-using System;
+using UnityEngine;
 using MoonlitSystem.UI.Immediate;
 
 internal static class {name}Skeleton
 {
-    // ReSharper disable IdentifierTypo
-    // ReSharper disable InconsistentNaming
-
+    // ReSharper disable IdentifierTypo InconsistentNaming
     {id_names_and_values}
-
-    // ReSharper restore InconsistentNaming
-    // ReSharper restore IdentifierTypo
+    // ReSharper restore InconsistentNaming IdentifierTypo
 
     internal struct Events
     {
         internal struct {name}Event
         {
             {button_events}
+            {toggle_events}
+            {inputfield_events}
         }
 
         internal {name}Event {name};
@@ -24,10 +22,7 @@ internal static class {name}Skeleton
 
     internal struct VisibleContent
     {
-        internal struct {name}Visible
-        {
-            internal bool IsShow;
-        }
+        internal struct {name}Visible { internal bool IsShow; }
 
         internal {name}Visible {name};
     }
@@ -51,13 +46,17 @@ internal static class {name}Skeleton
             {images}
             {buttons}
             {toggles}
+            {sliders}
+            {inputfields}
+            {dragdrop}
+            {dropdown}
         }
     }
 
     public static void UpdatingModal()
     {
         if (m_Events.{name}.Open) {
-            Visible.{name}.IsShow = true;
+            Visible.{name} = new VisibleContent.{name}Visible{IsShow = true};
         }
         {additional_events}
         if (m_Events.{name}.Close) {

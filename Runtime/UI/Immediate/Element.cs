@@ -62,7 +62,7 @@ namespace MoonlitSystem.UI.Immediate
     public class ElementData
     {
         public string ID;
-        public bool MarkedForDisplay;
+        internal bool MarkedForDisplay;
         internal ImmediateStyle.UpdateCanvasGroupVisibilityFields UpdateCGInLateUpdate;
 
         public static void SetupElementData(ElementData elementData, Transform transform)

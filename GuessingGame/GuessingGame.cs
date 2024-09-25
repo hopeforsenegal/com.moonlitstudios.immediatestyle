@@ -17,7 +17,7 @@ namespace MoonlitSystem
         private const string CanvasMainMenuPlay7538 = "/Canvas/MainMenu/Play7538";
         private const string CanvasMainMenuExitd391 = "/Canvas/MainMenu/Exitd391";
         private const string CanvasMainMenu8959 = "/Canvas/MainMenu8959";
-        private const string CanvasGuessingGame5cab = "/Canvas/GuessingGame5cab";
+        private const string CanvasGuessingGame3733 = "/Canvas/GuessingGame3733";
         private const string CanvasGuessingGameFeedback68d7 = "/Canvas/GuessingGame/Feedback68d7";
         private const string CanvasGuessingGameInputFieldLegacy1207 = "/Canvas/GuessingGame/InputField (Legacy)1207";
         private const string CanvasGuessingGameHistoryScrollViewViewportContentListingTextLegacy2cc8 = "/Canvas/GuessingGame/History/Scroll View/Viewport/Content/Listing/Text (Legacy)1ca7";
@@ -75,7 +75,7 @@ namespace MoonlitSystem
                 var color = Color.white;
                 if (m_VisibleGameUI.ShowHasWon) color = Color.green;
 
-                ImmediateStyle.CanvasGroup(CanvasGuessingGame5cab);
+                ImmediateStyle.CanvasGroup(CanvasGuessingGame3733);
                 ImmediateStyle.SetColor(color);
                 ImmediateStyle.Text(CanvasGuessingGameFeedback68d7, m_VisibleGameUI.FeedbackText); // Has an animator on it... this is not a problem at all! :-)
                 ImmediateStyle.ClearColor();

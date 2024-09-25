@@ -329,7 +329,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ElementData:
     ID: /Canvas/GuessingGame/History/Scroll View/Viewport/Content/Listing/Text (Legacy)1ca7
-    MarkedForDisplay: 0
 --- !u!114 &56612383
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -592,7 +591,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ElementData:
     ID: /Canvas/GuessingGame/History/Scroll View/Viewport/Content/GameObject788f
-    MarkedForDisplay: 0
 --- !u!114 &217067380
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -686,7 +684,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ElementData:
     ID: /Canvas/GuessingGame/History/Scroll View/Viewport/Content/GameObject788f
-    MarkedForDisplay: 0
 --- !u!114 &264364361
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1006,7 +1003,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ElementData:
     ID: /Canvas/MainMenu/Play7538
-    MarkedForDisplay: 0
 --- !u!114 &455677327
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1033,7 +1029,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ElementData:
     ID: /Canvas/MainMenu/Play2d73
-    MarkedForDisplay: 0
 --- !u!1 &480401161
 GameObject:
   m_ObjectHideFlags: 0
@@ -1103,7 +1098,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ElementData:
     ID: /Canvas/GuessingGame/History/Scroll View/Viewport/Content/GameObject788f
-    MarkedForDisplay: 0
 --- !u!114 &480401165
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1223,7 +1217,7 @@ GameObject:
   - component: {fileID: 523610633}
   - component: {fileID: 523610632}
   m_Layer: 0
-  m_Name: InputField (Legacy)
+  m_Name: InputField
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1371,7 +1365,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ElementData:
     ID: /Canvas/GuessingGame/InputField (Legacy)1207
-    MarkedForDisplay: 0
 --- !u!114 &523610633
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1481,7 +1474,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ElementData:
     ID: /Canvas/GuessingGame/History/Scroll View/Viewport/Content/Listing/Text (Legacy)1ca7
-    MarkedForDisplay: 0
 --- !u!114 &595059443
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1799,7 +1791,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ElementData:
     ID: /Canvas/MainMenu/Exitd391
-    MarkedForDisplay: 0
 --- !u!114 &809971096
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2065,7 +2056,7 @@ GameObject:
   - component: {fileID: 977334667}
   - component: {fileID: 977334666}
   m_Layer: 0
-  m_Name: Text (Legacy) (1)
+  m_Name: Title
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2147,7 +2138,7 @@ GameObject:
   - component: {fileID: 993043719}
   - component: {fileID: 993043718}
   m_Layer: 0
-  m_Name: Image (1)
+  m_Name: Image
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2280,7 +2271,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ElementData:
     ID: /Canvas/GuessingGame/History/Scroll View/Viewport/Content/GameObject788f
-    MarkedForDisplay: 0
 --- !u!114 &1014369417
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2715,7 +2705,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ElementData:
     ID: /Canvas/GuessingGame/RestartButton637f
-    MarkedForDisplay: 0
 --- !u!114 &1577023848
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2942,7 +2931,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ElementData:
     ID: /Canvas/GuessingGame/Feedback68d7
-    MarkedForDisplay: 0
 --- !u!114 &1747988823
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3011,7 +2999,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ElementData:
     ID: /Canvas/GuessingGame/Feedbacke989
-    MarkedForDisplay: 0
 --- !u!95 &1747988827
 Animator:
   serializedVersion: 5
@@ -3167,7 +3154,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ElementData:
     ID: /Canvas/MainMenu8959
-    MarkedForDisplay: 0
 --- !u!114 &1867643751
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3343,7 +3329,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ElementData:
     ID: /Canvas/GuessingGame/History/Scroll View/Viewport/Content/Listing/Text (Legacy)1ca7
-    MarkedForDisplay: 0
 --- !u!114 &2002965597
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3469,7 +3454,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ElementData:
     ID: /Canvas/GuessingGame/ExitButtonf275
-    MarkedForDisplay: 0
 --- !u!114 &2045456601
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3802,7 +3786,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ElementData:
     ID: /Canvas/GuessingGame/History/Scroll View/Viewport/Content/Listing/Text (Legacy)1ca7
-    MarkedForDisplay: 0
 --- !u!114 &2088007287
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3931,8 +3914,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ElementData:
-    ID: /Canvas/GuessingGame5cab
-    MarkedForDisplay: 0
+    ID: /Canvas/GuessingGame3733
 --- !u!114 &2143695468
 MonoBehaviour:
   m_ObjectHideFlags: 0

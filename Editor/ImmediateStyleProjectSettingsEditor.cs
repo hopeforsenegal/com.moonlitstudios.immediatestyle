@@ -22,7 +22,7 @@ namespace Editor
 
         public override void OnGUI(string searchContext)
         {
-            EditorGUILayout.PropertyField(m_FollowCursorRetained, new GUIContent("Change ImmediateStyle Follow cursor default behaviour for DragAndDrop."));
+            EditorGUILayout.PropertyField(m_FollowCursorRetained, new GUIContent("Change ImmediateStyle Follow cursor default behaviour for DragDrop."));
 
             m_ProjectSettings.ApplyModifiedProperties();
         }

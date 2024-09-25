@@ -92,8 +92,9 @@ namespace Editor.Editors
         {
             if (GUILayout.Button("Copy ID")) return Choice.CopyID;
             if (GUILayout.Button("Regenerate ID")) return Choice.RegenerateRandomID;
-            if (GUILayout.Button("Game Object Name as ID")) return Choice.UseGameObjectNameID;
-            if (GUILayout.Button("Copy Element's Events")) return Choice.CopyCode;
+            if (GUILayout.Button("Use Game Object Name as ID")) return Choice.UseGameObjectNameID;
+            EditorGUILayout.Space();
+            if (GUILayout.Button("Clipboard Code Snippet")) return Choice.CopyCode;
             return default;
         }
     }
@@ -189,13 +190,14 @@ namespace Editor.Editors
             Choice choice = default;
             if (GUILayout.Button("Copy ID")) choice = Choice.CopyID;
             if (GUILayout.Button("Regenerate ID")) choice = Choice.RegenerateRandomID;
-            if (GUILayout.Button("Copy Element's Events")) choice = Choice.CopyCode;
+            EditorGUILayout.Space();
+            if (GUILayout.Button("Clipboard Code Snippet")) choice = Choice.CopyCode;
             GUILayout.Label("w/ Children");
             using (new HorizontalScope()) {
-                if (GUILayout.Button("Copy For-Loop")) choice = Choice.ForLoopTemplate;
-                if (GUILayout.Button("Copy Individual")) choice = Choice.ElementTemplate;
+                if (GUILayout.Button("Code For-Loop")) choice = Choice.ForLoopTemplate;
+                if (GUILayout.Button("Code Individual")) choice = Choice.ElementTemplate;
             }
-            if (GUILayout.Button("Generate File With Events")) choice = Choice.FileTemplate;
+            if (GUILayout.Button("Create Full Code File")) choice = Choice.FileTemplate;
 
             if (choice == Choice.CopyID) {
                 var statements = string.Empty;
@@ -275,6 +277,38 @@ namespace Editor.Editors
                     }
                     buildParams.Toggles = elementInfo.ToArray();
                 }
+                {
+                    var elements = element.GetComponentsInChildren<ElementSlider>();
+                    var elementInfo = new List<ImmediateUITemplate.ElementInfo>();
+                    foreach (var t in elements) {
+                        elementInfo.Add(new ImmediateUITemplate.ElementInfo { GameObject_Name = t.name, Element_ID = t.ElementData.ID });
+                    }
+                    buildParams.Sliders = elementInfo.ToArray();
+                }
+                {
+                    var elements = element.GetComponentsInChildren<ElementDragDrop>();
+                    var elementInfo = new List<ImmediateUITemplate.ElementInfo>();
+                    foreach (var t in elements) {
+                        elementInfo.Add(new ImmediateUITemplate.ElementInfo { GameObject_Name = t.name, Element_ID = t.ElementData.ID });
+                    }
+                    buildParams.DragDrops = elementInfo.ToArray();
+                }
+                {
+                    var elements = element.GetComponentsInChildren<ElementDropdown>();
+                    var elementInfo = new List<ImmediateUITemplate.ElementInfo>();
+                    foreach (var t in elements) {
+                        elementInfo.Add(new ImmediateUITemplate.ElementInfo { GameObject_Name = t.name, Element_ID = t.ElementData.ID });
+                    }
+                    buildParams.Dropdowns = elementInfo.ToArray();
+                }
+                {
+                    var elements = element.GetComponentsInChildren<ElementInputField>();
+                    var elementInfo = new List<ImmediateUITemplate.ElementInfo>();
+                    foreach (var t in elements) {
+                        elementInfo.Add(new ImmediateUITemplate.ElementInfo { GameObject_Name = t.name, Element_ID = t.ElementData.ID });
+                    }
+                    buildParams.InputFields = elementInfo.ToArray();
+                }
 
                 ImmediateUITemplate.Build(buildParams);
             } else if (choice == Choice.ElementTemplate) {
@@ -327,6 +361,38 @@ namespace Editor.Editors
                         elementInfo.Add(new ImmediateUITemplate.ElementInfo { GameObject_Name = t.name, Element_ID = t.ElementData.ID });
                     }
                     buildParams.Toggles = elementInfo.ToArray();
+                }
+                {
+                    var elements = element.GetComponentsInChildren<ElementSlider>();
+                    var elementInfo = new List<ImmediateUITemplate.ElementInfo>();
+                    foreach (var t in elements) {
+                        elementInfo.Add(new ImmediateUITemplate.ElementInfo { GameObject_Name = t.name, Element_ID = t.ElementData.ID });
+                    }
+                    buildParams.Sliders = elementInfo.ToArray();
+                }
+                {
+                    var elements = element.GetComponentsInChildren<ElementDragDrop>();
+                    var elementInfo = new List<ImmediateUITemplate.ElementInfo>();
+                    foreach (var t in elements) {
+                        elementInfo.Add(new ImmediateUITemplate.ElementInfo { GameObject_Name = t.name, Element_ID = t.ElementData.ID });
+                    }
+                    buildParams.DragDrops = elementInfo.ToArray();
+                }
+                {
+                    var elements = element.GetComponentsInChildren<ElementDropdown>();
+                    var elementInfo = new List<ImmediateUITemplate.ElementInfo>();
+                    foreach (var t in elements) {
+                        elementInfo.Add(new ImmediateUITemplate.ElementInfo { GameObject_Name = t.name, Element_ID = t.ElementData.ID });
+                    }
+                    buildParams.Dropdowns = elementInfo.ToArray();
+                }
+                {
+                    var elements = element.GetComponentsInChildren<ElementInputField>();
+                    var elementInfo = new List<ImmediateUITemplate.ElementInfo>();
+                    foreach (var t in elements) {
+                        elementInfo.Add(new ImmediateUITemplate.ElementInfo { GameObject_Name = t.name, Element_ID = t.ElementData.ID });
+                    }
+                    buildParams.InputFields = elementInfo.ToArray();
                 }
 
                 var code = ImmediateUITemplate.BuildString(buildParams, ImmediateUITemplate.Name.ElementsExtension);
@@ -382,6 +448,38 @@ namespace Editor.Editors
                         elementInfo.Add(new ImmediateUITemplate.ElementInfo { GameObject_Name = t.name, Element_ID = t.ElementData.ID });
                     }
                     buildParams.Toggles = elementInfo.ToArray();
+                }
+                {
+                    var elements = element.GetComponentsInChildren<ElementSlider>();
+                    var elementInfo = new List<ImmediateUITemplate.ElementInfo>();
+                    foreach (var t in elements) {
+                        elementInfo.Add(new ImmediateUITemplate.ElementInfo { GameObject_Name = t.name, Element_ID = t.ElementData.ID });
+                    }
+                    buildParams.Sliders = elementInfo.ToArray();
+                }
+                {
+                    var elements = element.GetComponentsInChildren<ElementDragDrop>();
+                    var elementInfo = new List<ImmediateUITemplate.ElementInfo>();
+                    foreach (var t in elements) {
+                        elementInfo.Add(new ImmediateUITemplate.ElementInfo { GameObject_Name = t.name, Element_ID = t.ElementData.ID });
+                    }
+                    buildParams.DragDrops = elementInfo.ToArray();
+                }
+                {
+                    var elements = element.GetComponentsInChildren<ElementDropdown>();
+                    var elementInfo = new List<ImmediateUITemplate.ElementInfo>();
+                    foreach (var t in elements) {
+                        elementInfo.Add(new ImmediateUITemplate.ElementInfo { GameObject_Name = t.name, Element_ID = t.ElementData.ID });
+                    }
+                    buildParams.Dropdowns = elementInfo.ToArray();
+                }
+                {
+                    var elements = element.GetComponentsInChildren<ElementInputField>();
+                    var elementInfo = new List<ImmediateUITemplate.ElementInfo>();
+                    foreach (var t in elements) {
+                        elementInfo.Add(new ImmediateUITemplate.ElementInfo { GameObject_Name = t.name, Element_ID = t.ElementData.ID });
+                    }
+                    buildParams.InputFields = elementInfo.ToArray();
                 }
 
                 var code = ImmediateUITemplate.BuildString(buildParams, ImmediateUITemplate.Name.ElementsExtension);
