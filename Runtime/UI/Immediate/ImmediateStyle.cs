@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -63,15 +64,21 @@ namespace MoonlitSystem.UI.Immediate
             }
         }
 
-        public static void CanvasGroup(string id, out CanvasGroup canvasGroup)
+        // Because the immediate style nature updates several fields in LateUpdate
+        // we need to give you a way to overwrite that default behaviour easily if you want
+        //
+        // To be clear we need this if you want to diverge behavior
+        // from our typical 'autoupdate' of
+        // the fields (alpha|blocksRaycasts|interactable) on
+        // the Canvas Group (which normally happens in LateUpdate)
+        public delegate void UpdateCanvasGroupVisibilityFields(CanvasGroup canvasGroup);
+        public static void CanvasGroup(string id, UpdateCanvasGroupVisibilityFields updateCanvasGroupInLateUpdate)
         {
             var hasElement = Instance.m_InteractCanvasGroups.TryGetValue(id, out var element);
             Debug.Assert(hasElement, $"{id} is not a mapped canvas group. Did start get called? Does it need a root id?");
-            canvasGroup = null;
             if (hasElement) {
                 element.ElementData.MarkedForDisplay = true;
-                element.ElementData.SpecialSauce = true;
-                canvasGroup = element.CanvasGroup;
+                element.ElementData.UpdateCGInLateUpdate = updateCanvasGroupInLateUpdate;
             }
         }
 
@@ -400,16 +407,11 @@ namespace MoonlitSystem.UI.Immediate
             foreach (var entry in m_InteractCanvasGroups) {
                 var behavior = entry.Value.CanvasGroup;
                 var isOn = entry.Value.ElementData.MarkedForDisplay;
-                if (entry.Value.ElementData.MarkedForDisplay) {
-                    behavior.blocksRaycasts = isOn;
-                    behavior.interactable = isOn;
-                    if (!entry.Value.ElementData.SpecialSauce) {
-                        behavior.alpha = isOn ? 1f : 0f;
-                    }
-                } else {
-                    behavior.alpha = isOn ? 1f : 0f;
-                    behavior.blocksRaycasts = isOn;
-                    behavior.interactable = isOn;
+                behavior.blocksRaycasts = isOn;
+                behavior.interactable = isOn;
+                behavior.alpha = isOn ? 1f : 0f;
+                if (isOn) {
+                    entry.Value.ElementData.UpdateCGInLateUpdate?.Invoke(behavior);
                 }
 
                 entry.Value.ElementData.MarkedForDisplay = false;
@@ -454,7 +456,7 @@ namespace MoonlitSystem.UI.Immediate
                 var behavior = entry.Value.UIBehaviour;
                 if (entry.Value.ElementData.MarkedForDisplay != behavior.enabled) {
                     behavior.enabled = entry.Value.ElementData.MarkedForDisplay;
-                    behavior.interactable = entry.Value.ElementData.MarkedForDisplay; 
+                    behavior.interactable = entry.Value.ElementData.MarkedForDisplay;
                 }
 
                 entry.Value.ElementData.MarkedForDisplay = false;

@@ -12,6 +12,8 @@ namespace MoonlitSystem
 {
     public class GuessingGame : MonoBehaviour
     {
+        private const string CanvasGuessingGameRestartButton637f = "/Canvas/GuessingGame/RestartButton637f";
+        private const string CanvasGuessingGameExitButtonf275 = "/Canvas/GuessingGame/ExitButtonf275";
         private const string CanvasMainMenuPlay7538 = "/Canvas/MainMenu/Play7538";
         private const string CanvasMainMenuExitd391 = "/Canvas/MainMenu/Exitd391";
         private const string CanvasMainMenu8959 = "/Canvas/MainMenu8959";
@@ -24,7 +26,12 @@ namespace MoonlitSystem
         private const string CanvasMainMenuPlay2d73 = "/Canvas/MainMenu/Play2d73";
 
         public enum MainMenuEvent { Play = 1, Exit }
-        public struct GameEvent { public int? Guess; }
+        public struct GameEvent
+        {
+            public int? Guess;
+            public bool Exit;
+            internal bool Restart;
+        }
         public struct GameVisible
         {
             public bool IsShow;
@@ -41,8 +48,6 @@ namespace MoonlitSystem
         protected void Awake()
         {
             m_FeedbackTextAnimator = Reference.Find<Animator>(this, CanvasGuessingGameFeedbacke989);
-            m_GeneratedGuess = Random.Range(1, 10);
-            m_FeedbackTextAnimator.enabled = false;
             // We show a little bit of callback functionality to demonstrate that its possible to mix styles
             Reference.Find<Button>(this, CanvasMainMenuPlay2d73).onClick.AddListener(call: () => { Debug.Log("I am from a callback! You can mix styles to avoid changing everything at once!"); });
         }
@@ -52,30 +57,38 @@ namespace MoonlitSystem
             MainMenuEvent mainMenu = default;
             GameEvent gameEvent = default;
 
-            // Render and stylize UI here
-            ImmediateStyle.CanvasGroup(CanvasMainMenu8959);
+            /* Render and stylize UI here */
+            ImmediateStyle.CanvasGroup(CanvasMainMenu8959, (lateUpdateMainMenuCanvasGroup) => // In this case we always show out canvas group.. but change the fields on the component conditionally
+            {
+                lateUpdateMainMenuCanvasGroup.interactable = !m_VisibleGameUI.IsShow;
+                lateUpdateMainMenuCanvasGroup.blocksRaycasts = !m_VisibleGameUI.IsShow;
+                lateUpdateMainMenuCanvasGroup.alpha = 1;
+                if (m_VisibleGameUI.IsShow) {
+                    lateUpdateMainMenuCanvasGroup.alpha = Mathf.Lerp(1, 0, (Time.time - m_VisibleGameUI.FadeStartTime) * 3); // Lets fade the game screen (and lets do it with a manual lerp)
+                }
+            });
 
-            mainMenu = ImmediateStyle.Button(CanvasMainMenuPlay7538).IsMouseDown ? MainMenuEvent.Play : mainMenu;
-            mainMenu = ImmediateStyle.Button(CanvasMainMenuExitd391).IsMouseDown ? MainMenuEvent.Exit : mainMenu;
-
-            if (m_VisibleGameUI.IsShow) {
+            if (!m_VisibleGameUI.IsShow) {
+                mainMenu = ImmediateStyle.Button(CanvasMainMenuPlay7538).IsMouseDown ? MainMenuEvent.Play : mainMenu;
+                mainMenu = ImmediateStyle.Button(CanvasMainMenuExitd391).IsMouseDown || Input.GetKeyDown(KeyCode.Escape) ? MainMenuEvent.Exit : mainMenu; // We can check button presses from keyboard and UI on the same line
+            } else {
                 var color = Color.white;
                 if (m_VisibleGameUI.ShowHasWon) color = Color.green;
 
-                ImmediateStyle.CanvasGroup(CanvasGuessingGame5cab, out var gameCanvasGroup);
+                ImmediateStyle.CanvasGroup(CanvasGuessingGame5cab);
                 ImmediateStyle.SetColor(color);
                 ImmediateStyle.Text(CanvasGuessingGameFeedback68d7, m_VisibleGameUI.FeedbackText); // Has an animator on it... this is not a problem at all! :-)
                 ImmediateStyle.ClearColor();
 
-                gameCanvasGroup.alpha = Mathf.Lerp(0, 1, (Time.time - m_VisibleGameUI.FadeStartTime) * 3); // Lets fade the game screen (and lets do it with a manual lerp)
-
+                gameEvent.Restart = ImmediateStyle.Button(CanvasGuessingGameRestartButton637f).IsMouseDown || Input.GetKeyDown(KeyCode.R); // We can check button presses from keyboard and UI on the same line
+                gameEvent.Exit = ImmediateStyle.Button(CanvasGuessingGameExitButtonf275).IsMouseDown || Input.GetKeyDown(KeyCode.Escape);  // We can check button presses from keyboard and UI on the same line
                 if (!m_VisibleGameUI.ShowHasWon) {
                     if (ImmediateStyle.InputField(CanvasGuessingGameInputFieldLegacy1207, new[] { KeyCode.Return, KeyCode.KeypadEnter }, ref m_VisibleGameUI.InputFieldText).HasSubmitted && int.TryParse(m_VisibleGameUI.InputFieldText, out var guessInt)) {
                         gameEvent.Guess = guessInt;
                     }
                 }
 
-                // We can handle things that are represent a listing of elements with a ElementRootMapping
+                // We can handle things that are represent a listing of elements with a 'ElementRootMapping'
                 for (var i = 0; i < 4 && i < m_PreviousGuesses.Count; i++) {
                     var r = m_PreviousGuesses.Count - i - 1;
                     ImmediateStyle.CanvasGroup(i + CanvasGuessingGameHistoryScrollViewViewportContentListing621f);
@@ -84,9 +97,9 @@ namespace MoonlitSystem
             }
 
 
-            // Handle User feedback here
+            /* Handle User events here */
             if (mainMenu != default) {
-                Debug.Log("We clicked one of the two buttons!");
+                Debug.Log("We clicked one of the two buttons or hit 'Escape'!");
                 if (mainMenu == MainMenuEvent.Play) {
                     m_VisibleGameUI = new GameVisible { IsShow = true, FadeStartTime = Time.time };
                 }
@@ -94,9 +107,20 @@ namespace MoonlitSystem
 #if UNITY_EDITOR
                     EditorApplication.isPlaying = false;
 #else
-                Application.Quit();
+                    Application.Quit();
 #endif
                 }
+            }
+
+            if (gameEvent.Restart || mainMenu == MainMenuEvent.Play) { // Combined logic on starting a new game (Play has some of its own logic above ^)
+                m_PreviousGuesses.Clear();
+                m_GeneratedGuess = Random.Range(1, 10);
+                m_FeedbackTextAnimator.Rebind();
+                m_FeedbackTextAnimator.Update(0);
+                m_FeedbackTextAnimator.enabled = false;
+                m_VisibleGameUI.FeedbackText = string.Empty;
+                m_VisibleGameUI.InputFieldText = string.Empty;
+                m_VisibleGameUI.ShowHasWon = false;
             }
 
             if (gameEvent.Guess.HasValue) {
@@ -111,6 +135,9 @@ namespace MoonlitSystem
                     m_VisibleGameUI.ShowHasWon = true;
                     m_FeedbackTextAnimator.enabled = true;  // Add some juicy pulses so the user knows they won!
                 }
+            }
+            if (gameEvent.Exit) {
+                m_VisibleGameUI.IsShow = false;
             }
         }
     }
