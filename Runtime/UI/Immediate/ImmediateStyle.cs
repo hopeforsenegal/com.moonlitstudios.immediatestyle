@@ -23,9 +23,10 @@ namespace MoonlitSystem.UI.Immediate
                 }
                 return new ButtonData
                 {
-                    IsMouseDown = element.IsClicked,
-                    IsMousePressed = element.IsPressed,
+                    IsMouseDown = element.IsMouseDown,
+                    IsMousePressed = element.IsMousePressed,
                     IsMouseHovering = element.IsHovering || element.IsSelect,
+                    IsMouseUp = element.IsMouseUp,
                 };
             }
             return default;
@@ -47,9 +48,10 @@ namespace MoonlitSystem.UI.Immediate
                 }
                 return new ButtonData
                 {
-                    IsMouseDown = element.IsClicked,
-                    IsMousePressed = element.IsPressed,
+                    IsMouseDown = element.IsMouseDown,
+                    IsMousePressed = element.IsMousePressed,
                     IsMouseHovering = element.IsHovering || element.IsSelect,
+                    IsMouseUp = element.IsMouseUp,
                 };
             }
             return default;
@@ -294,6 +296,7 @@ namespace MoonlitSystem.UI.Immediate
             public bool IsMouseHovering { get; internal set; }
             public bool IsMouseDown { get; internal set; }
             public bool IsMousePressed { get; internal set; }
+            public bool IsMouseUp { get; internal set; }
         }
 
         public struct ToggleData
@@ -402,7 +405,8 @@ namespace MoonlitSystem.UI.Immediate
                 }
 
                 entry.Value.ElementData.MarkedForDisplay = false;
-                entry.Value.IsClicked = false;
+                entry.Value.IsMouseDown = false;
+                entry.Value.IsMouseUp = false;
             }
             foreach (var entry in m_InteractCanvasGroups) {
                 var behavior = entry.Value.CanvasGroup;

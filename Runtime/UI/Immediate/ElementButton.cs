@@ -7,11 +7,22 @@ namespace MoonlitSystem.UI.Immediate
     [DisallowMultipleComponent]
     public class ElementButton : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IPointerEnterHandler, IPointerExitHandler, ISubmitHandler, ISelectHandler, IDeselectHandler
     {
-        public ElementData ElementData = new ElementData();
-        public bool IsClicked { get; internal set; }
+        public ElementData ElementData = new ElementData(); // NOTE: The 'readonly' modifier makes things unserializable
+
+        // onClick fires on OnPointerClick.
+        // However for ImmediateStyle and responsive GUIs we operate on OnPointerDown
+        // https://x.com/ID_AA_Carmack/status/1787850053912064005  
+        //
+        // Therefore  IsMouseDown is true on OnPointerDown and NOT OnPointerClick... 
+        // Conversely IsMouseUp   is true on OnPointerUp, OnPointerClick, AND OnPointerExit (only when IsPressed is true)
+        //
+        // In anycase the most important thing here is that we don't force you to just be IsMouseDown (like we suggest).
+        // You have the choice to do things the way Unity already does it if you want with IsMouseUp.
+        public bool IsMouseDown { get; internal set; }
+        public bool IsMousePressed { get; private set; }
+        public bool IsMouseUp { get; internal set; }
         public bool IsHovering { get; private set; }
         public bool IsSelect { get; private set; }
-        public bool IsPressed { get; private set; }
 
         public Button Button { get; private set; }
         public Image Image { get; private set; } // Can only have one graphic
@@ -26,8 +37,7 @@ namespace MoonlitSystem.UI.Immediate
 
         protected void OnValidate()
         {
-            var behaviour = GetComponent<Button>();
-            Debug.Assert(behaviour != null, $"{nameof(behaviour)} was not set", this);
+            Debug.Assert(GetComponent<Button>() != null, "UIBehaviour was not set", this);
         }
 
         protected void Start()
@@ -42,13 +52,14 @@ namespace MoonlitSystem.UI.Immediate
 
         public void OnPointerDown(PointerEventData eventData)
         {
-            IsClicked = eventData.button == PointerEventData.InputButton.Left;
-            IsPressed = eventData.button == PointerEventData.InputButton.Left;
+            IsMouseDown = eventData.button == PointerEventData.InputButton.Left;
+            IsMousePressed = eventData.button == PointerEventData.InputButton.Left;
         }
 
         public void OnPointerUp(PointerEventData eventData)
         {
-            IsPressed = false;
+            IsMousePressed = false;
+            IsMouseUp = true;
         }
 
         public void OnPointerEnter(PointerEventData eventData)
@@ -58,13 +69,16 @@ namespace MoonlitSystem.UI.Immediate
 
         public void OnPointerExit(PointerEventData eventData)
         {
+            if (IsMousePressed) {
+                IsMouseUp = true;
+            }
             IsHovering = false;
-            IsPressed = false;
+            IsMousePressed = false;
         }
 
         public void OnSubmit(BaseEventData eventData)
         {
-            IsClicked = true;
+            IsMouseDown = true;
         }
 
         public void OnSelect(BaseEventData eventData)

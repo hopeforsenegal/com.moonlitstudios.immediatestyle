@@ -49,7 +49,11 @@ namespace MoonlitSystem
         {
             m_FeedbackTextAnimator = Reference.Find<Animator>(this, CanvasGuessingGameFeedbacke989);
             // We show a little bit of callback functionality to demonstrate that its possible to mix styles
-            Reference.Find<Button>(this, CanvasMainMenuPlay2d73).onClick.AddListener(call: () => { Debug.Log("I am from a callback! You can mix styles to avoid changing everything at once!"); });
+            Reference.Find<Button>(this, CanvasMainMenuPlay2d73).onClick.AddListener(() =>
+            {
+                // NOTE: onClick fires on OnPointerClick. See ElementButton.cs for details
+                Debug.Log("I am from an 'onClick' callback! You can mix styles to avoid changing everything at once!");
+            });
         }
 
         protected void Update()
@@ -60,16 +64,16 @@ namespace MoonlitSystem
             /* Render and stylize UI here */
             ImmediateStyle.CanvasGroup(CanvasMainMenu8959, (lateUpdateMainMenuCanvasGroup) => // In this case we always show out canvas group.. but change the fields on the component conditionally
             {
+                var alpha = 1f;
+                if (m_VisibleGameUI.IsShow) alpha = Mathf.Lerp(1, 0, (Time.time - m_VisibleGameUI.FadeStartTime) * 3); // Lets fade the game screen (and lets do it with a manual lerp)
+
                 lateUpdateMainMenuCanvasGroup.interactable = !m_VisibleGameUI.IsShow;
                 lateUpdateMainMenuCanvasGroup.blocksRaycasts = !m_VisibleGameUI.IsShow;
-                lateUpdateMainMenuCanvasGroup.alpha = 1;
-                if (m_VisibleGameUI.IsShow) {
-                    lateUpdateMainMenuCanvasGroup.alpha = Mathf.Lerp(1, 0, (Time.time - m_VisibleGameUI.FadeStartTime) * 3); // Lets fade the game screen (and lets do it with a manual lerp)
-                }
+                lateUpdateMainMenuCanvasGroup.alpha = alpha;
             });
 
             if (!m_VisibleGameUI.IsShow) {
-                mainMenu = ImmediateStyle.Button(CanvasMainMenuPlay7538).IsMouseDown ? MainMenuEvent.Play : mainMenu;
+                mainMenu = ImmediateStyle.Button(CanvasMainMenuPlay7538).IsMouseUp/*<-- see comment*/ ? MainMenuEvent.Play : mainMenu; // NOTE: See ElementButton.cs for details as we suggest actually using IsMouseDown instead of IsMouseUp.
                 mainMenu = ImmediateStyle.Button(CanvasMainMenuExitd391).IsMouseDown || Input.GetKeyDown(KeyCode.Escape) ? MainMenuEvent.Exit : mainMenu; // We can check button presses from keyboard and UI on the same line
             } else {
                 var color = Color.white;
@@ -99,7 +103,7 @@ namespace MoonlitSystem
 
             /* Handle User events here */
             if (mainMenu != default) {
-                Debug.Log("We clicked one of the two buttons or hit 'Escape'!");
+                Debug.Log("We clicked one of the two main menu buttons or hit 'Escape'!");
                 if (mainMenu == MainMenuEvent.Play) {
                     m_VisibleGameUI = new GameVisible { IsShow = true, FadeStartTime = Time.time };
                 }
