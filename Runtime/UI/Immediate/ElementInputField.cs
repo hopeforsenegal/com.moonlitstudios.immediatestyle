@@ -9,7 +9,7 @@ namespace MoonlitSystem.UI.Immediate
     {
         public Image Image { get; private set; }
         public InputField UIBehaviour { get; private set; }
-        private ElementRootMapping ElementRootMapping { get; set; }
+        private RootMapping RootMapping { get; set; }
 
         public ElementData ElementData = new ElementData();
         internal bool WasFocused;
@@ -21,7 +21,7 @@ namespace MoonlitSystem.UI.Immediate
         {
             Image = GetComponent<Image>();
             UIBehaviour = GetComponent<InputField>();
-            ElementRootMapping = ElementRootMapping.GetFirstParentOrAssert(this);
+            RootMapping = RootMapping.GetFirstParentOrAssert(this);
         }
 
         protected void OnValidate()
@@ -32,12 +32,12 @@ namespace MoonlitSystem.UI.Immediate
 
         protected void Start()
         {
-            ImmediateStyle.Register(this, ElementRootMapping);
+            ImmediateStyle.Register(this, RootMapping);
         }
 
         protected void OnDestroy()
         {
-            ImmediateStyle.Unregister(this, ElementRootMapping);
+            ImmediateStyle.Unregister(this, RootMapping);
         }
 
         public void OnSubmit(BaseEventData eventData)

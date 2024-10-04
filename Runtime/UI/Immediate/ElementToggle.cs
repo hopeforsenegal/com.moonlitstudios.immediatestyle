@@ -8,7 +8,7 @@ namespace MoonlitSystem.UI.Immediate
     public class ElementToggle : MonoBehaviour, IPointerDownHandler, ISubmitHandler
     {
         public Toggle UIBehaviour { get; private set; }
-        private ElementRootMapping ElementRootMapping { get; set; }
+        private RootMapping RootMapping { get; set; }
 
         public ElementData ElementData = new ElementData();
         public bool IsClicked { get; internal set; }
@@ -16,7 +16,7 @@ namespace MoonlitSystem.UI.Immediate
         protected void Awake()
         {
             UIBehaviour = GetComponent<Toggle>();
-            ElementRootMapping = ElementRootMapping.GetFirstParentOrAssert(this);
+            RootMapping = RootMapping.GetFirstParentOrAssert(this);
         }
 
         protected void OnValidate()
@@ -27,12 +27,12 @@ namespace MoonlitSystem.UI.Immediate
 
         protected void Start()
         {
-            ImmediateStyle.Register(this, ElementRootMapping);
+            ImmediateStyle.Register(this, RootMapping);
         }
 
         protected void OnDestroy()
         {
-            ImmediateStyle.Unregister(this, ElementRootMapping);
+            ImmediateStyle.Unregister(this, RootMapping);
         }
 
         public void OnPointerDown(PointerEventData eventData)

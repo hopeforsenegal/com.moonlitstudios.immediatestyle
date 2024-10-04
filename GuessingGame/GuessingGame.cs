@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 // A simple guessing game complete with animations & fading (One with Animator and the other with Math.Lerp)
 // + we show a little bit of callback functionality to demonstrate that its possible to mix styles
-// And of course we show off Reference and ElementRootMapping (useful for a listing of the same type of thing)
+// And of course we show off Reference and RootMapping (useful for a listing of the same type of thing)
 
 namespace MoonlitSystem
 {
@@ -92,7 +92,8 @@ namespace MoonlitSystem
                     }
                 }
 
-                // We can handle things that are represent a listing of elements with a 'ElementRootMapping'
+                // We can handle things that are represent a listing of elements with a 'RootMapping' component.
+                // It Basically allows you to reuse Prefabs or reuse GameObject Hiearchies
                 for (var i = 0; i < 4 && i < m_PreviousGuesses.Count; i++) {
                     var r = m_PreviousGuesses.Count - i - 1;
                     ImmediateStyle.CanvasGroup(i + CanvasGuessingGameHistoryScrollViewViewportContentListing621f);

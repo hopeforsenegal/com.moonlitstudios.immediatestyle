@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
@@ -140,7 +140,7 @@ if(component.IsDragging) ImmediateStyle.FollowCursor(component.transform);
 
         public struct BuildParams
         {
-            public string ElementRootMapping_ID;
+            public string RootMapping_ID;
             public ElementInfo RootCanvasGroup;
             public ElementInfo[] Buttons;
             public ElementInfo[] Toggles;
@@ -228,8 +228,8 @@ if(component.IsDragging) ImmediateStyle.FollowCursor(component.transform);
             }
 
             var extraConstant = "";
-            if (!string.IsNullOrWhiteSpace(build.ElementRootMapping_ID)) {
-                var elementRootMappingID = build.ElementRootMapping_ID;
+            if (!string.IsNullOrWhiteSpace(build.RootMapping_ID)) {
+                var elementRootMappingID = build.RootMapping_ID;
                 while (elementRootMappingID.Length > 0 && char.IsDigit(elementRootMappingID[elementRootMappingID.Length - 1])) {
                     elementRootMappingID = elementRootMappingID.Remove(elementRootMappingID.Length - 1);
                 }

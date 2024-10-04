@@ -17,8 +17,7 @@ namespace MoonlitSystem.UI.Immediate
         {
             var reference = references.FirstOrDefault(predicate: prospect =>
             {
-                // Cross boundary feature that might be slow but should be fine for now
-                var rootMapping = prospect.GetComponentInParent<ElementRootMapping>();
+                var rootMapping = prospect.GetComponentInParent<RootMapping>();
                 if (rootMapping != null) return (rootMapping.ID + prospect.ElementData.ID) == id;
                 else return prospect.ElementData.ID == id;
             });

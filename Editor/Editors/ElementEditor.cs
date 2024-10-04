@@ -238,7 +238,7 @@ namespace Editor.Editors
                 ImmediateUITemplate.BuildParams buildParams = default;
                 buildParams.RootCanvasGroup.GameObject_Name = element.name;
                 buildParams.RootCanvasGroup.Element_ID = element.ElementData.ID;
-                buildParams.ElementRootMapping_ID = element.GetComponent<ElementRootMapping>() != null ? element.GetComponent<ElementRootMapping>().ID : string.Empty;
+                buildParams.RootMapping_ID = element.GetComponent<RootMapping>() != null ? element.GetComponent<RootMapping>().ID : string.Empty;
                 {
                     var elements = element.GetComponentsInChildren<ElementText>();
                     var elementInfo = new List<ImmediateUITemplate.ElementInfo>();
@@ -323,7 +323,7 @@ namespace Editor.Editors
                 ImmediateUITemplate.BuildParams buildParams = default;
                 buildParams.RootCanvasGroup.GameObject_Name = element.name;
                 buildParams.RootCanvasGroup.Element_ID = element.ElementData.ID;
-                buildParams.ElementRootMapping_ID = element.GetComponent<ElementRootMapping>() != null ? element.GetComponent<ElementRootMapping>().ID : string.Empty;
+                buildParams.RootMapping_ID = element.GetComponent<RootMapping>() != null ? element.GetComponent<RootMapping>().ID : string.Empty;
                 {
                     var elements = element.GetComponentsInChildren<ElementText>();
                     var elementInfo = new List<ImmediateUITemplate.ElementInfo>();
@@ -409,7 +409,7 @@ namespace Editor.Editors
                 ImmediateUITemplate.BuildParams buildParams;
                 buildParams.RootCanvasGroup.GameObject_Name = element.name;
                 buildParams.RootCanvasGroup.Element_ID = element.ElementData.ID;
-                buildParams.ElementRootMapping_ID = element.GetComponent<ElementRootMapping>() != null ? element.GetComponent<ElementRootMapping>().ID : string.Empty;
+                buildParams.RootMapping_ID = element.GetComponent<RootMapping>() != null ? element.GetComponent<RootMapping>().ID : string.Empty;
                 buildParams.ForLoop = true;
                 {
                     var elements = element.GetComponentsInChildren<ElementText>();
@@ -896,9 +896,9 @@ namespace Editor.Editors
         }
     }
 
-    [CustomEditor(typeof(ElementRootMapping), true)]
+    [CustomEditor(typeof(RootMapping), true)]
     [CanEditMultipleObjects]
-    public class ElementRootMappingEditor : UnityEditor.Editor
+    public class RootMappingEditor : UnityEditor.Editor
     {
         private string prefix_go;
         private string prefix_si;
@@ -908,7 +908,7 @@ namespace Editor.Editors
             base.OnInspectorGUI();
             if (GUILayout.Button("Use Random for ID")) {
                 foreach (var t in targets) {
-                    var element = (ElementRootMapping)t;
+                    var element = (RootMapping)t;
                     element.Reset();
                     EditorUtility.SetDirty(element);
                 }
@@ -920,7 +920,7 @@ namespace Editor.Editors
 
                 if (GUILayout.Button("Use GameObject Name for ID")) {
                     foreach (var t in targets) {
-                        var element = (ElementRootMapping)t;
+                        var element = (RootMapping)t;
                         element.ID = $"{prefix_go}{t.name}";
                         EditorUtility.SetDirty(element);
                     }
@@ -934,7 +934,7 @@ namespace Editor.Editors
 
                 if (GUILayout.Button("Use Sibling Index for ID")) {
                     foreach (var t in targets) {
-                        var element = (ElementRootMapping)t;
+                        var element = (RootMapping)t;
                         element.ID = $"{prefix_si}{element.transform.GetSiblingIndex()}";
                         EditorUtility.SetDirty(element);
                     }

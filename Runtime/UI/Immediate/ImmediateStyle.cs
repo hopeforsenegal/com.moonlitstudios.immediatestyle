@@ -368,12 +368,12 @@ namespace MoonlitSystem.UI.Immediate
 
         protected void OnValidate()
         {
-            var allRoots = FindObjectsOfType<ElementRootMapping>();
+            var allRoots = FindObjectsOfType<RootMapping>();
             var uniqueIds = new HashSet<string>();
             // if we have an exception then one of our roots have the same name
             foreach (var item in allRoots) {
                 if (uniqueIds.Contains(item.ID)) {
-                    Debug.LogError($"You have a {nameof(ElementRootMapping)} with the same ID '{item.ID}'. Ignore if you have not made each Prefab or clone unique yet.");
+                    Debug.LogError($"You have a {nameof(RootMapping)} with the same ID '{item.ID}'. Ignore if you have not made each Prefab or clone unique yet.");
                     return;
                 }
                 uniqueIds.Add(item.ID);
@@ -488,7 +488,7 @@ namespace MoonlitSystem.UI.Immediate
             }
         }
 
-        internal static void Register<T>(T element, ElementRootMapping elementRootMapping) where T : MonoBehaviour
+        internal static void Register<T>(T element, RootMapping elementRootMapping) where T : MonoBehaviour
         {
             Debug.Assert(Instance, $"No GameObject with {nameof(ImmediateStyle)} Singleton Component is within the scene!");
             if (elementRootMapping == null) {
@@ -506,7 +506,7 @@ namespace MoonlitSystem.UI.Immediate
             }
         }
 
-        internal static void Unregister<T>(T element, ElementRootMapping elementRootMapping) where T : MonoBehaviour
+        internal static void Unregister<T>(T element, RootMapping elementRootMapping) where T : MonoBehaviour
         {
             if (Instance != null) {
                 if (elementRootMapping == null) {

@@ -6,7 +6,7 @@ namespace MoonlitSystem.UI.Immediate
     public class ElementDragDrop : MonoBehaviour
     {
         public DragDrop UIBehaviour { get; private set; }
-        private ElementRootMapping ElementRootMapping { get; set; }
+        private RootMapping RootMapping { get; set; }
 
         public ElementData ElementData = new ElementData();
 
@@ -14,7 +14,7 @@ namespace MoonlitSystem.UI.Immediate
         {
             UIBehaviour = GetComponent<DragDrop>();
             Debug.Assert(UIBehaviour != null, $"{nameof(UIBehaviour)} was not set", this);
-            ElementRootMapping = ElementRootMapping.GetFirstParentOrAssert(this);
+            RootMapping = RootMapping.GetFirstParentOrAssert(this);
         }
 
         protected void OnValidate()
@@ -25,12 +25,12 @@ namespace MoonlitSystem.UI.Immediate
 
         protected void Start()
         {
-            ImmediateStyle.Register(this, ElementRootMapping);
+            ImmediateStyle.Register(this, RootMapping);
         }
 
         protected void OnDestroy()
         {
-            ImmediateStyle.Unregister(this, ElementRootMapping);
+            ImmediateStyle.Unregister(this, RootMapping);
         }
     }
 }

@@ -6,14 +6,14 @@ namespace MoonlitSystem.UI.Immediate
     public class ElementCanvasGroup : MonoBehaviour
     {
         public CanvasGroup CanvasGroup { get; private set; }
-        private ElementRootMapping ElementRootMapping { get; set; }
+        private RootMapping RootMapping { get; set; }
 
         public ElementData ElementData = new ElementData();
 
         protected void Awake()
         {
             CanvasGroup = GetComponent<CanvasGroup>();
-            ElementRootMapping = ElementRootMapping.GetFirstParentOrAssert(this);
+            RootMapping = RootMapping.GetFirstParentOrAssert(this);
         }
 
         protected void OnValidate()
@@ -24,12 +24,12 @@ namespace MoonlitSystem.UI.Immediate
 
         protected void Start()
         {
-            ImmediateStyle.Register(this, ElementRootMapping);
+            ImmediateStyle.Register(this, RootMapping);
         }
 
         protected void OnDestroy()
         {
-            ImmediateStyle.Unregister(this, ElementRootMapping);
+            ImmediateStyle.Unregister(this, RootMapping);
         }
     }
 }
