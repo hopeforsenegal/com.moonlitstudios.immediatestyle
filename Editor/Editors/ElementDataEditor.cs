@@ -72,9 +72,10 @@ namespace Editor.Editors
                 var s = new GUIStyle(EditorStyles.boldLabel);
                 if (string.IsNullOrWhiteSpace(value)) s.normal.textColor = Color.red;
 
+                s.fixedWidth = 40;
                 GUILayout.Label("[GUID]", s);
                 EditorGUI.BeginDisabledGroup(true);
-                GUILayout.TextField(value, GUI.skin.textField, GUILayout.Width(200));
+                GUILayout.TextField(value, GUI.skin.textField);
                 EditorGUI.EndDisabledGroup();
             }
             EditorGUILayout.Space();
