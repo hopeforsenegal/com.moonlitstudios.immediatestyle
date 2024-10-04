@@ -21,7 +21,7 @@ namespace MoonlitSystem.UI.Immediate
                 if (rootMapping != null) return (rootMapping.ID + prospect.ElementData.ID) == id;
                 else return prospect.ElementData.ID == id;
             });
-            Debug.Assert(reference != null, $"Unable to find a reference. '{id}'", context);
+            Debug.Assert(reference != null, $"Unable to find a reference to '{id}'. Does the caller need a root id?", context);
             return reference.GetComponent<T>();
         }
 
