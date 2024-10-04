@@ -950,7 +950,8 @@ namespace Editor.Editors
     {
         public override void OnInspectorGUI()
         {
-            base.OnInspectorGUI();
+            ElementDataEditor.Render(targets);
+
             var choice = RenderButtons();
             if (choice == Choice.CopyID) {
                 var statements = string.Empty;

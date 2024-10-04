@@ -11,6 +11,9 @@ namespace Editor.Editors
         {
             var ids = new List<string>();
             foreach (var t in targets) {
+                if (t is Reference r) {
+                    ids.Add(r.ElementData.ID);
+                }
                 if (t is ElementButton eb) {
                     ids.Add(eb.ElementData.ID);
                 }
