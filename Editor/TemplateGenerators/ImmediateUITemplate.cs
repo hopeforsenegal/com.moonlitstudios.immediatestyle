@@ -386,7 +386,7 @@ if(component.IsDragging) ImmediateStyle.FollowCursor(component.transform);
             var code = BuildString(build, Name.ScreenExtension);
 
             File.WriteAllText(path, code);
-            AssetDatabase.ImportAsset(path);
+            AssetDatabase.Refresh();
         }
     }
 }
