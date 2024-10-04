@@ -135,7 +135,8 @@ namespace Editor.Editors
 
         public override void OnInspectorGUI()
         {
-            base.OnInspectorGUI();
+            ElementDataEditor.Render(targets);
+
             var choice = RenderButtons();
             if (choice == Choice.CopyID) {
                 var statements = string.Empty;
@@ -164,6 +165,12 @@ namespace Editor.Editors
                     ElementData.SetupElementData(element.ElementData, element.transform);
                     EditorUtility.SetDirty(element);
                 }
+            } else if (choice == Choice.UseGameObjectNameID) {
+                foreach (var t in targets) {
+                    var element = (ElementButton)t;
+                    ElementData.SetupElementDataGameObjectName(element.ElementData, element.transform);
+                    EditorUtility.SetDirty(element);
+                }
             }
         }
     }
@@ -185,7 +192,7 @@ namespace Editor.Editors
 
         public override void OnInspectorGUI()
         {
-            base.OnInspectorGUI();
+            ElementDataEditor.Render(targets);
 
             Choice choice = default;
             if (GUILayout.Button("Copy ID")) choice = Choice.CopyID;
@@ -505,7 +512,8 @@ namespace Editor.Editors
 
         public override void OnInspectorGUI()
         {
-            base.OnInspectorGUI();
+            ElementDataEditor.Render(targets);
+
             var choice = RenderButtons();
             if (choice == Choice.CopyID) {
                 var statements = string.Empty;
@@ -561,7 +569,8 @@ namespace Editor.Editors
 
         public override void OnInspectorGUI()
         {
-            base.OnInspectorGUI();
+            ElementDataEditor.Render(targets);
+
             var choice = RenderButtons();
             if (choice == Choice.CopyID) {
                 var statements = string.Empty;
@@ -590,6 +599,12 @@ namespace Editor.Editors
                     ElementData.SetupElementData(element.ElementData, element.transform);
                     EditorUtility.SetDirty(element);
                 }
+            } else if (choice == Choice.UseGameObjectNameID) {
+                foreach (var t in targets) {
+                    var element = (ElementToggle)t;
+                    ElementData.SetupElementDataGameObjectName(element.ElementData, element.transform);
+                    EditorUtility.SetDirty(element);
+                }
             }
         }
     }
@@ -611,7 +626,8 @@ namespace Editor.Editors
 
         public override void OnInspectorGUI()
         {
-            base.OnInspectorGUI();
+            ElementDataEditor.Render(targets);
+
             var choice = RenderButtons();
             if (choice == Choice.CopyID) {
                 var statements = string.Empty;
@@ -640,6 +656,12 @@ namespace Editor.Editors
                     ElementData.SetupElementData(element.ElementData, element.transform);
                     EditorUtility.SetDirty(element);
                 }
+            } else if (choice == Choice.UseGameObjectNameID) {
+                foreach (var t in targets) {
+                    var element = (ElementDragDrop)t;
+                    ElementData.SetupElementDataGameObjectName(element.ElementData, element.transform);
+                    EditorUtility.SetDirty(element);
+                }
             }
         }
     }
@@ -661,7 +683,8 @@ namespace Editor.Editors
 
         public override void OnInspectorGUI()
         {
-            base.OnInspectorGUI();
+            ElementDataEditor.Render(targets);
+
             var choice = RenderButtons();
             if (choice == Choice.CopyID) {
                 var statements = string.Empty;
@@ -690,6 +713,12 @@ namespace Editor.Editors
                     ElementData.SetupElementData(element.ElementData, element.transform);
                     EditorUtility.SetDirty(element);
                 }
+            } else if (choice == Choice.UseGameObjectNameID) {
+                foreach (var t in targets) {
+                    var element = (ElementText)t;
+                    ElementData.SetupElementDataGameObjectName(element.ElementData, element.transform);
+                    EditorUtility.SetDirty(element);
+                }
             }
         }
     }
@@ -712,7 +741,8 @@ namespace Editor.Editors
 
         public override void OnInspectorGUI()
         {
-            base.OnInspectorGUI();
+            ElementDataEditor.Render(targets);
+
             var choice = RenderButtons();
             if (choice == Choice.CopyID) {
                 var statements = string.Empty;
@@ -741,6 +771,12 @@ namespace Editor.Editors
                     ElementData.SetupElementData(element.ElementData, element.transform);
                     EditorUtility.SetDirty(element);
                 }
+            } else if (choice == Choice.UseGameObjectNameID) {
+                foreach (var t in targets) {
+                    var element = (ElementInputField)t;
+                    ElementData.SetupElementDataGameObjectName(element.ElementData, element.transform);
+                    EditorUtility.SetDirty(element);
+                }
             }
         }
     }
@@ -762,7 +798,8 @@ namespace Editor.Editors
 
         public override void OnInspectorGUI()
         {
-            base.OnInspectorGUI();
+            ElementDataEditor.Render(targets);
+
             var choice = RenderButtons();
             if (choice == Choice.CopyID) {
                 var statements = string.Empty;
@@ -791,6 +828,12 @@ namespace Editor.Editors
                     ElementData.SetupElementData(element.ElementData, element.transform);
                     EditorUtility.SetDirty(element);
                 }
+            } else if (choice == Choice.UseGameObjectNameID) {
+                foreach (var t in targets) {
+                    var element = (ElementSlider)t;
+                    ElementData.SetupElementDataGameObjectName(element.ElementData, element.transform);
+                    EditorUtility.SetDirty(element);
+                }
             }
         }
     }
@@ -813,7 +856,8 @@ namespace Editor.Editors
 
         public override void OnInspectorGUI()
         {
-            base.OnInspectorGUI();
+            ElementDataEditor.Render(targets);
+
             var choice = RenderButtons();
             if (choice == Choice.CopyID) {
                 var statements = string.Empty;
@@ -840,6 +884,12 @@ namespace Editor.Editors
                 foreach (var t in targets) {
                     var element = (ElementDropdown)t;
                     ElementData.SetupElementData(element.ElementData, element.transform);
+                    EditorUtility.SetDirty(element);
+                }
+            } else if (choice == Choice.UseGameObjectNameID) {
+                foreach (var t in targets) {
+                    var element = (ElementDropdown)t;
+                    ElementData.SetupElementDataGameObjectName(element.ElementData, element.transform);
                     EditorUtility.SetDirty(element);
                 }
             }
