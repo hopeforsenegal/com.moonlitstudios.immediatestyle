@@ -969,16 +969,34 @@ namespace Editor.Editors
                     var id = element.ElementData.ID;
                     var (constantStatement, constant) = Builder.BuildConstantStatement(id);
                     if (element.GetComponent<CanvasGroup>() != null) {
-                        var elementStatement = Builder.BuildReferenceStatement(constant, "CanvasGroup");
+                        var elementStatement = Builder.BuildReferenceStatement(constant, nameof(CanvasGroup));
                         statements += constantStatement + Environment.NewLine + elementStatement;
-                    } else if (element.GetComponent<DragDrop>() != null) {
-                        var elementStatement = Builder.BuildReferenceStatement(constant, "DragDrop");
-                        statements += constantStatement + Environment.NewLine + elementStatement;
-                    } else if (element.GetComponent<Image>() != null) {
-                        var elementStatement = Builder.BuildReferenceStatement(constant, "Image");
+                    } else if (element.GetComponent<Button>() != null) {
+                        var elementStatement = Builder.BuildReferenceStatement(constant, nameof(Button));
                         statements += constantStatement + Environment.NewLine + elementStatement;
                     } else {
-                        var elementStatement = Builder.BuildReferenceStatement(constant);
+                        // Default to the first other component we come across
+                        var components = element.gameObject.GetComponents<Component>();
+                        Debug.Assert(components.Length >= 2, "Have reference and at least Transform");
+                        var result = 0;
+                        for (int i = components.Length - 1; i >= 0; i--) {
+                            if (components[i] == element) continue;
+                            if (components[i].GetType().Name == nameof(CanvasRenderer)) continue;
+                            if (components[i].GetType().Name == nameof(Element)) continue;
+                            if (components[i].GetType().Name == nameof(ElementButton)) continue;
+                            if (components[i].GetType().Name == nameof(ElementCanvasGroup)) continue;
+                            if (components[i].GetType().Name == nameof(ElementDragDrop)) continue;
+                            if (components[i].GetType().Name == nameof(ElementDropdown)) continue;
+                            if (components[i].GetType().Name == nameof(ElementImage)) continue;
+                            if (components[i].GetType().Name == nameof(ElementInputField)) continue;
+                            if (components[i].GetType().Name == nameof(ElementSlider)) continue;
+                            if (components[i].GetType().Name == nameof(ElementText)) continue;
+                            if (components[i].GetType().Name == nameof(ElementToggle)) continue;
+
+                            result = i;
+                            break;
+                        }
+                        var elementStatement = Builder.BuildReferenceStatement(constant, components[result].GetType().Name);
                         statements += constantStatement + Environment.NewLine + elementStatement;
                     }
                     Util.ClipboardText = statements + Environment.NewLine;
