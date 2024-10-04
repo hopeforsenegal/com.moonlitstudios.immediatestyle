@@ -1,4 +1,4 @@
-using System;
+// We use Debug.Assert judiciously in this API. If you don't want that to show in the Profiler (since these will cause GC allocs) make sure you are running without the DEBUG conditional
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
