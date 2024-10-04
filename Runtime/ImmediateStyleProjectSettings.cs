@@ -18,7 +18,7 @@ namespace MoonlitSystem
                 Directory.CreateDirectory(ImmediateStyleSettingsResDir);
                 var assetPath = Path.Combine(ImmediateStyleSettingsResDir, ImmediateStyleSettingsFile + ImmediateStyleSettingsFileExtension);
                 instance = CreateInstance<ImmediateStyleProjectSettings>();
-                instance.followCursorRetained = FollowCursorRetained.OverrideNoFollowCursor; // @default
+                instance.unused = "Here temporarily until real settings get added.";
 #if UNITY_EDITOR
                 AssetDatabase.CreateAsset(instance, assetPath);
                 AssetDatabase.SaveAssets();
@@ -28,14 +28,6 @@ namespace MoonlitSystem
             return instance;
         }
 
-        public enum FollowCursorRetained { NoOverride, OverrideFollowCursor, OverrideNoFollowCursor }
-
-        // DragDrop components by default follow cursor (in order to be consistent with a typical Unity UI Component). 
-        // However if that component is engaged with the ImmediateStyle we override them to all not follow cursor. (so you have to explicitly call ImmediateStyle.FollowCursor)
-        // But of course here you can change that in case you want to prescribe a different default
-
-        // NOTE: I strongly suspect that both ways work without an override setting.
-        // However we'll keep this for now and will possibly remove it once there are more settings (So we have a place to easily add new settings)
-        public FollowCursorRetained followCursorRetained = FollowCursorRetained.OverrideNoFollowCursor; // @default
+        public string unused; // @placeholder. Here temporarily until real settings get added.
     }
 }

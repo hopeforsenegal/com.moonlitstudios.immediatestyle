@@ -269,7 +269,7 @@ namespace MoonlitSystem.UI.Immediate
             Debug.Assert(hasElement, $"{id} is not a mapped dropdown. Did start get called? Does it need a root id?");
             if (hasElement) {
                 element.ElementData.MarkedForDisplay = true;
-                // we could speed this up a lot.. I can imagine cases of drop downs with intensive options
+                // We could speed this up a lot.. I can imagine cases of drop downs with intensive options
                 // first thing that comes to mind is to cache or use a hashcode of some sort (perhaps this is what the object comparison is already doing?)
                 if (element.UIBehaviour.options != options) {
                     element.UIBehaviour.options = new List<Dropdown.OptionData>(options);
@@ -550,12 +550,6 @@ namespace MoonlitSystem.UI.Immediate
                         var id = prefix + dd.ElementData.ID;
                         Debug.Assert(!Instance.m_InteractDragDrops.ContainsKey(id), $"Duplicate entry found for id '{id}'");
                         Instance.m_InteractDragDrops[id] = dd;
-                        // in this special case we do some overriding to make things a bit more consistent
-                        // but basically is a way of forcing all the DragDrop components to have a unified setting if you want.
-                        // And, conversely, also allows us to default DragDrop to have FollowMouseCursor = true as default which makes sense inside Unity
-                        if (sImmediateStyleProjectSettings.followCursorRetained != ImmediateStyleProjectSettings.FollowCursorRetained.NoOverride) {
-                            dd.UIBehaviour.FollowMouseCursor = sImmediateStyleProjectSettings.followCursorRetained == ImmediateStyleProjectSettings.FollowCursorRetained.OverrideFollowCursor;
-                        }
                     }
                     break;
                 case ElementButton b: {
