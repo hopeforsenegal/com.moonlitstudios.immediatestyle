@@ -118,6 +118,8 @@ Feel free to just drop us a line on [Discord](https://discord.gg/8y87EEaftE). It
 ## Support this project 
 Please please please!! ⭐ Star this project! If you truly feel empowered at all by this project please give [our games](https://linktr.ee/moonlit_games) a shot (and drop 5 star reviews there too!). Each of these games are powered by this framework (I'll update this section to include additional games as they start to use this project)
 
+If you have feedback, want to extend the API to handle more components, or would like the API to respond to more event types please feel free to reach out (or create an Issue).
+
 ![icon512](https://github.com/user-attachments/assets/85141dc9-110e-4a8d-b684-6c9a686c278b)
 [Apple](https://apps.apple.com/us/app/caribbean-dominoes/id1588590418)
 [Android](https://play.google.com/store/apps/details?id=com.MoonlitStudios.CaribbeanDominoes)
