@@ -40,6 +40,7 @@ namespace MoonlitSystem
             internal bool ShowHasWon;
             internal string FeedbackText;
             internal string InputFieldText;
+            internal bool IsExitButtonHover;
         }
         public AudioClip click;
         private AudioSource m_Sfx;
@@ -91,7 +92,12 @@ namespace MoonlitSystem
                 ImmediateStyle.ClearColor();
 
                 gameEvent.Restart = ImmediateStyle.Button(CanvasGuessingGameRestartButton637f).IsMouseDown || Input.GetKeyDown(KeyCode.R); // We can check button presses from keyboard and UI on the same line
-                gameEvent.Exit = ImmediateStyle.Button(CanvasGuessingGameExitButtonf275).IsMouseDown || Input.GetKeyDown(KeyCode.Escape);  // We can check button presses from keyboard and UI on the same line
+
+                ImmediateStyle.SetColor(m_VisibleGameUI.IsExitButtonHover ? Color.red : Color.white);
+                var exitButtonInteraction = ImmediateStyle.Button(CanvasGuessingGameExitButtonf275); // We can handle button hovers ourselves if we want
+                ImmediateStyle.ClearColor();
+                m_VisibleGameUI.IsExitButtonHover = exitButtonInteraction.IsMouseHovering;
+                gameEvent.Exit = exitButtonInteraction.IsMouseDown || Input.GetKeyDown(KeyCode.Escape);
                 if (!m_VisibleGameUI.ShowHasWon) {
                     if (ImmediateStyle.InputField(CanvasGuessingGameInputFieldLegacy1207, new[] { KeyCode.Return, KeyCode.KeypadEnter }, ref m_VisibleGameUI.InputFieldText).HasSubmitted && int.TryParse(m_VisibleGameUI.InputFieldText, out var guessInt)) {
                         gameEvent.Guess = guessInt;
