@@ -63,7 +63,7 @@ With this API you can (& more!)
   }
 ```
 
-None of that working? **Honestly, just scroll to the bottom and reach out to us**.
+None of that working? **Honestly, just reach out us!** (Links & methods towards the bottom).
 
 ## Examples
 Please look at the [Style Comparisons](https://github.com/hopeforsenegal/com.moonlitstudios.immediatestyle/blob/main/StyleComparisons) folder for more elaborate examples that are setup like the real world. (or specifically [Immediate Example](https://github.com/hopeforsenegal/com.moonlitstudios.immediatestyle/blob/main/StyleComparisons/ImmediateExample.cs) to hop right into a code example) 
