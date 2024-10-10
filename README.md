@@ -23,6 +23,14 @@ if(ImmediateStyle.Button(CanvasLeftd414).IsMouseDown){
     Debug.Log("Hello World!");
 }
 ```
+How many times have you wanted things to be simple... 
+For instance to check that the exit button was clicked OR the escape key was pressed with just a single if statement?
+```cs 
+if(ImmediateStyle.Button(ExitButtond31h).IsMouseDown || Input.GetButtonDown(KeyCode.Escape)){
+    Debug.Log("Exit the game!");
+}
+```
+With this API you can (& more!)
 
 <br>
 
