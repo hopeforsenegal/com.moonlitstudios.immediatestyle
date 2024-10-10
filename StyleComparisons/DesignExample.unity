@@ -427,7 +427,7 @@ GameObject:
   - component: {fileID: 1268708534}
   - component: {fileID: 1268708535}
   m_Layer: 0
-  m_Name: ImmediateStyle
+  m_Name: DesignExample
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
