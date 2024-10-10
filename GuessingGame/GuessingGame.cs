@@ -24,6 +24,7 @@ namespace MoonlitSystem
         private const string CanvasGuessingGameHistoryScrollViewViewportContentListing621f = "/Canvas/GuessingGame/History/Scroll View/Viewport/Content/GameObject788f";
         private const string CanvasGuessingGameFeedbacke989 = "/Canvas/GuessingGame/Feedbacke989";
         private const string CanvasMainMenuPlay2d73 = "/Canvas/MainMenu/Play2d73";
+        private const string SFX3814 = "/SFX3814";
 
         public enum MainMenuEvent { Play = 1, Exit }
         public struct GameEvent
@@ -40,6 +41,8 @@ namespace MoonlitSystem
             internal string FeedbackText;
             internal string InputFieldText;
         }
+        public AudioClip click;
+        private AudioSource m_Sfx;
         private GameVisible m_VisibleGameUI;
         private readonly List<int> m_PreviousGuesses = new List<int>();
         private int m_GeneratedGuess;
@@ -48,6 +51,9 @@ namespace MoonlitSystem
         protected void Awake()
         {
             m_FeedbackTextAnimator = Reference.Find<Animator>(this, CanvasGuessingGameFeedbacke989);
+            m_Sfx = Reference.Find<AudioSource>(this, SFX3814);
+            m_Sfx.clip = click;
+
             // We show a little bit of callback functionality to demonstrate that its possible to mix styles
             Reference.Find<Button>(this, CanvasMainMenuPlay2d73).onClick.AddListener(() =>
             {
@@ -105,6 +111,7 @@ namespace MoonlitSystem
             /* Handle User events here */
             if (mainMenu != default) {
                 Debug.Log("We clicked one of the two main menu buttons or hit 'Escape'!");
+                m_Sfx.Play();
                 if (mainMenu == MainMenuEvent.Play) {
                     m_VisibleGameUI = new GameVisible { IsShow = true, FadeStartTime = Time.time };
                 }
@@ -130,6 +137,7 @@ namespace MoonlitSystem
 
             if (gameEvent.Guess.HasValue) {
                 m_PreviousGuesses.Add(gameEvent.Guess.Value);
+                m_Sfx.Play();
 
                 if (gameEvent.Guess > m_GeneratedGuess) {
                     m_VisibleGameUI.FeedbackText = "Lower...";
