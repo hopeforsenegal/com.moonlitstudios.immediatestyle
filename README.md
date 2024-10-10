@@ -23,6 +23,14 @@ if(ImmediateStyle.Button(CanvasLeftd414).IsMouseDown){
     Debug.Log("Hello World!");
 }
 ```
+How many times have you wanted things to be simple... 
+For instance to check that the exit button was clicked OR the escape key was pressed with just a single if statement?
+```cs 
+if(ImmediateStyle.Button(ExitButtond31h).IsMouseDown || Input.GetButtonDown(KeyCode.Escape)){
+    Debug.Log("Exit the game!");
+}
+```
+With this API you can (& more!)
 
 <br>
 
@@ -55,7 +63,7 @@ if(ImmediateStyle.Button(CanvasLeftd414).IsMouseDown){
   }
 ```
 
-None of that working? **Honestly, just scroll to the bottom and reach out to us**.
+None of that working? **Honestly, just reach out us!** (Links & methods towards the bottom).
 
 ## Examples
 Please look at the [Style Comparisons](https://github.com/hopeforsenegal/com.moonlitstudios.immediatestyle/blob/main/StyleComparisons) folder for more elaborate examples that are setup like the real world. (or specifically [Immediate Example](https://github.com/hopeforsenegal/com.moonlitstudios.immediatestyle/blob/main/StyleComparisons/ImmediateExample.cs) to hop right into a code example) 
@@ -109,6 +117,8 @@ Feel free to just drop us a line on [Discord](https://discord.gg/8y87EEaftE). It
 
 ## Support this project 
 Please please please!! ⭐ Star this project! If you truly feel empowered at all by this project please give [our games](https://linktr.ee/moonlit_games) a shot (and drop 5 star reviews there too!). Each of these games are powered by this framework (I'll update this section to include additional games as they start to use this project)
+
+If you have feedback, want to extend the API to handle more components, or would like the API to respond to more event types please feel free to reach out (or create an Issue).
 
 ![icon512](https://github.com/user-attachments/assets/85141dc9-110e-4a8d-b684-6c9a686c278b)
 [Apple](https://apps.apple.com/us/app/caribbean-dominoes/id1588590418)
