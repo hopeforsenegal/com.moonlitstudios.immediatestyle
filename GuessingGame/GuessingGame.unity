@@ -2807,6 +2807,7 @@ GameObject:
   - component: {fileID: 1577023849}
   - component: {fileID: 1577023848}
   - component: {fileID: 1577023847}
+  - component: {fileID: 1577023852}
   m_Layer: 0
   m_Name: RestartButton
   m_TagString: Untagged
@@ -2943,6 +2944,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1577023845}
   m_CullTransparentMesh: 1
+--- !u!114 &1577023852
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1577023845}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 08699c09d86934bfe80515d29b8df33e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  message: We like loggin out restarts
 --- !u!1 &1660813865
 GameObject:
   m_ObjectHideFlags: 0
@@ -3556,6 +3570,8 @@ GameObject:
   - component: {fileID: 2045456602}
   - component: {fileID: 2045456601}
   - component: {fileID: 2045456600}
+  - component: {fileID: 2045456605}
+  - component: {fileID: 2045456606}
   m_Layer: 0
   m_Name: ExitButton
   m_TagString: Untagged
@@ -3629,7 +3645,7 @@ MonoBehaviour:
     m_SelectOnDown: {fileID: 0}
     m_SelectOnLeft: {fileID: 0}
     m_SelectOnRight: {fileID: 0}
-  m_Transition: 1
+  m_Transition: 0
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
     m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
@@ -3692,6 +3708,33 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2045456598}
   m_CullTransparentMesh: 1
+--- !u!114 &2045456605
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2045456598}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 08699c09d86934bfe80515d29b8df33e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  message: '[Design Team]: Programmer. This exit button turns red on hover? How did
+    you do that? The button has its transition set to NONE.'
+--- !u!114 &2045456606
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2045456598}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 08699c09d86934bfe80515d29b8df33e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  message: '[Programming Team]: Designer. It''s because we do things in code sometimes.'
 --- !u!1 &2046854641
 GameObject:
   m_ObjectHideFlags: 0

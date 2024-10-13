@@ -4,10 +4,6 @@ using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
 
-// A simple guessing game complete with animations & fading (One with Animator and the other with Math.Lerp)
-// + we show a little bit of callback functionality to demonstrate that its possible to mix styles
-// And of course we show off Reference and RootMapping (useful for a listing of the same type of thing)
-
 namespace MoonlitSystem
 {
     public class GuessingGame : MonoBehaviour
@@ -47,13 +43,21 @@ namespace MoonlitSystem
         private GameVisible m_VisibleGameUI;
         private readonly List<int> m_PreviousGuesses = new List<int>();
         private int m_GeneratedGuess;
+        private GuessingGameButtonExtra[] m_GuessingGameButtonExtras;
+        private Dictionary<GuessingGameButtonExtra, ElementButton> m_MappingExtra = new Dictionary<GuessingGameButtonExtra, ElementButton>();
         private Animator m_FeedbackTextAnimator;
 
         protected void Awake()
         {
+            m_GuessingGameButtonExtras = FindObjectsOfType<GuessingGameButtonExtra>();
             m_FeedbackTextAnimator = Reference.Find<Animator>(this, CanvasGuessingGameFeedbacke989);
             m_Sfx = Reference.Find<AudioSource>(this, SFX3814);
             m_Sfx.clip = click;
+
+            // We could just call GetComponent in Update which would be 10x slower on the CPU... It would work in the majority of cases.
+            // Profile to actually see where your "real" bottlenecks are (its almost never the thing you suspect most)
+            // See GuessingGameButtonExtra.cs for details on what this functionality is about
+            foreach (var extra in m_GuessingGameButtonExtras) m_MappingExtra.Add(extra, extra.GetComponent<ElementButton>());
 
             // We show a little bit of callback functionality to demonstrate that its possible to mix styles
             Reference.Find<Button>(this, CanvasMainMenuPlay2d73).onClick.AddListener(() =>
@@ -68,6 +72,7 @@ namespace MoonlitSystem
             MainMenuEvent mainMenu = default;
             GameEvent gameEvent = default;
 
+            /******************************/
             /* Render and stylize UI here */
             ImmediateStyle.CanvasGroup(CanvasMainMenu8959, (lateUpdateMainMenuCanvasGroup) => // In this case we always show out canvas group.. but change the fields on the component conditionally
             {
@@ -105,7 +110,7 @@ namespace MoonlitSystem
                 }
 
                 // We can handle things that are represent a listing of elements with a 'RootMapping' component.
-                // It Basically allows you to reuse Prefabs or reuse GameObject Hiearchies
+                // It basically allows you to reuse Prefabs or reuse GameObject Hiearchies
                 for (var i = 0; i < 4 && i < m_PreviousGuesses.Count; i++) {
                     var r = m_PreviousGuesses.Count - i - 1;
                     ImmediateStyle.CanvasGroup(i + CanvasGuessingGameHistoryScrollViewViewportContentListing621f);
@@ -113,8 +118,20 @@ namespace MoonlitSystem
                 }
             }
 
-
+            /***************************/
             /* Handle User events here */
+
+            // Unique "text" per button (optional and designer driven)
+            // Add GuessingGameButtonExtra (with a message) to any button as many times as you want
+            // No need to change or add code its all handled by this 5 line for loop
+            // This is dealing with "Retained Mode" native Unity GameObjects (ElementButton & GuessingGameButtonExtra) directly,
+            // so there is no need to interact with the ImmediateStyle API here.
+            foreach (var extra in m_MappingExtra) {
+                if (!extra.Value.IsMouseDown) continue;
+                if (string.IsNullOrWhiteSpace(extra.Key.message)) continue;
+                Debug.Log(extra.Key.message);
+            }
+
             if (mainMenu != default) {
                 Debug.Log("We clicked one of the two main menu buttons or hit 'Escape'!");
                 m_Sfx.Play();
