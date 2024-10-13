@@ -159,7 +159,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -387.5791, y: 9.942505}
+  m_AnchoredPosition: {x: 648, y: 361}
   m_SizeDelta: {x: 532.8518, y: 119.885}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &10596085
@@ -257,7 +257,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ElementData:
     ID: /Canvas/CanvasGroup/Swappables/Swap1be93
-    MarkedForDisplay: 0
 --- !u!114 &16378550
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -520,7 +519,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -786, y: -295}
+  m_AnchoredPosition: {x: -705, y: -73}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &105086089
@@ -575,7 +574,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ElementData:
     ID: /Canvas/CanvasGroup/DropDownImage40d6
-    MarkedForDisplay: 0
 --- !u!114 &105086092
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -839,7 +837,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ElementData:
     ID: /Canvas/CanvasGroup/DragAndDrop0e99
-    MarkedForDisplay: 0
 --- !u!114 &215768974
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1242,7 +1239,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ElementData:
     ID: /Canvas/CanvasGroup/Swappables/Swap1be93
-    MarkedForDisplay: 0
 --- !u!114 &395704707
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1645,7 +1641,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ElementData:
     ID: /Canvas/CanvasGroup/DragAndDrop (1)2173
-    MarkedForDisplay: 0
 --- !u!114 &514040422
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1780,7 +1775,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ElementData:
     ID: /Canvas/CanvasGroup/RadioButtons/Toggle0a56
-    MarkedForDisplay: 0
 --- !u!114 &521241116
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2049,7 +2043,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ElementData:
     ID: /Canvas/Right3c3e
-    MarkedForDisplay: 0
 --- !u!114 &635447176
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2183,7 +2176,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -641, y: 172}
+  m_AnchoredPosition: {x: 40, y: 346}
   m_SizeDelta: {x: 160, y: 20}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &647299324
@@ -2200,7 +2193,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ElementData:
     ID: /Canvas/CanvasGroup/Slider863e
-    MarkedForDisplay: 0
 --- !u!114 &647299325
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2378,7 +2370,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 250, y: 227}
+  m_AnchoredPosition: {x: -662, y: 227}
   m_SizeDelta: {x: 160, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &871156252
@@ -2395,7 +2387,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ElementData:
     ID: /Canvas/CanvasGroup/InputField (Legacy)5474
-    MarkedForDisplay: 0
 --- !u!114 &871156253
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2551,7 +2542,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 528.62, y: 200.23}
+  m_AnchoredPosition: {x: -383.38, y: 200.23}
   m_SizeDelta: {x: 300, y: 100.47}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &879782905
@@ -2568,7 +2559,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ElementData:
     ID: /Canvas/CanvasGroup/Value (1)ab1e
-    MarkedForDisplay: 0
 --- !u!114 &879782906
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2864,7 +2854,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ElementData:
     ID: /Canvas/CanvasGroup/Toggle74f8
-    MarkedForDisplay: 0
 --- !u!114 &994792717
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3131,7 +3120,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ElementData:
     ID: /Canvas/Value6b89
-    MarkedForDisplay: 0
 --- !u!114 &1115967455
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3379,7 +3367,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ElementData:
     ID: /Canvas/CanvasGroup/Imagead3b
-    MarkedForDisplay: 0
 --- !u!114 &1323807121
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3813,7 +3800,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ElementData:
     ID: /Canvas/CanvasGroup/RadioButtons/Toggle0a56
-    MarkedForDisplay: 0
 --- !u!114 &1484501063
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3915,7 +3901,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -602, y: -319}
+  m_AnchoredPosition: {x: -521, y: -97}
   m_SizeDelta: {x: 160, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1496266532
@@ -3932,7 +3918,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ElementData:
     ID: /Canvas/CanvasGroup/Dropdown (Legacy)55fc
-    MarkedForDisplay: 0
 --- !u!114 &1496266533
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4626,7 +4611,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ElementData:
     ID: /Canvas/CanvasGroup/Swappables/Swap1be93
-    MarkedForDisplay: 0
 --- !u!114 &1603234337
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4774,7 +4758,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ElementData:
     ID: /Canvas/CanvasGroup/RadioButtons/Toggle0a56
-    MarkedForDisplay: 0
 --- !u!114 &1610245140
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4891,7 +4874,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ElementData:
     ID: /Canvas/Leftd414
-    MarkedForDisplay: 0
 --- !u!114 &1624927461
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5372,7 +5354,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ElementData:
     ID: /Canvas/CanvasGroup03b0
-    MarkedForDisplay: 0
 --- !u!114 &1867643751
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5801,7 +5782,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ElementData:
     ID: /Canvas/CanvasGroup/Swappables/Swap1be93
-    MarkedForDisplay: 0
 --- !u!114 &2130726247
 MonoBehaviour:
   m_ObjectHideFlags: 0

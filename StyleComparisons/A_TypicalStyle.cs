@@ -74,14 +74,14 @@ namespace Editing.BotEditor.StyleComparisons
         private void RaiseValue()
         {
             value = value + 1;
-            image.sprite = left;
+            image.sprite = right;
             image.enabled = true;
             text.text = $"-> {value}";
         }
         private void LowerValue()
         {
             value = value - 1;
-            image.sprite = right;
+            image.sprite = left;
             image.enabled = true;
             text.text = $"-> {value}";
         }
