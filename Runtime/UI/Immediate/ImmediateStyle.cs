@@ -177,10 +177,10 @@ namespace MoonlitSystem.UI.Immediate
                 dragDrop = element.UIBehaviour;
                 return new DragDropData
                 {
-                    IsMouseUp = element.UIBehaviour.IsMouseUp,
-                    IsHovering = element.UIBehaviour.IsMouseHovering,
-                    IsDragging = element.UIBehaviour.IsDragging,
-                    Position = new Vector2(element.UIBehaviour.transform.position.x, element.UIBehaviour.transform.position.y),
+                    IsMouseUp =  dragDrop.IsMouseUp,
+                    IsHovering = dragDrop.IsMouseHovering,
+                    IsDragging = dragDrop.IsDragging,
+                    Position = new Vector2(dragDrop.transform.position.x, dragDrop.transform.position.y),
                 };
             }
             return default;

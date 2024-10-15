@@ -16,7 +16,7 @@ namespace MoonlitSystem.UI.Immediate
         // Therefore  IsMouseDown is true on OnPointerDown and NOT OnPointerClick... 
         // Conversely IsMouseUp   is true on OnPointerUp, OnPointerClick, AND OnPointerExit (only when IsPressed is true)
         //
-        // In anycase the most important thing here is that we don't force you to just be IsMouseDown (like we suggest).
+        // In any case the most important thing here is that we don't force you to just be IsMouseDown (like we suggest).
         // You have the choice to do things the way Unity already does it if you want with IsMouseUp.
         public bool IsMouseDown { get; internal set; }
         public bool IsMousePressed { get; private set; }

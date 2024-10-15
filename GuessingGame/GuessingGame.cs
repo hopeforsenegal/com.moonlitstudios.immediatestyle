@@ -41,11 +41,11 @@ namespace MoonlitSystem
         public AudioClip click;
         private AudioSource m_Sfx;
         private GameVisible m_VisibleGameUI;
-        private readonly List<int> m_PreviousGuesses = new List<int>();
         private int m_GeneratedGuess;
         private GuessingGameButtonExtra[] m_GuessingGameButtonExtras;
-        private Dictionary<GuessingGameButtonExtra, ElementButton> m_MappingExtra = new Dictionary<GuessingGameButtonExtra, ElementButton>();
         private Animator m_FeedbackTextAnimator;
+        private readonly Dictionary<GuessingGameButtonExtra, ElementButton> m_MappingExtra = new Dictionary<GuessingGameButtonExtra, ElementButton>();
+        private readonly List<int> m_PreviousGuesses = new List<int>();
 
         protected void Awake()
         {
@@ -60,7 +60,7 @@ namespace MoonlitSystem
             foreach (var extra in m_GuessingGameButtonExtras) m_MappingExtra.Add(extra, extra.GetComponent<ElementButton>());
 
             // We show a little bit of callback functionality to demonstrate that its possible to mix styles
-            Reference.Find<Button>(this, CanvasMainMenuPlay2d73).onClick.AddListener(() =>
+            Reference.Find<Button>(this, CanvasMainMenuPlay2d73).onClick.AddListener(call: () =>
             {
                 // NOTE: onClick fires on OnPointerClick. See ElementButton.cs for details
                 Debug.Log("I am from an 'onClick' callback! You can mix styles to avoid changing everything at once!");
@@ -74,7 +74,7 @@ namespace MoonlitSystem
 
             /******************************/
             /* Render and stylize UI here */
-            ImmediateStyle.CanvasGroup(CanvasMainMenu8959, (lateUpdateMainMenuCanvasGroup) => // In this case we always show out canvas group.. but change the fields on the component conditionally
+            ImmediateStyle.CanvasGroup(CanvasMainMenu8959, updateCanvasGroupInLateUpdate: lateUpdateMainMenuCanvasGroup => // In this case we always show out canvas group.. but change the fields on the component conditionally
             {
                 var alpha = 1f;
                 if (m_VisibleGameUI.IsShow) alpha = Mathf.Lerp(1, 0, (Time.time - m_VisibleGameUI.FadeStartTime) * 3); // Lets fade the game screen (and lets do it with a manual lerp)
@@ -110,7 +110,7 @@ namespace MoonlitSystem
                 }
 
                 // We can handle things that are represent a listing of elements with a 'RootMapping' component.
-                // It basically allows you to reuse Prefabs or reuse GameObject Hiearchies
+                // It basically allows you to reuse Prefabs or reuse GameObject Hierarchies
                 for (var i = 0; i < 4 && i < m_PreviousGuesses.Count; i++) {
                     var r = m_PreviousGuesses.Count - i - 1;
                     ImmediateStyle.CanvasGroup(i + CanvasGuessingGameHistoryScrollViewViewportContentListing621f);

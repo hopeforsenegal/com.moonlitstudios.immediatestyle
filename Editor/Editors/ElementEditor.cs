@@ -8,7 +8,6 @@ using static Editor.Editors.UI;
 using System.Collections.Generic;
 using Editor.TemplateGenerators;
 using System.Linq;
-using MoonlitSystem.UI;
 using System.Text;
 
 namespace Editor.Editors
@@ -979,7 +978,7 @@ namespace Editor.Editors
                         var components = element.gameObject.GetComponents<Component>();
                         Debug.Assert(components.Length >= 2, "Have reference and at least Transform");
                         var result = 0;
-                        for (int i = components.Length - 1; i >= 0; i--) {
+                        for (var i = components.Length - 1; i >= 0; i--) {
                             if (components[i] == element) continue;
                             if (components[i].GetType().Name == nameof(CanvasRenderer)) continue;
                             if (components[i].GetType().Name == nameof(Element)) continue;
