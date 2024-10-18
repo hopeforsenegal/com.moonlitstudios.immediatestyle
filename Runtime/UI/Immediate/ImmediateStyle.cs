@@ -70,7 +70,7 @@ namespace MoonlitSystem.UI.Immediate
         // we need to give you a way to overwrite that default behaviour easily if you want
         //
         // To be clear we need this if you want to diverge behavior
-        // from our typical 'autoupdate' of
+        // from our typical 'auto update' of
         // the fields (alpha|blocksRaycasts|interactable) on
         // the Canvas Group (which normally happens in LateUpdate)
         public delegate void UpdateCanvasGroupVisibilityFields(CanvasGroup canvasGroup);
@@ -345,7 +345,7 @@ namespace MoonlitSystem.UI.Immediate
         private readonly HashSet<string> m_RootMappings = new HashSet<string>();
         private bool m_HasSetColor;
         private Color m_Color;
-        private static ImmediateStyleProjectSettings sImmediateStyleProjectSettings;
+        private static ImmediateStyleSettings sImmediateStyleProjectSettings;
 
         private static ImmediateStyle Instance
         {
@@ -359,7 +359,7 @@ namespace MoonlitSystem.UI.Immediate
                 Instance = this;
                 Instance.m_Color = Color.white; // default color
                 // Load in project settings
-                sImmediateStyleProjectSettings = ImmediateStyleProjectSettings.LoadInstance();
+                sImmediateStyleProjectSettings = ImmediateStyleSettings.LoadInstance();
                 DontDestroyOnLoad(gameObject);
             } else if (Instance != this) {
                 Destroy(gameObject);
