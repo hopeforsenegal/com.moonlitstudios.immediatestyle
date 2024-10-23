@@ -133,6 +133,9 @@ namespace MoonlitSystem.UI.Immediate
                 element.ElementData.MarkedForDisplay = true;
                 if (Instance.m_HasSetColor) {
                     element.Text.color = Instance.m_Color;
+#if TMP_PRESENT
+                    element.TextPro.color = Instance.m_Color;
+#endif
                 }
             }
         }
@@ -147,6 +150,12 @@ namespace MoonlitSystem.UI.Immediate
                 if (Instance.m_HasSetColor) {
                     element.Text.color = Instance.m_Color;
                 }
+#if TMP_PRESENT
+                element.TextPro.text = text;
+                if (Instance.m_HasSetColor) {
+                    element.TextPro.color = Instance.m_Color;
+                }
+#endif
             }
         }
 
@@ -432,6 +441,12 @@ namespace MoonlitSystem.UI.Immediate
                 if (entry.Value.ElementData.MarkedForDisplay != behavior.enabled) {
                     behavior.enabled = entry.Value.ElementData.MarkedForDisplay;
                 }
+#if TMP_PRESENT
+                var behavior2 = entry.Value.TextPro;
+                if (entry.Value.ElementData.MarkedForDisplay != behavior2.enabled) {
+                    behavior2.enabled = entry.Value.ElementData.MarkedForDisplay;
+                }
+#endif
 
                 entry.Value.ElementData.MarkedForDisplay = false;
             }
