@@ -132,9 +132,12 @@ namespace MoonlitSystem.UI.Immediate
             if (hasElement) {
                 element.ElementData.MarkedForDisplay = true;
                 if (Instance.m_HasSetColor) {
-                    element.Text.color = Instance.m_Color;
 #if TMP_PRESENT
-                    element.TextPro.color = Instance.m_Color;
+                    if (element.Text == null) {
+                        element.TextPro.color = Instance.m_Color;
+                    }
+#else
+                    element.Text.color = Instance.m_Color;
 #endif
                 }
             }
@@ -146,14 +149,17 @@ namespace MoonlitSystem.UI.Immediate
             Debug.Assert(hasElement, !hasElement ? $"{id} is not mapped. Did start get called? Does the caller need a root id?" : "");
             if (hasElement) {
                 element.ElementData.MarkedForDisplay = true;
+#if TMP_PRESENT
+                if (element.Text == null) {
+                    element.TextPro.text = text;
+                    if (Instance.m_HasSetColor) {
+                        element.TextPro.color = Instance.m_Color;
+                    }
+                }
+#else
                 element.Text.text = text;
                 if (Instance.m_HasSetColor) {
                     element.Text.color = Instance.m_Color;
-                }
-#if TMP_PRESENT
-                element.TextPro.text = text;
-                if (Instance.m_HasSetColor) {
-                    element.TextPro.color = Instance.m_Color;
                 }
 #endif
             }
@@ -437,14 +443,19 @@ namespace MoonlitSystem.UI.Immediate
                 entry.Value.ElementData.MarkedForDisplay = false;
             }
             foreach (var entry in m_InteractTexts) {
+#if TMP_PRESENT
+                var behavior2 = entry.Value.TextPro;
+                var behavior = entry.Value.Text;
+                if (behavior2 != null && entry.Value.ElementData.MarkedForDisplay != behavior2.enabled) {
+                    behavior2.enabled = entry.Value.ElementData.MarkedForDisplay;
+                }
+                if (behavior != null && entry.Value.ElementData.MarkedForDisplay != behavior.enabled) {
+                    behavior.enabled = entry.Value.ElementData.MarkedForDisplay;
+                }
+#else
                 var behavior = entry.Value.Text;
                 if (entry.Value.ElementData.MarkedForDisplay != behavior.enabled) {
                     behavior.enabled = entry.Value.ElementData.MarkedForDisplay;
-                }
-#if TMP_PRESENT
-                var behavior2 = entry.Value.TextPro;
-                if (entry.Value.ElementData.MarkedForDisplay != behavior2.enabled) {
-                    behavior2.enabled = entry.Value.ElementData.MarkedForDisplay;
                 }
 #endif
 
