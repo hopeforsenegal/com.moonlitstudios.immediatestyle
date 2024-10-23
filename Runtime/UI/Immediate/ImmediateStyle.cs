@@ -1,4 +1,3 @@
-// We use Debug.Assert judiciously in this API. If you don't want that to show in the Profiler (since these will cause GC allocs) make sure you are running without the DEBUG conditional
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -12,7 +11,7 @@ namespace MoonlitSystem.UI.Immediate
         public static ButtonData Button(string id)
         {
             var hasElement = Instance.m_InteractButtons.TryGetValue(id, out var element);
-            Debug.Assert(hasElement, $"{id} is not mapped. Did start get called? Does the caller need a root id?");
+            Debug.Assert(hasElement, !hasElement ? $"{id} is not mapped. Did start get called? Does the caller need a root id?" : "");
             if (hasElement) {
                 element.ElementData.MarkedForDisplay = true;
                 // Buttons may or may not have an image. And the image might be a sibling or it might be a child.
@@ -35,7 +34,7 @@ namespace MoonlitSystem.UI.Immediate
         public static ButtonData Button(string id, out Button button)
         {
             var hasElement = Instance.m_InteractButtons.TryGetValue(id, out var element);
-            Debug.Assert(hasElement, $"{id} is not mapped. Did start get called? Does the caller need a root id?");
+            Debug.Assert(hasElement, !hasElement ? $"{id} is not mapped. Did start get called? Does the caller need a root id?" : "");
             button = null;
             if (hasElement) {
                 element.ElementData.MarkedForDisplay = true;
@@ -60,7 +59,7 @@ namespace MoonlitSystem.UI.Immediate
         public static void CanvasGroup(string id)
         {
             var hasElement = Instance.m_InteractCanvasGroups.TryGetValue(id, out var element);
-            Debug.Assert(hasElement, $"{id} is not mapped. Did start get called? Does the caller need a root id?");
+            Debug.Assert(hasElement, !hasElement ? $"{id} is not mapped. Did start get called? Does the caller need a root id?" : "");
             if (hasElement) {
                 element.ElementData.MarkedForDisplay = true;
             }
@@ -77,7 +76,7 @@ namespace MoonlitSystem.UI.Immediate
         public static void CanvasGroup(string id, UpdateCanvasGroupVisibilityFields updateCanvasGroupInLateUpdate)
         {
             var hasElement = Instance.m_InteractCanvasGroups.TryGetValue(id, out var element);
-            Debug.Assert(hasElement, $"{id} is not mapped. Did start get called? Does the caller need a root id?");
+            Debug.Assert(hasElement, !hasElement ? $"{id} is not mapped. Did start get called? Does the caller need a root id?" : "");
             if (hasElement) {
                 element.ElementData.MarkedForDisplay = true;
                 element.ElementData.UpdateCGInLateUpdate = updateCanvasGroupInLateUpdate;
@@ -88,7 +87,7 @@ namespace MoonlitSystem.UI.Immediate
         public static void Image(string id)
         {
             var hasElement = Instance.m_InteractImages.TryGetValue(id, out var element);
-            Debug.Assert(hasElement, $"{id} is not mapped. Did start get called? Does the caller need a root id?");
+            Debug.Assert(hasElement, !hasElement ? $"{id} is not mapped. Did start get called? Does the caller need a root id?" : "");
             if (hasElement) {
                 element.ElementData.MarkedForDisplay = true;
                 if (Instance.m_HasSetColor) {
@@ -101,7 +100,7 @@ namespace MoonlitSystem.UI.Immediate
         public static void Image(string id, Sprite sprite)
         {
             var hasElement = Instance.m_InteractImages.TryGetValue(id, out var element);
-            Debug.Assert(hasElement, $"{id} is not mapped. Did start get called? Does the caller need a root id?");
+            Debug.Assert(hasElement, !hasElement ? $"{id} is not mapped. Did start get called? Does the caller need a root id?" : "");
             Debug.Assert(sprite, "sprite was null");
             if (hasElement) {
                 element.ElementData.MarkedForDisplay = true;
@@ -116,7 +115,7 @@ namespace MoonlitSystem.UI.Immediate
         public static void Image(string id, out Image image)
         {
             var hasElement = Instance.m_InteractImages.TryGetValue(id, out var element);
-            Debug.Assert(hasElement, $"{id} is not mapped. Did start get called? Does the caller need a root id?");
+            Debug.Assert(hasElement, !hasElement ? $"{id} is not mapped. Did start get called? Does the caller need a root id?" : "");
             image = null;
             if (hasElement) {
                 element.ElementData.MarkedForDisplay = true;
@@ -129,7 +128,7 @@ namespace MoonlitSystem.UI.Immediate
         public static void Text(string id)
         {
             var hasElement = Instance.m_InteractTexts.TryGetValue(id, out var element);
-            Debug.Assert(hasElement, $"{id} is not mapped. Did start get called? Does the caller need a root id?");
+            Debug.Assert(hasElement, !hasElement ? $"{id} is not mapped. Did start get called? Does the caller need a root id?" : "");
             if (hasElement) {
                 element.ElementData.MarkedForDisplay = true;
                 if (Instance.m_HasSetColor) {
@@ -141,7 +140,7 @@ namespace MoonlitSystem.UI.Immediate
         public static void Text(string id, string text)
         {
             var hasElement = Instance.m_InteractTexts.TryGetValue(id, out var element);
-            Debug.Assert(hasElement, $"{id} is not mapped. Did start get called? Does the caller need a root id?");
+            Debug.Assert(hasElement, !hasElement ? $"{id} is not mapped. Did start get called? Does the caller need a root id?" : "");
             if (hasElement) {
                 element.ElementData.MarkedForDisplay = true;
                 element.Text.text = text;
@@ -154,7 +153,7 @@ namespace MoonlitSystem.UI.Immediate
         public static ToggleData Toggle(string id, bool isOn)
         {
             var hasElement = Instance.m_InteractToggles.TryGetValue(id, out var element);
-            Debug.Assert(hasElement, $"{id} is not mapped. Did start get called? Does the caller need a root id?");
+            Debug.Assert(hasElement, !hasElement ? $"{id} is not mapped. Did start get called? Does the caller need a root id?" : "");
             var isClicked = false;
             if (hasElement) {
                 element.ElementData.MarkedForDisplay = true;
@@ -170,14 +169,14 @@ namespace MoonlitSystem.UI.Immediate
         public static DragDropData DragDrop(string id, out DragDrop dragDrop)
         {
             var hasElement = Instance.m_InteractDragDrops.TryGetValue(id, out var element);
-            Debug.Assert(hasElement, $"{id} is not mapped. Did start get called? Does the caller need a root id?");
+            Debug.Assert(hasElement, !hasElement ? $"{id} is not mapped. Did start get called? Does the caller need a root id?" : "");
             dragDrop = null;
             if (hasElement) {
                 element.ElementData.MarkedForDisplay = true;
                 dragDrop = element.UIBehaviour;
                 return new DragDropData
                 {
-                    IsMouseUp =  dragDrop.IsMouseUp,
+                    IsMouseUp = dragDrop.IsMouseUp,
                     IsHovering = dragDrop.IsMouseHovering,
                     IsDragging = dragDrop.IsDragging,
                     Position = new Vector2(dragDrop.transform.position.x, dragDrop.transform.position.y),
@@ -196,7 +195,7 @@ namespace MoonlitSystem.UI.Immediate
         public static InputFieldData InputField(string id, IEnumerable<KeyCode> keyCodes, ref string text)
         {
             var hasElement = Instance.m_InteractInputFields.TryGetValue(id, out var element);
-            Debug.Assert(hasElement, $"{id} is not mapped. Did start get called? Does the caller need a root id?");
+            Debug.Assert(hasElement, !hasElement ? $"{id} is not mapped. Did start get called? Does the caller need a root id?" : "");
             var hasSubmitted = false;
             if (hasElement) {
                 element.ElementData.MarkedForDisplay = true;
@@ -227,7 +226,7 @@ namespace MoonlitSystem.UI.Immediate
         public static void FocusInputField(string id)
         {
             var hasElement = Instance.m_InteractInputFields.TryGetValue(id, out var element);
-            Debug.Assert(hasElement, $"{id} is not mapped. Did start get called? Does the caller need a root id?");
+            Debug.Assert(hasElement, !hasElement ? $"{id} is not mapped. Did start get called? Does the caller need a root id?" : "");
             if (hasElement) {
                 element.UIBehaviour.Select();
             }
@@ -236,7 +235,7 @@ namespace MoonlitSystem.UI.Immediate
         public static SliderData Slider(string id)
         {
             var hasElement = Instance.m_InteractSliders.TryGetValue(id, out var element);
-            Debug.Assert(hasElement, $"{id} is not mapped. Did start get called? Does the caller need a root id?");
+            Debug.Assert(hasElement, !hasElement ? $"{id} is not mapped. Did start get called? Does the caller need a root id?" : "");
             if (hasElement) {
                 element.ElementData.MarkedForDisplay = true;
                 return new SliderData
@@ -250,7 +249,7 @@ namespace MoonlitSystem.UI.Immediate
         public static SliderData Slider(string id, out Slider slider)
         {
             var hasElement = Instance.m_InteractSliders.TryGetValue(id, out var element);
-            Debug.Assert(hasElement, $"{id} is not mapped. Did start get called? Does the caller need a root id?");
+            Debug.Assert(hasElement, !hasElement ? $"{id} is not mapped. Did start get called? Does the caller need a root id?" : "");
             slider = null;
             if (hasElement) {
                 element.ElementData.MarkedForDisplay = true;
@@ -266,7 +265,7 @@ namespace MoonlitSystem.UI.Immediate
         public static DropdownData Dropdown(string id, IEnumerable<Dropdown.OptionData> options)
         {
             var hasElement = Instance.m_InteractDropdowns.TryGetValue(id, out var element);
-            Debug.Assert(hasElement, $"{id} is not mapped. Did start get called? Does the caller need a root id?");
+            Debug.Assert(hasElement, !hasElement ? $"{id} is not mapped. Did start get called? Does the caller need a root id?" : "");
             if (hasElement) {
                 element.ElementData.MarkedForDisplay = true;
                 // We could speed this up a lot.. I can imagine cases of drop downs with intensive options
