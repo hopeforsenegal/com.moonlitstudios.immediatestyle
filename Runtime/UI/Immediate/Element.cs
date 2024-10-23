@@ -1,6 +1,9 @@
 using System;
 using UnityEngine;
 using UnityEngine.UI;
+#if TMP_PRESENT
+using TMPro;
+#endif
 
 namespace MoonlitSystem.UI.Immediate
 {
