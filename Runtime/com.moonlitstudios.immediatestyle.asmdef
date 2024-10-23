@@ -15,6 +15,6 @@
             "expression": ">=1.0.0",
             "define": "TMP_PRESENT"
         }
-    ]
+    ],
     "noEngineReferences": false
 }
