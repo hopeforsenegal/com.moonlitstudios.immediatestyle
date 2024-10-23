@@ -6,7 +6,7 @@ using System.Text;
 using UnityEditor;
 using UnityEngine;
 
-namespace Editor.TemplateGenerators
+namespace MoonlitSystem.TemplateGenerators
 {
     public static class ImmediateUITemplate
     {

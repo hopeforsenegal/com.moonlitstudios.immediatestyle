@@ -2,7 +2,7 @@ using JetBrains.Annotations;
 using UnityEditor;
 using UnityEngine;
 
-namespace Editor
+namespace MoonlitSystem
 {
     [UsedImplicitly]
     public class LabelWidthScope : GUI.Scope

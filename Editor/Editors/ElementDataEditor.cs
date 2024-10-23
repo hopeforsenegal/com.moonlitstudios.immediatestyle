@@ -3,7 +3,7 @@ using MoonlitSystem.UI.Immediate;
 using UnityEditor;
 using UnityEngine;
 
-namespace Editor.Editors
+namespace MoonlitSystem.Editors
 {
     public static class ElementDataEditor
     {

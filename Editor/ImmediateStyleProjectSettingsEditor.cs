@@ -1,9 +1,8 @@
-using MoonlitSystem;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.UIElements;
 
-namespace Editor
+namespace MoonlitSystem
 {
     public class ImmediateStyleSettingsProvider : SettingsProvider
     {

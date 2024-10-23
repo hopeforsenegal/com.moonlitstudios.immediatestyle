@@ -1,16 +1,16 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using MoonlitSystem.TemplateGenerators;
 using MoonlitSystem.UI.Immediate;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
 using Object = UnityEngine.Object;
-using static Editor.Editors.UI;
-using System.Collections.Generic;
-using Editor.TemplateGenerators;
-using System.Linq;
-using System.Text;
+using static MoonlitSystem.Editors.UI;
 
-namespace Editor.Editors
+namespace MoonlitSystem.Editors
 {
     public static class Builder
     {
