@@ -19,6 +19,13 @@ namespace MoonlitSystem.UI.Immediate
                 ElementData.SetupElementData(e.ElementData, e.transform);
                 return;
             }
+#if TMP_PRESENT
+            if (GetComponent<TMP_Text>() != null && GetComponent<ElementText>() == null) {
+                var e = gameObject.AddComponent<ElementText>();
+                ElementData.SetupElementData(e.ElementData, e.transform);
+                return;
+            }
+#endif
             if (GetComponent<Toggle>() != null && GetComponent<ElementToggle>() == null) {
                 var e = gameObject.AddComponent<ElementToggle>();
                 ElementData.SetupElementData(e.ElementData, e.transform);
