@@ -96,10 +96,7 @@ namespace MoonlitSystem.Editors
             if (GUILayout.Button("Clipboard Code Snippet")) return Choice.CopyCode;
             return default;
         }
-    }
 
-    public static class Helper
-    {
         public static void ElementDestroy(GameObject gameObject, Object o)
         {
             if (EditorApplication.isPlaying) return;
@@ -129,7 +126,7 @@ namespace MoonlitSystem.Editors
 
         private void OnDestroy()
         {
-            Helper.ElementDestroy(m_ThisObjRef, target);
+            UI.ElementDestroy(m_ThisObjRef, target);
         }
 
         public override void OnInspectorGUI()
@@ -145,7 +142,7 @@ namespace MoonlitSystem.Editors
                     var (constantStatement, _) = Builder.BuildConstantStatement(id);
                     statements += constantStatement + Environment.NewLine;
                 }
-                Util.ClipboardText = statements;
+                Helper.ClipboardText = statements;
             } else if (choice == Choice.CopyCode) {
                 var constantStatements = string.Empty;
                 var elementStatements = string.Empty;
@@ -157,7 +154,7 @@ namespace MoonlitSystem.Editors
                     constantStatements += constantStatement + Environment.NewLine;
                     elementStatements += elementStatement + Environment.NewLine;
                 }
-                Util.ClipboardText = constantStatements + elementStatements;
+                Helper.ClipboardText = constantStatements + elementStatements;
             } else if (choice == Choice.RegenerateRandomID) {
                 foreach (var t in targets) {
                     var element = (ElementButton)t;
@@ -186,7 +183,7 @@ namespace MoonlitSystem.Editors
 
         private void OnDestroy()
         {
-            Helper.ElementDestroy(m_ThisObjRef, target);
+            UI.ElementDestroy(m_ThisObjRef, target);
         }
 
         public override void OnInspectorGUI()
@@ -213,7 +210,7 @@ namespace MoonlitSystem.Editors
                     var (constantStatement, _) = Builder.BuildConstantStatement(id);
                     statements += constantStatement + Environment.NewLine;
                 }
-                Util.ClipboardText = statements;
+                Helper.ClipboardText = statements;
             } else if (choice == Choice.CopyCode) {
                 var constantStatements = string.Empty;
                 var elementStatements = string.Empty;
@@ -225,7 +222,7 @@ namespace MoonlitSystem.Editors
                     constantStatements += constantStatement + Environment.NewLine;
                     elementStatements += elementStatement + Environment.NewLine;
                 }
-                Util.ClipboardText = constantStatements + elementStatements;
+                Helper.ClipboardText = constantStatements + elementStatements;
             } else if (choice == Choice.RegenerateRandomID) {
                 foreach (var t in targets) {
                     var element = (ElementCanvasGroup)t;
@@ -402,7 +399,7 @@ namespace MoonlitSystem.Editors
                 }
 
                 var code = ImmediateUITemplate.BuildString(buildParams, ImmediateUITemplate.Name.ElementsExtension);
-                Util.ClipboardText = code;
+                Helper.ClipboardText = code;
             } else if (choice == Choice.ForLoopTemplate) {
                 var element = (ElementCanvasGroup)target;
                 ImmediateUITemplate.BuildParams buildParams;
@@ -489,7 +486,7 @@ namespace MoonlitSystem.Editors
                 }
 
                 var code = ImmediateUITemplate.BuildString(buildParams, ImmediateUITemplate.Name.ElementsExtension);
-                Util.ClipboardText = code;
+                Helper.ClipboardText = code;
             }
         }
     }
@@ -506,7 +503,7 @@ namespace MoonlitSystem.Editors
 
         private void OnDestroy()
         {
-            Helper.ElementDestroy(m_ThisObjRef, target);
+            UI.ElementDestroy(m_ThisObjRef, target);
         }
 
         public override void OnInspectorGUI()
@@ -522,7 +519,7 @@ namespace MoonlitSystem.Editors
                     var (constantStatement, _) = Builder.BuildConstantStatement(id);
                     statements += constantStatement + Environment.NewLine;
                 }
-                Util.ClipboardText = statements;
+                Helper.ClipboardText = statements;
             } else if (choice == Choice.CopyCode) {
                 var constantStatements = string.Empty;
                 var elementStatements = string.Empty;
@@ -534,7 +531,7 @@ namespace MoonlitSystem.Editors
                     constantStatements += constantStatement + Environment.NewLine;
                     elementStatements += elementStatement + Environment.NewLine;
                 }
-                Util.ClipboardText = constantStatements + elementStatements;
+                Helper.ClipboardText = constantStatements + elementStatements;
             } else if (choice == Choice.RegenerateRandomID) {
                 foreach (var t in targets) {
                     var element = (ElementImage)t;
@@ -563,7 +560,7 @@ namespace MoonlitSystem.Editors
 
         private void OnDestroy()
         {
-            Helper.ElementDestroy(m_ThisObjRef, target);
+            UI.ElementDestroy(m_ThisObjRef, target);
         }
 
         public override void OnInspectorGUI()
@@ -579,7 +576,7 @@ namespace MoonlitSystem.Editors
                     var (constantStatement, _) = Builder.BuildConstantStatement(id);
                     statements += constantStatement + Environment.NewLine;
                 }
-                Util.ClipboardText = statements;
+                Helper.ClipboardText = statements;
             } else if (choice == Choice.CopyCode) {
                 var constantStatements = string.Empty;
                 var elementStatements = string.Empty;
@@ -591,7 +588,7 @@ namespace MoonlitSystem.Editors
                     constantStatements += constantStatement + Environment.NewLine;
                     elementStatements += elementStatement + Environment.NewLine;
                 }
-                Util.ClipboardText = constantStatements + elementStatements;
+                Helper.ClipboardText = constantStatements + elementStatements;
             } else if (choice == Choice.RegenerateRandomID) {
                 foreach (var t in targets) {
                     var element = (ElementToggle)t;
@@ -620,7 +617,7 @@ namespace MoonlitSystem.Editors
 
         private void OnDestroy()
         {
-            Helper.ElementDestroy(m_ThisObjRef, target);
+            UI.ElementDestroy(m_ThisObjRef, target);
         }
 
         public override void OnInspectorGUI()
@@ -636,7 +633,7 @@ namespace MoonlitSystem.Editors
                     var (constantStatement, _) = Builder.BuildConstantStatement(id);
                     statements += constantStatement + Environment.NewLine;
                 }
-                Util.ClipboardText = statements;
+                Helper.ClipboardText = statements;
             } else if (choice == Choice.CopyCode) {
                 var constantStatements = string.Empty;
                 var elementStatements = string.Empty;
@@ -648,7 +645,7 @@ namespace MoonlitSystem.Editors
                     constantStatements += constantStatement + Environment.NewLine;
                     elementStatements += elementStatement + Environment.NewLine;
                 }
-                Util.ClipboardText = constantStatements + elementStatements;
+                Helper.ClipboardText = constantStatements + elementStatements;
             } else if (choice == Choice.RegenerateRandomID) {
                 foreach (var t in targets) {
                     var element = (ElementDragDrop)t;
@@ -677,7 +674,7 @@ namespace MoonlitSystem.Editors
 
         private void OnDestroy()
         {
-            Helper.ElementDestroy(m_ThisObjRef, target);
+            UI.ElementDestroy(m_ThisObjRef, target);
         }
 
         public override void OnInspectorGUI()
@@ -693,7 +690,7 @@ namespace MoonlitSystem.Editors
                     var (constantStatement, _) = Builder.BuildConstantStatement(id);
                     statements += constantStatement + Environment.NewLine;
                 }
-                Util.ClipboardText = statements;
+                Helper.ClipboardText = statements;
             } else if (choice == Choice.CopyCode) {
                 var constantStatements = string.Empty;
                 var elementStatements = string.Empty;
@@ -705,7 +702,7 @@ namespace MoonlitSystem.Editors
                     constantStatements += constantStatement + Environment.NewLine;
                     elementStatements += elementStatement + Environment.NewLine;
                 }
-                Util.ClipboardText = constantStatements + elementStatements;
+                Helper.ClipboardText = constantStatements + elementStatements;
             } else if (choice == Choice.RegenerateRandomID) {
                 foreach (var t in targets) {
                     var element = (ElementText)t;
@@ -735,7 +732,7 @@ namespace MoonlitSystem.Editors
 
         private void OnDestroy()
         {
-            Helper.ElementDestroy(m_ThisObjRef, target);
+            UI.ElementDestroy(m_ThisObjRef, target);
         }
 
         public override void OnInspectorGUI()
@@ -751,7 +748,7 @@ namespace MoonlitSystem.Editors
                     var (constantStatement, _) = Builder.BuildConstantStatement(id);
                     statements += constantStatement + Environment.NewLine;
                 }
-                Util.ClipboardText = statements;
+                Helper.ClipboardText = statements;
             } else if (choice == Choice.CopyCode) {
                 var constantStatements = string.Empty;
                 var elementStatements = string.Empty;
@@ -763,7 +760,7 @@ namespace MoonlitSystem.Editors
                     constantStatements += constantStatement + Environment.NewLine;
                     elementStatements += elementStatement + Environment.NewLine;
                 }
-                Util.ClipboardText = constantStatements + elementStatements;
+                Helper.ClipboardText = constantStatements + elementStatements;
             } else if (choice == Choice.RegenerateRandomID) {
                 foreach (var t in targets) {
                     var element = (ElementInputField)t;
@@ -792,7 +789,7 @@ namespace MoonlitSystem.Editors
 
         private void OnDestroy()
         {
-            Helper.ElementDestroy(m_ThisObjRef, target);
+            UI.ElementDestroy(m_ThisObjRef, target);
         }
 
         public override void OnInspectorGUI()
@@ -808,7 +805,7 @@ namespace MoonlitSystem.Editors
                     var (constantStatement, _) = Builder.BuildConstantStatement(id);
                     statements += constantStatement + Environment.NewLine;
                 }
-                Util.ClipboardText = statements;
+                Helper.ClipboardText = statements;
             } else if (choice == Choice.CopyCode) {
                 var constantStatements = string.Empty;
                 var elementStatements = string.Empty;
@@ -820,7 +817,7 @@ namespace MoonlitSystem.Editors
                     constantStatements += constantStatement + Environment.NewLine;
                     elementStatements += elementStatement + Environment.NewLine;
                 }
-                Util.ClipboardText = constantStatements + elementStatements;
+                Helper.ClipboardText = constantStatements + elementStatements;
             } else if (choice == Choice.RegenerateRandomID) {
                 foreach (var t in targets) {
                     var element = (ElementSlider)t;
@@ -850,7 +847,7 @@ namespace MoonlitSystem.Editors
 
         private void OnDestroy()
         {
-            Helper.ElementDestroy(m_ThisObjRef, target);
+            UI.ElementDestroy(m_ThisObjRef, target);
         }
 
         public override void OnInspectorGUI()
@@ -866,7 +863,7 @@ namespace MoonlitSystem.Editors
                     var (constantStatement, _) = Builder.BuildConstantStatement(id);
                     statements += constantStatement + Environment.NewLine;
                 }
-                Util.ClipboardText = statements;
+                Helper.ClipboardText = statements;
             } else if (choice == Choice.CopyCode) {
                 var constantStatements = string.Empty;
                 var elementStatements = string.Empty;
@@ -878,7 +875,7 @@ namespace MoonlitSystem.Editors
                     constantStatements += constantStatement + Environment.NewLine;
                     elementStatements += elementStatement + Environment.NewLine;
                 }
-                Util.ClipboardText = constantStatements + elementStatements;
+                Helper.ClipboardText = constantStatements + elementStatements;
             } else if (choice == Choice.RegenerateRandomID) {
                 foreach (var t in targets) {
                     var element = (ElementDropdown)t;
@@ -960,7 +957,7 @@ namespace MoonlitSystem.Editors
                     var (constantStatement, _) = Builder.BuildConstantStatement(id);
                     statements += constantStatement + Environment.NewLine;
                 }
-                Util.ClipboardText = statements;
+                Helper.ClipboardText = statements;
             } else if (choice == Choice.CopyCode) {
                 var statements = string.Empty;
                 foreach (var t in targets) {
@@ -998,7 +995,7 @@ namespace MoonlitSystem.Editors
                         var elementStatement = Builder.BuildReferenceStatement(constant, components[result].GetType().Name);
                         statements += constantStatement + Environment.NewLine + elementStatement;
                     }
-                    Util.ClipboardText = statements + Environment.NewLine;
+                    Helper.ClipboardText = statements + Environment.NewLine;
                 }
             } else if (choice == Choice.RegenerateRandomID) {
                 foreach (var t in targets) {

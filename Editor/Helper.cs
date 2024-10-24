@@ -2,7 +2,7 @@
 
 namespace MoonlitSystem
 {
-    public static class Util
+    public static class Helper
     {
         public static string ClipboardText
         {
