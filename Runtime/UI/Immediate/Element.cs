@@ -89,8 +89,8 @@ namespace MoonlitSystem.UI.Immediate
         private static string GetGameObjectFullPathHierarchy(Transform current)
         {
             if (current.parent == null)
-                return "/" + current.name;
-            return GetGameObjectFullPathHierarchy(current.parent) + "/" + current.name;
+                return "/" + current.name.Replace("-", "");
+            return GetGameObjectFullPathHierarchy(current.parent) + "/" + current.name.Replace("-", ""); // remove "-" because it messes with constants that get created
         }
     }
 }
