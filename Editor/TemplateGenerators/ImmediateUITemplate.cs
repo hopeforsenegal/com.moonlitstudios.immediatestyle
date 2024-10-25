@@ -108,6 +108,8 @@ if(component.IsDragging) ImmediateStyle.FollowCursor(component.transform);
                 var constant = BuildConstantStatement(buttonID);
                 var buttonStatement = BuildButtonStatement(constant);
                 buttonStatement = buttonStatement.Replace(";", "");
+                name = CleanString(name);
+                eventName = CleanString(eventName);
                 return $"m_Events.{name}.{eventName} = {buttonStatement}.IsMouseDown || m_Events.{name}.{eventName};";
             }
             public static string BuildToggleReadEvent(string name, string buttonID, string eventName)
@@ -115,6 +117,8 @@ if(component.IsDragging) ImmediateStyle.FollowCursor(component.transform);
                 var constant = BuildConstantStatement(buttonID);
                 var buttonStatement = BuildToggleStatement(constant);
                 buttonStatement = buttonStatement.Replace(";", "");
+                name = CleanString(name);
+                eventName = CleanString(eventName);
                 return $"m_Events.{name}.{eventName} = {buttonStatement}.IsClicked || m_Events.{name}.{eventName};";
             }
             internal static string BuildInputFieldsReadEvent(string name, string buttonID, string eventName)
@@ -122,10 +126,14 @@ if(component.IsDragging) ImmediateStyle.FollowCursor(component.transform);
                 var constant = BuildConstantStatement(buttonID);
                 var statement = BuildInputFieldStatement(constant);
                 statement = statement.Replace(";", "");
+                name = CleanString(name);
+                eventName = CleanString(eventName);
                 return $"m_Events.{name}.{eventName} = {statement}.HasSubmitted || m_Events.{name}.{eventName};";
             }
             public static string BuildUseEvent(string name, string eventName)
             {
+                name = CleanString(name);
+                eventName = CleanString(eventName);
                 return $@"        if (m_Events.{name}.{eventName}) {{
         }}";
             }
