@@ -13,7 +13,7 @@ or this (for older versions of Unity)
 https://docs.unity3d.com/2018.1/Documentation/ScriptReference/UI.Button-onClick.html
 ___
 ### Immediate Example
-This is the *new way* that we provide you to interact with the UI. Less steps. Less code. Straightforward "if statements" if you desire.
+This is the ***new way*** that we provide you to interact with the UI. Less steps. Less code. Straightforward "if statements" if you desire.
 ___
 Below, each step is approximately what you would do in order to achieve the functionality that you see in those scenes. We've broken it up into the roughly same comparible steps and functionality. You can now evaluate which method or style best fits your needs. (We do recommend opening up the scenes and give them a spin after reading the steps in case you are not familiar with one of the styles)
 
