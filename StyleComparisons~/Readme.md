@@ -62,4 +62,4 @@ Step 2. (The thing to note is that we don't need to get back to the editor and "
 ___
 From here you can now hit **Play** without getting missing reference exceptions and get the responsive UI funuctionality that was intended.
 
-Note: Remember you can mix all three style if you would like. See [Guessing Game](https://github.com/hopeforsenegal/com.moonlitstudios.immediatestyle/blob/main/GuessingGame~) if you would like to see that in action
+Note: Remember you can mix all three style if you would like. See [Guessing Game](https://github.com/hopeforsenegal/com.moonlitstudios.immediatestyle/blob/main/GuessingGame~#guessing-game) if you would like to see that in action
