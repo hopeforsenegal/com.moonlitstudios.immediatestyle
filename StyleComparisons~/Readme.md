@@ -24,8 +24,7 @@ Step 1.
 <img width="600" alt="Screenshot 2024-10-10 at 9 47 09 AM" src="https://github.com/user-attachments/assets/89e64f6f-22c5-413e-9ec5-28790bfdb92a">
 
 Step 2.
-
-<img width="600" alt="Screenshot 2024-10-10 at 10 01 03 AM" src="https://github.com/user-attachments/assets/cf7bc61c-7b64-46a5-8643-16f35c0ee0cc">
+https://github.com/hopeforsenegal/com.moonlitstudios.immediatestyle/blob/bfed9a33207350af9ccad8d7b7e556578ee120a8/StyleComparisons~/DesignExample.cs#L12-L31
 
 Step 3.
 
@@ -38,8 +37,8 @@ Step 1.
 <img width="600" alt="Screenshot 2024-10-10 at 9 47 09 AM" src="https://github.com/user-attachments/assets/89e64f6f-22c5-413e-9ec5-28790bfdb92a">
 
 Step 2.
+https://github.com/hopeforsenegal/com.moonlitstudios.immediatestyle/blob/bfed9a33207350af9ccad8d7b7e556578ee120a8/StyleComparisons~/StandardExample.cs#L12-L40
 
-<img width="600" alt="Screenshot 2024-10-10 at 9 52 53 AM" src="https://github.com/user-attachments/assets/be85909f-0059-4a61-a9ad-dc0875aaba3d">
 
 Step 3.
 
@@ -56,8 +55,7 @@ Step 1a. (This is step 1a because you haven't left the editor and is a simple cl
 <img width="300" alt="Screenshot 2024-10-10 at 9 47 29 AM" src="https://github.com/user-attachments/assets/fe88d97d-dd7a-4ee4-a3aa-9f83e333152b">
 
 Step 2. (The thing to note is that we don't need to get back to the editor and "set references")
-
-<img width="600" alt="Screenshot 2024-10-10 at 9 48 01 AM" src="https://github.com/user-attachments/assets/d277dbb7-29eb-4522-b3c9-904c56a47e7c">
+https://github.com/hopeforsenegal/com.moonlitstudios.immediatestyle/blob/bfed9a33207350af9ccad8d7b7e556578ee120a8/StyleComparisons~/ImmediateExample.cs#L15-L29
 
 ___
 From here you can now hit **Play** without getting missing reference exceptions and get the responsive UI funuctionality that was intended.
