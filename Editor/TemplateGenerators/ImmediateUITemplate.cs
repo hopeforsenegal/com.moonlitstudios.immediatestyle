@@ -332,7 +332,6 @@ if(component.IsDragging) ImmediateStyle.FollowCursor(component.transform);
 
                 var buttonsNoEvent = "";
                 foreach (var button in build.InputFields) {
-
                     var constant = Builder.BuildConstantStatement(extraConstant + button.Element_ID);
                     var buttonStatement = Builder.BuildInputFieldStatement(constant);
                     buttonStatement = buttonStatement.Replace(";", "");
