@@ -12,6 +12,18 @@
     "immediate",
     "easy"
   ],
+  "samples": [
+	{
+		"displayName": "GuessingGame",
+		"description": "A simple, yet complete, guessing game with Animations and Audio to help demonstrate just how versatile the API is and how it can handle most workflows (even for a Designer)",
+		"path": "GuessingGame~"
+	},
+	{
+		"displayName": "StyleComparisons",
+		"description": "Here we are just showing the stylistic code changes and workflow changes that is entailed in different UI workflows. Each Step is approximately what you would do in order to achieve the functionality that you see in those scenes. Open up the scenes and give them a shot :-).",
+		"path": "StyleComparisons~"
+	}
+  ],
   "author": {
     "name": "Moonlit Studios",
     "url": "https://moonlitstudios.us/"
