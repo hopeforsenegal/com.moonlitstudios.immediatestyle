@@ -529,108 +529,19 @@ namespace MoonlitSystem.Editors
             // Falls out and handles additional CanvasGroup only choices here (yea got lazy)
             switch (choice) {
                 case Choice.FileTemplate: CreateFileTemplate(); break;
-                case Choice.ElementTemplate: CreateElementTemplate(); break;
-                case Choice.ForLoopTemplate: CreateForLoopTemplate(); break;
+                case Choice.ElementTemplate: CreateTemplate(false); break;
+                case Choice.ForLoopTemplate: CreateTemplate(true); break;
             }
         }
 
-        private void CreateForLoopTemplate()
-        {
-            var element = (ElementCanvasGroup)target;
-            ImmediateUITemplate.BuildParams buildParams;
-            buildParams.RootCanvasGroup.GameObject_Name = element.name;
-            buildParams.RootCanvasGroup.Element_ID = element.ElementData.ID;
-            buildParams.RootMapping_ID = element.GetComponent<RootMapping>() != null ? element.GetComponent<RootMapping>().ID : string.Empty;
-            buildParams.ForLoop = true;
-            {
-                var elements = element.GetComponentsInChildren<ElementText>();
-                var elementInfo = new List<ImmediateUITemplate.ElementInfo>();
-                foreach (var t in elements) {
-                    elementInfo.Add(new ImmediateUITemplate.ElementInfo { GameObject_Name = t.name, Element_ID = t.ElementData.ID });
-                }
-                buildParams.Texts = elementInfo.ToArray();
-            }
-            {
-                var elements = element.GetComponentsInChildren<ElementImage>();
-                var elementInfo = new List<ImmediateUITemplate.ElementInfo>();
-                foreach (var t in elements) {
-                    elementInfo.Add(new ImmediateUITemplate.ElementInfo { GameObject_Name = t.name, Element_ID = t.ElementData.ID });
-                }
-                buildParams.Images = elementInfo.ToArray();
-            }
-            {
-                var elements = element.GetComponentsInChildren<ElementCanvasGroup>();
-                var elementInfo = new List<ImmediateUITemplate.ElementInfo>();
-
-                var items = new HashSet<ElementCanvasGroup>(elements);
-                items.Remove(element);
-                elements = items.ToArray();
-
-                foreach (var t in elements) {
-                    elementInfo.Add(new ImmediateUITemplate.ElementInfo { GameObject_Name = t.name, Element_ID = t.ElementData.ID });
-                }
-                buildParams.CanvasGroups = elementInfo.ToArray();
-            }
-            {
-                var elements = element.GetComponentsInChildren<ElementButton>();
-                var elementInfo = new List<ImmediateUITemplate.ElementInfo>();
-                foreach (var t in elements) {
-                    elementInfo.Add(new ImmediateUITemplate.ElementInfo { GameObject_Name = t.name, Element_ID = t.ElementData.ID });
-                }
-                buildParams.Buttons = elementInfo.ToArray();
-            }
-            {
-                var elements = element.GetComponentsInChildren<ElementToggle>();
-                var elementInfo = new List<ImmediateUITemplate.ElementInfo>();
-                foreach (var t in elements) {
-                    elementInfo.Add(new ImmediateUITemplate.ElementInfo { GameObject_Name = t.name, Element_ID = t.ElementData.ID });
-                }
-                buildParams.Toggles = elementInfo.ToArray();
-            }
-            {
-                var elements = element.GetComponentsInChildren<ElementSlider>();
-                var elementInfo = new List<ImmediateUITemplate.ElementInfo>();
-                foreach (var t in elements) {
-                    elementInfo.Add(new ImmediateUITemplate.ElementInfo { GameObject_Name = t.name, Element_ID = t.ElementData.ID });
-                }
-                buildParams.Sliders = elementInfo.ToArray();
-            }
-            {
-                var elements = element.GetComponentsInChildren<ElementDragDrop>();
-                var elementInfo = new List<ImmediateUITemplate.ElementInfo>();
-                foreach (var t in elements) {
-                    elementInfo.Add(new ImmediateUITemplate.ElementInfo { GameObject_Name = t.name, Element_ID = t.ElementData.ID });
-                }
-                buildParams.DragDrops = elementInfo.ToArray();
-            }
-            {
-                var elements = element.GetComponentsInChildren<ElementDropdown>();
-                var elementInfo = new List<ImmediateUITemplate.ElementInfo>();
-                foreach (var t in elements) {
-                    elementInfo.Add(new ImmediateUITemplate.ElementInfo { GameObject_Name = t.name, Element_ID = t.ElementData.ID });
-                }
-                buildParams.Dropdowns = elementInfo.ToArray();
-            }
-            {
-                var elements = element.GetComponentsInChildren<ElementInputField>();
-                var elementInfo = new List<ImmediateUITemplate.ElementInfo>();
-                foreach (var t in elements) {
-                    elementInfo.Add(new ImmediateUITemplate.ElementInfo { GameObject_Name = t.name, Element_ID = t.ElementData.ID });
-                }
-                buildParams.InputFields = elementInfo.ToArray();
-            }
-
-            var code = ImmediateUITemplate.BuildString(buildParams, ImmediateUITemplate.Name.ElementsExtension);
-            Helper.ClipboardText = code;
-        }
-
-        private void CreateElementTemplate()
+        private void CreateTemplate(bool isForloop)
         {
             var element = (ElementCanvasGroup)target;
             ImmediateUITemplate.BuildParams buildParams = default;
             buildParams.RootCanvasGroup.GameObject_Name = element.name;
             buildParams.RootCanvasGroup.Element_ID = element.ElementData.ID;
             buildParams.RootMapping_ID = element.GetComponent<RootMapping>() != null ? element.GetComponent<RootMapping>().ID : string.Empty;
+            buildParams.ForLoop = isForloop;
             {
                 var elements = element.GetComponentsInChildren<ElementText>();
                 var elementInfo = new List<ImmediateUITemplate.ElementInfo>();
@@ -801,7 +712,6 @@ namespace MoonlitSystem.Editors
             ImmediateUITemplate.Build(buildParams);
         }
     }
-
 
     [CustomEditor(typeof(Reference), true)]
     [CanEditMultipleObjects]
