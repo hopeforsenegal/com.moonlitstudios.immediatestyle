@@ -14,6 +14,278 @@ namespace MoonlitSystem.Editors
 {
     public static class Builder
     {
+        public static void HandleUserChoice(Choice choice, Object[] targets, Type type)
+        {
+            switch (choice) {
+                case Choice.CopyID: Helper.ClipboardText = BuildConstantStatements(targets); break;
+                case Choice.RegenerateRandomID: RegenerateRandomIDsForTargets(targets); break;
+                case Choice.UseGameObjectNameID: UseGameObjectNameIDsForTargets(targets); break;
+                case Choice.CopyCode: {
+                        if (type == typeof(ElementButtonEditor)) Helper.ClipboardText = CopyCodeButtonStatement(targets);
+                        if (type == typeof(ElementImageEditor)) Helper.ClipboardText = CopyCodeImageStatement(targets);
+                        if (type == typeof(ElementToggleEditor)) Helper.ClipboardText = CopyCodeToggleStatement(targets);
+                        if (type == typeof(ElementDragDropEditor)) Helper.ClipboardText = CopyCodeDragDropStatement(targets);
+                        if (type == typeof(ElementTextEditor)) Helper.ClipboardText = CopyCodeTextStatement(targets);
+                        if (type == typeof(ElementInputFieldEditor)) Helper.ClipboardText = CopyCodeInputFieldStatement(targets);
+                        if (type == typeof(ElementSliderEditor)) Helper.ClipboardText = CopyCodeSliderStatement(targets);
+                        if (type == typeof(ElementDropdownEditor)) Helper.ClipboardText = CopyCodeDropdownStatement(targets);
+                        if (type == typeof(ElementCanvasGroupEditor)) Helper.ClipboardText = CopyCodeCanvasGroupStatement(targets);
+                        if (type == typeof(ReferenceEditor)) Helper.ClipboardText = CopyCodeReferenceStatement(targets);
+                        break;
+                    }
+                    // These choice only apply to CanvasGroup
+            }
+        }
+
+        private static string CopyCodeButtonStatement(Object[] targets)
+        {
+            var constantStatements = string.Empty;
+            var elementStatements = string.Empty;
+            var settings = ImmediateStyleSettings.LoadInstance();
+            foreach (var t in targets) {
+                var element = (ElementButton)t;
+                var id = element.ElementData.ID;
+                var (constantStatement, constant) = BuildConstantStatement(id);
+                if (!settings.inlineClipboardGUIDS) {
+                    var elementStatement = BuildButtonStatement(constant);
+                    constantStatements += constantStatement + Environment.NewLine;
+                    elementStatements += elementStatement + Environment.NewLine;
+                } else {
+                    var elementStatement = BuildButtonStatement($"\"{id}\"");
+                    elementStatements += elementStatement + Environment.NewLine;
+                }
+            }
+
+            return constantStatements + elementStatements;
+        }
+
+        private static string CopyCodeImageStatement(Object[] targets)
+        {
+            var constantStatements = string.Empty;
+            var elementStatements = string.Empty;
+            var settings = ImmediateStyleSettings.LoadInstance();
+            foreach (var t in targets) {
+                var element = (ElementImage)t;
+                var id = element.ElementData.ID;
+                var (constantStatement, constant) = BuildConstantStatement(id);
+                if (!settings.inlineClipboardGUIDS) {
+                    var elementStatement = BuildImageStatement(constant);
+                    constantStatements += constantStatement + Environment.NewLine;
+                    elementStatements += elementStatement + Environment.NewLine;
+                } else {
+                    var elementStatement = BuildImageStatement($"\"{id}\"");
+                    elementStatements += elementStatement + Environment.NewLine;
+                }
+            }
+
+            return constantStatements + elementStatements;
+        }
+
+        private static string CopyCodeToggleStatement(Object[] targets)
+        {
+            var constantStatements = string.Empty;
+            var elementStatements = string.Empty;
+            var settings = ImmediateStyleSettings.LoadInstance();
+            foreach (var t in targets) {
+                var element = (ElementToggle)t;
+                var id = element.ElementData.ID;
+                var (constantStatement, constant) = BuildConstantStatement(id);
+                if (!settings.inlineClipboardGUIDS) {
+                    var elementStatement = BuildToggleStatement(constant);
+                    constantStatements += constantStatement + Environment.NewLine;
+                    elementStatements += elementStatement + Environment.NewLine;
+                } else {
+                    var elementStatement = BuildToggleStatement($"\"{id}\"");
+                    elementStatements += elementStatement + Environment.NewLine;
+                }
+            }
+
+            return constantStatements + elementStatements;
+        }
+
+        private static string CopyCodeDragDropStatement(Object[] targets)
+        {
+            var constantStatements = string.Empty;
+            var elementStatements = string.Empty;
+            var settings = ImmediateStyleSettings.LoadInstance();
+            foreach (var t in targets) {
+                var element = (ElementDragDrop)t;
+                var id = element.ElementData.ID;
+                var (constantStatement, constant) = BuildConstantStatement(id);
+                if (!settings.inlineClipboardGUIDS) {
+                    var elementStatement = BuildDragDropStatement(constant);
+                    constantStatements += constantStatement + Environment.NewLine;
+                    elementStatements += elementStatement + Environment.NewLine;
+                } else {
+                    var elementStatement = BuildDragDropStatement($"\"{id}\"");
+                    elementStatements += elementStatement + Environment.NewLine;
+                }
+            }
+
+            return constantStatements + elementStatements;
+        }
+
+        private static string CopyCodeTextStatement(Object[] targets)
+        {
+            var constantStatements = string.Empty;
+            var elementStatements = string.Empty;
+            var settings = ImmediateStyleSettings.LoadInstance();
+            foreach (var t in targets) {
+                var element = (ElementText)t;
+                var id = element.ElementData.ID;
+                var (constantStatement, constant) = BuildConstantStatement(id);
+                if (!settings.inlineClipboardGUIDS) {
+                    var elementStatement = BuildTextStatement(constant);
+                    constantStatements += constantStatement + Environment.NewLine;
+                    elementStatements += elementStatement + Environment.NewLine;
+                } else {
+                    var elementStatement = BuildTextStatement($"\"{id}\"");
+                    elementStatements += elementStatement + Environment.NewLine;
+                }
+            }
+
+            return constantStatements + elementStatements;
+        }
+
+        private static string CopyCodeInputFieldStatement(Object[] targets)
+        {
+            var constantStatements = string.Empty;
+            var elementStatements = string.Empty;
+            var settings = ImmediateStyleSettings.LoadInstance();
+            foreach (var t in targets) {
+                var element = (ElementInputField)t;
+                var id = element.ElementData.ID;
+                var (constantStatement, constant) = BuildConstantStatement(id);
+                if (!settings.inlineClipboardGUIDS) {
+                    var elementStatement = BuildInputFieldStatement(constant);
+                    constantStatements += constantStatement + Environment.NewLine;
+                    elementStatements += elementStatement + Environment.NewLine;
+                } else {
+                    var elementStatement = BuildInputFieldStatement($"\"{id}\"");
+                    elementStatements += elementStatement + Environment.NewLine;
+                }
+            }
+
+            return constantStatements + elementStatements;
+        }
+
+        private static string CopyCodeSliderStatement(Object[] targets)
+        {
+            var constantStatements = string.Empty;
+            var elementStatements = string.Empty;
+            var settings = ImmediateStyleSettings.LoadInstance();
+            foreach (var t in targets) {
+                var element = (ElementSlider)t;
+                var id = element.ElementData.ID;
+                var (constantStatement, constant) = BuildConstantStatement(id);
+                if (!settings.inlineClipboardGUIDS) {
+                    var elementStatement = BuildSliderStatement(constant);
+                    constantStatements += constantStatement + Environment.NewLine;
+                    elementStatements += elementStatement + Environment.NewLine;
+                } else {
+                    var elementStatement = BuildSliderStatement($"\"{id}\"");
+                    elementStatements += elementStatement + Environment.NewLine;
+                }
+            }
+
+            return constantStatements + elementStatements;
+        }
+
+        private static string CopyCodeDropdownStatement(Object[] targets)
+        {
+            var constantStatements = string.Empty;
+            var elementStatements = string.Empty;
+            var settings = ImmediateStyleSettings.LoadInstance();
+            foreach (var t in targets) {
+                var element = (ElementDropdown)t;
+                var id = element.ElementData.ID;
+                var (constantStatement, constant) = BuildConstantStatement(id);
+                if (!settings.inlineClipboardGUIDS) {
+                    var elementStatement = BuildDropdownStatement(constant);
+                    constantStatements += constantStatement + Environment.NewLine;
+                    elementStatements += elementStatement + Environment.NewLine;
+                } else {
+                    var elementStatement = BuildDropdownStatement($"\"{id}\"");
+                    elementStatements += elementStatement + Environment.NewLine;
+                }
+            }
+
+            return constantStatements + elementStatements;
+        }
+
+        private static string CopyCodeCanvasGroupStatement(Object[] targets)
+        {
+            var constantStatements = string.Empty;
+            var elementStatements = string.Empty;
+            var settings = ImmediateStyleSettings.LoadInstance();
+            foreach (var t in targets) {
+                var element = (ElementCanvasGroup)t;
+                var id = element.ElementData.ID;
+                var (constantStatement, constant) = BuildConstantStatement(id);
+                if (!settings.inlineClipboardGUIDS) {
+                    var elementStatement = BuildCanvasGroupStatement(constant);
+                    constantStatements += constantStatement + Environment.NewLine;
+                    elementStatements += elementStatement + Environment.NewLine;
+                } else {
+                    var elementStatement = BuildCanvasGroupStatement($"\"{id}\"");
+                    elementStatements += elementStatement + Environment.NewLine;
+                }
+            }
+
+            return constantStatements + elementStatements;
+        }
+
+        private static string CopyCodeReferenceStatement(Object[] targets)
+        {
+            var statements = string.Empty;
+            var settings = ImmediateStyleSettings.LoadInstance();
+            var resultStatement = string.Empty;
+            foreach (var t in targets) {
+                var element = (Reference)t;
+                var id = element.ElementData.ID;
+                var (constantStatement, constant) = BuildConstantStatement(id);
+                if (settings.inlineClipboardGUIDS) {
+                    constantStatement = string.Empty;
+                    constant = $"\"{id}\"";
+                }
+                if (element.GetComponent<CanvasGroup>() != null) {
+                    var elementStatement = BuildReferenceStatement(constant, nameof(CanvasGroup));
+                    statements += constantStatement + Environment.NewLine + elementStatement;
+                } else if (element.GetComponent<Button>() != null) {
+                    var elementStatement = BuildReferenceStatement(constant, nameof(Button));
+                    statements += constantStatement + Environment.NewLine + elementStatement;
+                } else {
+                    // Default to the first other component we come across
+                    var components = element.gameObject.GetComponents<Component>();
+                    Debug.Assert(components.Length >= 2, "Have reference and at least Transform");
+                    var result = 0;
+                    for (var i = components.Length - 1; i >= 0; i--) {
+                        if (components[i] == element) continue;
+                        if (components[i].GetType().Name == nameof(CanvasRenderer)) continue;
+                        if (components[i].GetType().Name == nameof(Element)) continue;
+                        if (components[i].GetType().Name == nameof(ElementButton)) continue;
+                        if (components[i].GetType().Name == nameof(ElementCanvasGroup)) continue;
+                        if (components[i].GetType().Name == nameof(ElementDragDrop)) continue;
+                        if (components[i].GetType().Name == nameof(ElementDropdown)) continue;
+                        if (components[i].GetType().Name == nameof(ElementImage)) continue;
+                        if (components[i].GetType().Name == nameof(ElementInputField)) continue;
+                        if (components[i].GetType().Name == nameof(ElementSlider)) continue;
+                        if (components[i].GetType().Name == nameof(ElementText)) continue;
+                        if (components[i].GetType().Name == nameof(ElementToggle)) continue;
+
+                        result = i;
+                        break;
+                    }
+                    var elementStatement = BuildReferenceStatement(constant, components[result].GetType().Name);
+                    statements += constantStatement + Environment.NewLine + elementStatement;
+                }
+
+                resultStatement = statements + Environment.NewLine;
+            }
+
+            return resultStatement;
+        }
+
         public static string BuildConstantStatements(Object[] targets)
         {
             var statements = string.Empty;
@@ -118,13 +390,30 @@ namespace MoonlitSystem.Editors
             ForLoopTemplate,
         }
 
-        public static Choice RenderButtons()
+        public static Choice RenderUserSelections(Object[] targets)
         {
+            ElementDataEditor.Render(targets);
             if (GUILayout.Button("Copy ID")) return Choice.CopyID;
             if (GUILayout.Button("Regenerate ID")) return Choice.RegenerateRandomID;
             if (GUILayout.Button("Use Game Object Name as ID")) return Choice.UseGameObjectNameID;
             EditorGUILayout.Space();
             if (GUILayout.Button("Clipboard Code Snippet")) return Choice.CopyCode;
+            return default;
+        }
+
+        public static Choice RenderCanvasGroupUserSelections(Object[] targets)
+        {
+            ElementDataEditor.Render(targets);
+            if (GUILayout.Button("Copy ID")) return Choice.CopyID;
+            if (GUILayout.Button("Regenerate ID")) return Choice.RegenerateRandomID;
+            EditorGUILayout.Space();
+            if (GUILayout.Button("Clipboard Code Snippet")) return Choice.CopyCode;
+            GUILayout.Label("w/ Children");
+            using (new HorizontalScope()) {
+                if (GUILayout.Button("Code For-Loop")) return Choice.ForLoopTemplate;
+                if (GUILayout.Button("Code Individual")) return Choice.ElementTemplate;
+            }
+            if (GUILayout.Button("Create Full Code File")) return Choice.FileTemplate;
             return default;
         }
 
@@ -150,364 +439,9 @@ namespace MoonlitSystem.Editors
     public class ElementButtonEditor : Editor
     {
         private GameObject m_ThisObjRef;
-        private void OnEnable()
-        {
-            m_ThisObjRef = ((ElementButton)target).gameObject;
-        }
-
-        private void OnDestroy()
-        {
-            UI.ElementDestroy(m_ThisObjRef, target);
-        }
-
-        public override void OnInspectorGUI()
-        {
-            ElementDataEditor.Render(targets);
-
-            switch (RenderButtons()) {
-                case Choice.CopyID: Helper.ClipboardText = Builder.BuildConstantStatements(targets); break;
-                case Choice.CopyCode: Helper.ClipboardText = CopyCodeButtonStatement(targets); break;
-                case Choice.RegenerateRandomID: Builder.RegenerateRandomIDsForTargets(targets); break;
-                case Choice.UseGameObjectNameID: Builder.UseGameObjectNameIDsForTargets(targets); break;
-            }
-        }
-
-        private static string CopyCodeButtonStatement(Object[] objects)
-        {
-            var constantStatements = string.Empty;
-            var elementStatements = string.Empty;
-            var settings = ImmediateStyleSettings.LoadInstance();
-            foreach (var t in objects) {
-                var element = (ElementButton)t;
-                var id = element.ElementData.ID;
-                var (constantStatement, constant) = Builder.BuildConstantStatement(id);
-                if (!settings.inlineClipboardGUIDS) {
-                    var elementStatement = Builder.BuildButtonStatement(constant);
-                    constantStatements += constantStatement + Environment.NewLine;
-                    elementStatements += elementStatement + Environment.NewLine;
-                } else {
-                    var elementStatement = Builder.BuildButtonStatement($"\"{id}\"");
-                    elementStatements += elementStatement + Environment.NewLine;
-                }
-            }
-
-            return constantStatements + elementStatements;
-        }
-    }
-
-    [CustomEditor(typeof(ElementCanvasGroup), true)]
-    [CanEditMultipleObjects]
-    public class ElementCanvasGroupEditor : Editor
-    {
-        private GameObject m_ThisObjRef;
-        private void OnEnable()
-        {
-            m_ThisObjRef = ((ElementCanvasGroup)target).gameObject;
-        }
-
-        private void OnDestroy()
-        {
-            UI.ElementDestroy(m_ThisObjRef, target);
-        }
-
-        public override void OnInspectorGUI()
-        {
-            ElementDataEditor.Render(targets);
-
-            Choice choice = default;
-            if (GUILayout.Button("Copy ID")) choice = Choice.CopyID;
-            if (GUILayout.Button("Regenerate ID")) choice = Choice.RegenerateRandomID;
-            EditorGUILayout.Space();
-            if (GUILayout.Button("Clipboard Code Snippet")) choice = Choice.CopyCode;
-            GUILayout.Label("w/ Children");
-            using (new HorizontalScope()) {
-                if (GUILayout.Button("Code For-Loop")) choice = Choice.ForLoopTemplate;
-                if (GUILayout.Button("Code Individual")) choice = Choice.ElementTemplate;
-            }
-            if (GUILayout.Button("Create Full Code File")) choice = Choice.FileTemplate;
-
-            if (choice == Choice.CopyID) {
-                Helper.ClipboardText = Builder.BuildConstantStatements(targets);
-            } else if (choice == Choice.CopyCode) {
-                var constantStatements = string.Empty;
-                var elementStatements = string.Empty;
-                var settings = ImmediateStyleSettings.LoadInstance();
-                foreach (var t in targets) {
-                    var element = (ElementCanvasGroup)t;
-                    var id = element.ElementData.ID;
-                    var (constantStatement, constant) = Builder.BuildConstantStatement(id);
-                    if (!settings.inlineClipboardGUIDS) {
-                        var elementStatement = Builder.BuildCanvasGroupStatement(constant);
-                        constantStatements += constantStatement + Environment.NewLine;
-                        elementStatements += elementStatement + Environment.NewLine;
-                    } else {
-                        var elementStatement = Builder.BuildCanvasGroupStatement($"\"{id}\"");
-                        elementStatements += elementStatement + Environment.NewLine;
-                    }
-                }
-                Helper.ClipboardText = constantStatements + elementStatements;
-            } else if (choice == Choice.RegenerateRandomID) {
-                Builder.RegenerateRandomIDsForTargets(targets);
-            } else if (choice == Choice.FileTemplate) {
-                var element = (ElementCanvasGroup)target;
-                ImmediateUITemplate.BuildParams buildParams = default;
-                buildParams.RootCanvasGroup.GameObject_Name = element.name;
-                buildParams.RootCanvasGroup.Element_ID = element.ElementData.ID;
-                buildParams.RootMapping_ID = element.GetComponent<RootMapping>() != null ? element.GetComponent<RootMapping>().ID : string.Empty;
-                {
-                    var elements = element.GetComponentsInChildren<ElementText>();
-                    var elementInfo = new List<ImmediateUITemplate.ElementInfo>();
-                    foreach (var t in elements) {
-                        elementInfo.Add(new ImmediateUITemplate.ElementInfo { GameObject_Name = t.name, Element_ID = t.ElementData.ID });
-                    }
-                    buildParams.Texts = elementInfo.ToArray();
-                }
-                {
-                    var elements = element.GetComponentsInChildren<ElementImage>();
-                    var elementInfo = new List<ImmediateUITemplate.ElementInfo>();
-                    foreach (var t in elements) {
-                        elementInfo.Add(new ImmediateUITemplate.ElementInfo { GameObject_Name = t.name, Element_ID = t.ElementData.ID });
-                    }
-                    buildParams.Images = elementInfo.ToArray();
-                }
-                {
-                    var elements = element.GetComponentsInChildren<ElementCanvasGroup>();
-                    var elementInfo = new List<ImmediateUITemplate.ElementInfo>();
-
-                    var items = new HashSet<ElementCanvasGroup>(elements);
-                    items.Remove(element);
-                    elements = items.ToArray();
-
-                    foreach (var t in elements) {
-                        elementInfo.Add(new ImmediateUITemplate.ElementInfo { GameObject_Name = t.name, Element_ID = t.ElementData.ID });
-                    }
-                    buildParams.CanvasGroups = elementInfo.ToArray();
-                }
-                {
-                    var elements = element.GetComponentsInChildren<ElementButton>();
-                    var elementInfo = new List<ImmediateUITemplate.ElementInfo>();
-                    foreach (var t in elements) {
-                        elementInfo.Add(new ImmediateUITemplate.ElementInfo { GameObject_Name = t.name, Element_ID = t.ElementData.ID });
-                    }
-                    buildParams.Buttons = elementInfo.ToArray();
-                }
-                {
-                    var elements = element.GetComponentsInChildren<ElementToggle>();
-                    var elementInfo = new List<ImmediateUITemplate.ElementInfo>();
-                    foreach (var t in elements) {
-                        elementInfo.Add(new ImmediateUITemplate.ElementInfo { GameObject_Name = t.name, Element_ID = t.ElementData.ID });
-                    }
-                    buildParams.Toggles = elementInfo.ToArray();
-                }
-                {
-                    var elements = element.GetComponentsInChildren<ElementSlider>();
-                    var elementInfo = new List<ImmediateUITemplate.ElementInfo>();
-                    foreach (var t in elements) {
-                        elementInfo.Add(new ImmediateUITemplate.ElementInfo { GameObject_Name = t.name, Element_ID = t.ElementData.ID });
-                    }
-                    buildParams.Sliders = elementInfo.ToArray();
-                }
-                {
-                    var elements = element.GetComponentsInChildren<ElementDragDrop>();
-                    var elementInfo = new List<ImmediateUITemplate.ElementInfo>();
-                    foreach (var t in elements) {
-                        elementInfo.Add(new ImmediateUITemplate.ElementInfo { GameObject_Name = t.name, Element_ID = t.ElementData.ID });
-                    }
-                    buildParams.DragDrops = elementInfo.ToArray();
-                }
-                {
-                    var elements = element.GetComponentsInChildren<ElementDropdown>();
-                    var elementInfo = new List<ImmediateUITemplate.ElementInfo>();
-                    foreach (var t in elements) {
-                        elementInfo.Add(new ImmediateUITemplate.ElementInfo { GameObject_Name = t.name, Element_ID = t.ElementData.ID });
-                    }
-                    buildParams.Dropdowns = elementInfo.ToArray();
-                }
-                {
-                    var elements = element.GetComponentsInChildren<ElementInputField>();
-                    var elementInfo = new List<ImmediateUITemplate.ElementInfo>();
-                    foreach (var t in elements) {
-                        elementInfo.Add(new ImmediateUITemplate.ElementInfo { GameObject_Name = t.name, Element_ID = t.ElementData.ID });
-                    }
-                    buildParams.InputFields = elementInfo.ToArray();
-                }
-
-                ImmediateUITemplate.Build(buildParams);
-            } else if (choice == Choice.ElementTemplate) {
-                var element = (ElementCanvasGroup)target;
-                ImmediateUITemplate.BuildParams buildParams = default;
-                buildParams.RootCanvasGroup.GameObject_Name = element.name;
-                buildParams.RootCanvasGroup.Element_ID = element.ElementData.ID;
-                buildParams.RootMapping_ID = element.GetComponent<RootMapping>() != null ? element.GetComponent<RootMapping>().ID : string.Empty;
-                {
-                    var elements = element.GetComponentsInChildren<ElementText>();
-                    var elementInfo = new List<ImmediateUITemplate.ElementInfo>();
-                    foreach (var t in elements) {
-                        elementInfo.Add(new ImmediateUITemplate.ElementInfo { GameObject_Name = t.name, Element_ID = t.ElementData.ID });
-                    }
-                    buildParams.Texts = elementInfo.ToArray();
-                }
-                {
-                    var elements = element.GetComponentsInChildren<ElementImage>();
-                    var elementInfo = new List<ImmediateUITemplate.ElementInfo>();
-                    foreach (var t in elements) {
-                        elementInfo.Add(new ImmediateUITemplate.ElementInfo { GameObject_Name = t.name, Element_ID = t.ElementData.ID });
-                    }
-                    buildParams.Images = elementInfo.ToArray();
-                }
-                {
-                    var elements = element.GetComponentsInChildren<ElementCanvasGroup>();
-                    var elementInfo = new List<ImmediateUITemplate.ElementInfo>();
-
-                    var items = new HashSet<ElementCanvasGroup>(elements);
-                    items.Remove(element);
-                    elements = items.ToArray();
-
-                    foreach (var t in elements) {
-                        elementInfo.Add(new ImmediateUITemplate.ElementInfo { GameObject_Name = t.name, Element_ID = t.ElementData.ID });
-                    }
-                    buildParams.CanvasGroups = elementInfo.ToArray();
-                }
-                {
-                    var elements = element.GetComponentsInChildren<ElementButton>();
-                    var elementInfo = new List<ImmediateUITemplate.ElementInfo>();
-                    foreach (var t in elements) {
-                        elementInfo.Add(new ImmediateUITemplate.ElementInfo { GameObject_Name = t.name, Element_ID = t.ElementData.ID });
-                    }
-                    buildParams.Buttons = elementInfo.ToArray();
-                }
-                {
-                    var elements = element.GetComponentsInChildren<ElementToggle>();
-                    var elementInfo = new List<ImmediateUITemplate.ElementInfo>();
-                    foreach (var t in elements) {
-                        elementInfo.Add(new ImmediateUITemplate.ElementInfo { GameObject_Name = t.name, Element_ID = t.ElementData.ID });
-                    }
-                    buildParams.Toggles = elementInfo.ToArray();
-                }
-                {
-                    var elements = element.GetComponentsInChildren<ElementSlider>();
-                    var elementInfo = new List<ImmediateUITemplate.ElementInfo>();
-                    foreach (var t in elements) {
-                        elementInfo.Add(new ImmediateUITemplate.ElementInfo { GameObject_Name = t.name, Element_ID = t.ElementData.ID });
-                    }
-                    buildParams.Sliders = elementInfo.ToArray();
-                }
-                {
-                    var elements = element.GetComponentsInChildren<ElementDragDrop>();
-                    var elementInfo = new List<ImmediateUITemplate.ElementInfo>();
-                    foreach (var t in elements) {
-                        elementInfo.Add(new ImmediateUITemplate.ElementInfo { GameObject_Name = t.name, Element_ID = t.ElementData.ID });
-                    }
-                    buildParams.DragDrops = elementInfo.ToArray();
-                }
-                {
-                    var elements = element.GetComponentsInChildren<ElementDropdown>();
-                    var elementInfo = new List<ImmediateUITemplate.ElementInfo>();
-                    foreach (var t in elements) {
-                        elementInfo.Add(new ImmediateUITemplate.ElementInfo { GameObject_Name = t.name, Element_ID = t.ElementData.ID });
-                    }
-                    buildParams.Dropdowns = elementInfo.ToArray();
-                }
-                {
-                    var elements = element.GetComponentsInChildren<ElementInputField>();
-                    var elementInfo = new List<ImmediateUITemplate.ElementInfo>();
-                    foreach (var t in elements) {
-                        elementInfo.Add(new ImmediateUITemplate.ElementInfo { GameObject_Name = t.name, Element_ID = t.ElementData.ID });
-                    }
-                    buildParams.InputFields = elementInfo.ToArray();
-                }
-
-                var code = ImmediateUITemplate.BuildString(buildParams, ImmediateUITemplate.Name.ElementsExtension);
-                Helper.ClipboardText = code;
-            } else if (choice == Choice.ForLoopTemplate) {
-                var element = (ElementCanvasGroup)target;
-                ImmediateUITemplate.BuildParams buildParams;
-                buildParams.RootCanvasGroup.GameObject_Name = element.name;
-                buildParams.RootCanvasGroup.Element_ID = element.ElementData.ID;
-                buildParams.RootMapping_ID = element.GetComponent<RootMapping>() != null ? element.GetComponent<RootMapping>().ID : string.Empty;
-                buildParams.ForLoop = true;
-                {
-                    var elements = element.GetComponentsInChildren<ElementText>();
-                    var elementInfo = new List<ImmediateUITemplate.ElementInfo>();
-                    foreach (var t in elements) {
-                        elementInfo.Add(new ImmediateUITemplate.ElementInfo { GameObject_Name = t.name, Element_ID = t.ElementData.ID });
-                    }
-                    buildParams.Texts = elementInfo.ToArray();
-                }
-                {
-                    var elements = element.GetComponentsInChildren<ElementImage>();
-                    var elementInfo = new List<ImmediateUITemplate.ElementInfo>();
-                    foreach (var t in elements) {
-                        elementInfo.Add(new ImmediateUITemplate.ElementInfo { GameObject_Name = t.name, Element_ID = t.ElementData.ID });
-                    }
-                    buildParams.Images = elementInfo.ToArray();
-                }
-                {
-                    var elements = element.GetComponentsInChildren<ElementCanvasGroup>();
-                    var elementInfo = new List<ImmediateUITemplate.ElementInfo>();
-
-                    var items = new HashSet<ElementCanvasGroup>(elements);
-                    items.Remove(element);
-                    elements = items.ToArray();
-
-                    foreach (var t in elements) {
-                        elementInfo.Add(new ImmediateUITemplate.ElementInfo { GameObject_Name = t.name, Element_ID = t.ElementData.ID });
-                    }
-                    buildParams.CanvasGroups = elementInfo.ToArray();
-                }
-                {
-                    var elements = element.GetComponentsInChildren<ElementButton>();
-                    var elementInfo = new List<ImmediateUITemplate.ElementInfo>();
-                    foreach (var t in elements) {
-                        elementInfo.Add(new ImmediateUITemplate.ElementInfo { GameObject_Name = t.name, Element_ID = t.ElementData.ID });
-                    }
-                    buildParams.Buttons = elementInfo.ToArray();
-                }
-                {
-                    var elements = element.GetComponentsInChildren<ElementToggle>();
-                    var elementInfo = new List<ImmediateUITemplate.ElementInfo>();
-                    foreach (var t in elements) {
-                        elementInfo.Add(new ImmediateUITemplate.ElementInfo { GameObject_Name = t.name, Element_ID = t.ElementData.ID });
-                    }
-                    buildParams.Toggles = elementInfo.ToArray();
-                }
-                {
-                    var elements = element.GetComponentsInChildren<ElementSlider>();
-                    var elementInfo = new List<ImmediateUITemplate.ElementInfo>();
-                    foreach (var t in elements) {
-                        elementInfo.Add(new ImmediateUITemplate.ElementInfo { GameObject_Name = t.name, Element_ID = t.ElementData.ID });
-                    }
-                    buildParams.Sliders = elementInfo.ToArray();
-                }
-                {
-                    var elements = element.GetComponentsInChildren<ElementDragDrop>();
-                    var elementInfo = new List<ImmediateUITemplate.ElementInfo>();
-                    foreach (var t in elements) {
-                        elementInfo.Add(new ImmediateUITemplate.ElementInfo { GameObject_Name = t.name, Element_ID = t.ElementData.ID });
-                    }
-                    buildParams.DragDrops = elementInfo.ToArray();
-                }
-                {
-                    var elements = element.GetComponentsInChildren<ElementDropdown>();
-                    var elementInfo = new List<ImmediateUITemplate.ElementInfo>();
-                    foreach (var t in elements) {
-                        elementInfo.Add(new ImmediateUITemplate.ElementInfo { GameObject_Name = t.name, Element_ID = t.ElementData.ID });
-                    }
-                    buildParams.Dropdowns = elementInfo.ToArray();
-                }
-                {
-                    var elements = element.GetComponentsInChildren<ElementInputField>();
-                    var elementInfo = new List<ImmediateUITemplate.ElementInfo>();
-                    foreach (var t in elements) {
-                        elementInfo.Add(new ImmediateUITemplate.ElementInfo { GameObject_Name = t.name, Element_ID = t.ElementData.ID });
-                    }
-                    buildParams.InputFields = elementInfo.ToArray();
-                }
-
-                var code = ImmediateUITemplate.BuildString(buildParams, ImmediateUITemplate.Name.ElementsExtension);
-                Helper.ClipboardText = code;
-            }
-        }
+        private void OnEnable() => m_ThisObjRef = ((ElementButton)target).gameObject;
+        private void OnDestroy() => UI.ElementDestroy(m_ThisObjRef, target);
+        public override void OnInspectorGUI() => Builder.HandleUserChoice(RenderUserSelections(targets), targets, GetType());
     }
 
     [CustomEditor(typeof(ElementImage), true)]
@@ -515,47 +449,9 @@ namespace MoonlitSystem.Editors
     public class ElementImageEditor : Editor
     {
         private GameObject m_ThisObjRef;
-        private void OnEnable()
-        {
-            m_ThisObjRef = ((ElementImage)target).gameObject;
-        }
-
-        private void OnDestroy()
-        {
-            UI.ElementDestroy(m_ThisObjRef, target);
-        }
-
-        public override void OnInspectorGUI()
-        {
-            ElementDataEditor.Render(targets);
-
-            var choice = RenderButtons();
-            if (choice == Choice.CopyID) {
-                Helper.ClipboardText = Builder.BuildConstantStatements(targets);
-            } else if (choice == Choice.CopyCode) {
-                var constantStatements = string.Empty;
-                var elementStatements = string.Empty;
-                var settings = ImmediateStyleSettings.LoadInstance();
-                foreach (var t in targets) {
-                    var element = (ElementImage)t;
-                    var id = element.ElementData.ID;
-                    var (constantStatement, constant) = Builder.BuildConstantStatement(id);
-                    if (!settings.inlineClipboardGUIDS) {
-                        var elementStatement = Builder.BuildImageStatement(constant);
-                        constantStatements += constantStatement + Environment.NewLine;
-                        elementStatements += elementStatement + Environment.NewLine;
-                    } else {
-                        var elementStatement = Builder.BuildImageStatement($"\"{id}\"");
-                        elementStatements += elementStatement + Environment.NewLine;
-                    }
-                }
-                Helper.ClipboardText = constantStatements + elementStatements;
-            } else if (choice == Choice.RegenerateRandomID) {
-                Builder.RegenerateRandomIDsForTargets(targets);
-            } else if (choice == Choice.UseGameObjectNameID) {
-                Builder.UseGameObjectNameIDsForTargets(targets);
-            }
-        }
+        private void OnEnable() => m_ThisObjRef = ((ElementImage)target).gameObject;
+        private void OnDestroy() => UI.ElementDestroy(m_ThisObjRef, target);
+        public override void OnInspectorGUI() => Builder.HandleUserChoice(RenderUserSelections(targets), targets, GetType());
     }
 
     [CustomEditor(typeof(ElementToggle), true)]
@@ -563,47 +459,9 @@ namespace MoonlitSystem.Editors
     public class ElementToggleEditor : Editor
     {
         private GameObject m_ThisObjRef;
-        private void OnEnable()
-        {
-            m_ThisObjRef = ((ElementToggle)target).gameObject;
-        }
-
-        private void OnDestroy()
-        {
-            UI.ElementDestroy(m_ThisObjRef, target);
-        }
-
-        public override void OnInspectorGUI()
-        {
-            ElementDataEditor.Render(targets);
-
-            var choice = RenderButtons();
-            if (choice == Choice.CopyID) {
-                Helper.ClipboardText = Builder.BuildConstantStatements(targets);
-            } else if (choice == Choice.CopyCode) {
-                var constantStatements = string.Empty;
-                var elementStatements = string.Empty;
-                var settings = ImmediateStyleSettings.LoadInstance();
-                foreach (var t in targets) {
-                    var element = (ElementToggle)t;
-                    var id = element.ElementData.ID;
-                    var (constantStatement, constant) = Builder.BuildConstantStatement(id);
-                    if (!settings.inlineClipboardGUIDS) {
-                        var elementStatement = Builder.BuildToggleStatement(constant);
-                        constantStatements += constantStatement + Environment.NewLine;
-                        elementStatements += elementStatement + Environment.NewLine;
-                    } else {
-                        var elementStatement = Builder.BuildToggleStatement($"\"{id}\"");
-                        elementStatements += elementStatement + Environment.NewLine;
-                    }
-                }
-                Helper.ClipboardText = constantStatements + elementStatements;
-            } else if (choice == Choice.RegenerateRandomID) {
-                Builder.RegenerateRandomIDsForTargets(targets);
-            } else if (choice == Choice.UseGameObjectNameID) {
-                Builder.UseGameObjectNameIDsForTargets(targets);
-            }
-        }
+        private void OnEnable() => m_ThisObjRef = ((ElementToggle)target).gameObject;
+        private void OnDestroy() => UI.ElementDestroy(m_ThisObjRef, target);
+        public override void OnInspectorGUI() => Builder.HandleUserChoice(RenderUserSelections(targets), targets, GetType());
     }
 
     [CustomEditor(typeof(ElementDragDrop), true)]
@@ -611,47 +469,9 @@ namespace MoonlitSystem.Editors
     public class ElementDragDropEditor : Editor
     {
         private GameObject m_ThisObjRef;
-        private void OnEnable()
-        {
-            m_ThisObjRef = ((ElementDragDrop)target).gameObject;
-        }
-
-        private void OnDestroy()
-        {
-            UI.ElementDestroy(m_ThisObjRef, target);
-        }
-
-        public override void OnInspectorGUI()
-        {
-            ElementDataEditor.Render(targets);
-
-            var choice = RenderButtons();
-            if (choice == Choice.CopyID) {
-                Helper.ClipboardText = Builder.BuildConstantStatements(targets);
-            } else if (choice == Choice.CopyCode) {
-                var constantStatements = string.Empty;
-                var elementStatements = string.Empty;
-                var settings = ImmediateStyleSettings.LoadInstance();
-                foreach (var t in targets) {
-                    var element = (ElementDragDrop)t;
-                    var id = element.ElementData.ID;
-                    var (constantStatement, constant) = Builder.BuildConstantStatement(id);
-                    if (!settings.inlineClipboardGUIDS) {
-                        var elementStatement = Builder.BuildDragDropStatement(constant);
-                        constantStatements += constantStatement + Environment.NewLine;
-                        elementStatements += elementStatement + Environment.NewLine;
-                    } else {
-                        var elementStatement = Builder.BuildDragDropStatement($"\"{id}\"");
-                        elementStatements += elementStatement + Environment.NewLine;
-                    }
-                }
-                Helper.ClipboardText = constantStatements + elementStatements;
-            } else if (choice == Choice.RegenerateRandomID) {
-                Builder.RegenerateRandomIDsForTargets(targets);
-            } else if (choice == Choice.UseGameObjectNameID) {
-                Builder.UseGameObjectNameIDsForTargets(targets);
-            }
-        }
+        private void OnEnable() => m_ThisObjRef = ((ElementDragDrop)target).gameObject;
+        private void OnDestroy() => UI.ElementDestroy(m_ThisObjRef, target);
+        public override void OnInspectorGUI() => Builder.HandleUserChoice(RenderUserSelections(targets), targets, GetType());
     }
 
     [CustomEditor(typeof(ElementText), true)]
@@ -659,96 +479,19 @@ namespace MoonlitSystem.Editors
     public class ElementTextEditor : Editor
     {
         private GameObject m_ThisObjRef;
-        private void OnEnable()
-        {
-            m_ThisObjRef = ((ElementText)target).gameObject;
-        }
-
-        private void OnDestroy()
-        {
-            UI.ElementDestroy(m_ThisObjRef, target);
-        }
-
-        public override void OnInspectorGUI()
-        {
-            ElementDataEditor.Render(targets);
-
-            var choice = RenderButtons();
-            if (choice == Choice.CopyID) {
-                Helper.ClipboardText = Builder.BuildConstantStatements(targets);
-            } else if (choice == Choice.CopyCode) {
-                var constantStatements = string.Empty;
-                var elementStatements = string.Empty;
-                var settings = ImmediateStyleSettings.LoadInstance();
-                foreach (var t in targets) {
-                    var element = (ElementText)t;
-                    var id = element.ElementData.ID;
-                    var (constantStatement, constant) = Builder.BuildConstantStatement(id);
-                    if (!settings.inlineClipboardGUIDS) {
-                        var elementStatement = Builder.BuildTextStatement(constant);
-                        constantStatements += constantStatement + Environment.NewLine;
-                        elementStatements += elementStatement + Environment.NewLine;
-                    } else {
-                        var elementStatement = Builder.BuildTextStatement($"\"{id}\"");
-                        elementStatements += elementStatement + Environment.NewLine;
-                    }
-                }
-                Helper.ClipboardText = constantStatements + elementStatements;
-            } else if (choice == Choice.RegenerateRandomID) {
-                Builder.RegenerateRandomIDsForTargets(targets);
-            } else if (choice == Choice.UseGameObjectNameID) {
-                Builder.UseGameObjectNameIDsForTargets(targets);
-            }
-        }
+        private void OnEnable() => m_ThisObjRef = ((ElementText)target).gameObject;
+        private void OnDestroy() => UI.ElementDestroy(m_ThisObjRef, target);
+        public override void OnInspectorGUI() => Builder.HandleUserChoice(RenderUserSelections(targets), targets, GetType());
     }
-
 
     [CustomEditor(typeof(ElementInputField), true)]
     [CanEditMultipleObjects]
     public class ElementInputFieldEditor : Editor
     {
         private GameObject m_ThisObjRef;
-        private void OnEnable()
-        {
-            m_ThisObjRef = ((ElementInputField)target).gameObject;
-        }
-
-        private void OnDestroy()
-        {
-            UI.ElementDestroy(m_ThisObjRef, target);
-        }
-
-        public override void OnInspectorGUI()
-        {
-            ElementDataEditor.Render(targets);
-
-            var choice = RenderButtons();
-            if (choice == Choice.CopyID) {
-                Helper.ClipboardText = Builder.BuildConstantStatements(targets);
-            } else if (choice == Choice.CopyCode) {
-                var constantStatements = string.Empty;
-                var elementStatements = string.Empty;
-                var settings = ImmediateStyleSettings.LoadInstance();
-                foreach (var t in targets) {
-                    var element = (ElementInputField)t;
-                    var id = element.ElementData.ID;
-                    var (constantStatement, constant) = Builder.BuildConstantStatement(id);
-                    if (!settings.inlineClipboardGUIDS) {
-                        var elementStatement = Builder.BuildInputFieldStatement(constant);
-                        constantStatements += constantStatement + Environment.NewLine;
-                        elementStatements += elementStatement + Environment.NewLine;
-                    } else {
-                        var elementStatement = Builder.BuildInputFieldStatement($"\"{id}\"");
-                        elementStatements += elementStatement + Environment.NewLine;
-                    }
-                }
-                Helper.ClipboardText = constantStatements + elementStatements;
-            } else if (choice == Choice.RegenerateRandomID) {
-                Builder.RegenerateRandomIDsForTargets(targets);
-            } else if (choice == Choice.UseGameObjectNameID) {
-                Builder.UseGameObjectNameIDsForTargets(targets);
-            }
-        }
+        private void OnEnable() => m_ThisObjRef = ((ElementInputField)target).gameObject;
+        private void OnDestroy() => UI.ElementDestroy(m_ThisObjRef, target);
+        public override void OnInspectorGUI() => Builder.HandleUserChoice(RenderUserSelections(targets), targets, GetType());
     }
 
     [CustomEditor(typeof(ElementSlider), true)]
@@ -756,95 +499,306 @@ namespace MoonlitSystem.Editors
     public class ElementSliderEditor : Editor
     {
         private GameObject m_ThisObjRef;
-        private void OnEnable()
-        {
-            m_ThisObjRef = ((ElementSlider)target).gameObject;
-        }
-
-        private void OnDestroy()
-        {
-            UI.ElementDestroy(m_ThisObjRef, target);
-        }
-
-        public override void OnInspectorGUI()
-        {
-            ElementDataEditor.Render(targets);
-
-            var choice = RenderButtons();
-            if (choice == Choice.CopyID) {
-                Helper.ClipboardText = Builder.BuildConstantStatements(targets);
-            } else if (choice == Choice.CopyCode) {
-                var constantStatements = string.Empty;
-                var elementStatements = string.Empty;
-                var settings = ImmediateStyleSettings.LoadInstance();
-                foreach (var t in targets) {
-                    var element = (ElementSlider)t;
-                    var id = element.ElementData.ID;
-                    var (constantStatement, constant) = Builder.BuildConstantStatement(id);
-                    if (!settings.inlineClipboardGUIDS) {
-                        var elementStatement = Builder.BuildSliderStatement(constant);
-                        constantStatements += constantStatement + Environment.NewLine;
-                        elementStatements += elementStatement + Environment.NewLine;
-                    } else {
-                        var elementStatement = Builder.BuildSliderStatement($"\"{id}\"");
-                        elementStatements += elementStatement + Environment.NewLine;
-                    }
-                }
-                Helper.ClipboardText = constantStatements + elementStatements;
-            } else if (choice == Choice.RegenerateRandomID) {
-                Builder.RegenerateRandomIDsForTargets(targets);
-            } else if (choice == Choice.UseGameObjectNameID) {
-                Builder.UseGameObjectNameIDsForTargets(targets);
-            }
-        }
+        private void OnEnable() => m_ThisObjRef = ((ElementSlider)target).gameObject;
+        private void OnDestroy() => UI.ElementDestroy(m_ThisObjRef, target);
+        public override void OnInspectorGUI() => Builder.HandleUserChoice(RenderUserSelections(targets), targets, GetType());
     }
-
 
     [CustomEditor(typeof(ElementDropdown), true)]
     [CanEditMultipleObjects]
     public class ElementDropdownEditor : Editor
     {
         private GameObject m_ThisObjRef;
-        private void OnEnable()
-        {
-            m_ThisObjRef = ((ElementDropdown)target).gameObject;
-        }
+        private void OnEnable() => m_ThisObjRef = ((ElementDropdown)target).gameObject;
+        private void OnDestroy() => UI.ElementDestroy(m_ThisObjRef, target);
+        public override void OnInspectorGUI() => Builder.HandleUserChoice(RenderUserSelections(targets), targets, GetType());
+    }
 
-        private void OnDestroy()
-        {
-            UI.ElementDestroy(m_ThisObjRef, target);
-        }
+    [CustomEditor(typeof(ElementCanvasGroup), true)]
+    [CanEditMultipleObjects]
+    public class ElementCanvasGroupEditor : Editor
+    {
+        private GameObject m_ThisObjRef;
+        private void OnEnable() => m_ThisObjRef = ((ElementCanvasGroup)target).gameObject;
+        private void OnDestroy() => UI.ElementDestroy(m_ThisObjRef, target);
 
         public override void OnInspectorGUI()
         {
-            ElementDataEditor.Render(targets);
-
-            var choice = RenderButtons();
-            if (choice == Choice.CopyID) {
-                Helper.ClipboardText = Builder.BuildConstantStatements(targets);
-            } else if (choice == Choice.CopyCode) {
-                var constantStatements = string.Empty;
-                var elementStatements = string.Empty;
-                var settings = ImmediateStyleSettings.LoadInstance();
-                foreach (var t in targets) {
-                    var element = (ElementDropdown)t;
-                    var id = element.ElementData.ID;
-                    var (constantStatement, constant) = Builder.BuildConstantStatement(id);
-                    if (!settings.inlineClipboardGUIDS) {
-                        var elementStatement = Builder.BuildDropdownStatement(constant);
-                        constantStatements += constantStatement + Environment.NewLine;
-                        elementStatements += elementStatement + Environment.NewLine;
-                    } else {
-                        var elementStatement = Builder.BuildDropdownStatement($"\"{id}\"");
-                        elementStatements += elementStatement + Environment.NewLine;
-                    }
-                }
-                Helper.ClipboardText = constantStatements + elementStatements;
-            } else if (choice == Choice.RegenerateRandomID) {
-                Builder.RegenerateRandomIDsForTargets(targets);
-            } else if (choice == Choice.UseGameObjectNameID) {
-                Builder.UseGameObjectNameIDsForTargets(targets);
+            var choice = RenderCanvasGroupUserSelections(targets);
+            Builder.HandleUserChoice(choice, targets, GetType());
+            // Falls out and handles additional CanvasGroup only choices here (yea got lazy)
+            switch (choice) {
+                case Choice.FileTemplate: CreateFileTemplate(); break;
+                case Choice.ElementTemplate: CreateElementTemplate(); break;
+                case Choice.ForLoopTemplate: CreateForLoopTemplate(); break;
             }
+        }
+
+        private void CreateForLoopTemplate()
+        {
+            var element = (ElementCanvasGroup)target;
+            ImmediateUITemplate.BuildParams buildParams;
+            buildParams.RootCanvasGroup.GameObject_Name = element.name;
+            buildParams.RootCanvasGroup.Element_ID = element.ElementData.ID;
+            buildParams.RootMapping_ID = element.GetComponent<RootMapping>() != null ? element.GetComponent<RootMapping>().ID : string.Empty;
+            buildParams.ForLoop = true;
+            {
+                var elements = element.GetComponentsInChildren<ElementText>();
+                var elementInfo = new List<ImmediateUITemplate.ElementInfo>();
+                foreach (var t in elements) {
+                    elementInfo.Add(new ImmediateUITemplate.ElementInfo { GameObject_Name = t.name, Element_ID = t.ElementData.ID });
+                }
+                buildParams.Texts = elementInfo.ToArray();
+            }
+            {
+                var elements = element.GetComponentsInChildren<ElementImage>();
+                var elementInfo = new List<ImmediateUITemplate.ElementInfo>();
+                foreach (var t in elements) {
+                    elementInfo.Add(new ImmediateUITemplate.ElementInfo { GameObject_Name = t.name, Element_ID = t.ElementData.ID });
+                }
+                buildParams.Images = elementInfo.ToArray();
+            }
+            {
+                var elements = element.GetComponentsInChildren<ElementCanvasGroup>();
+                var elementInfo = new List<ImmediateUITemplate.ElementInfo>();
+
+                var items = new HashSet<ElementCanvasGroup>(elements);
+                items.Remove(element);
+                elements = items.ToArray();
+
+                foreach (var t in elements) {
+                    elementInfo.Add(new ImmediateUITemplate.ElementInfo { GameObject_Name = t.name, Element_ID = t.ElementData.ID });
+                }
+                buildParams.CanvasGroups = elementInfo.ToArray();
+            }
+            {
+                var elements = element.GetComponentsInChildren<ElementButton>();
+                var elementInfo = new List<ImmediateUITemplate.ElementInfo>();
+                foreach (var t in elements) {
+                    elementInfo.Add(new ImmediateUITemplate.ElementInfo { GameObject_Name = t.name, Element_ID = t.ElementData.ID });
+                }
+                buildParams.Buttons = elementInfo.ToArray();
+            }
+            {
+                var elements = element.GetComponentsInChildren<ElementToggle>();
+                var elementInfo = new List<ImmediateUITemplate.ElementInfo>();
+                foreach (var t in elements) {
+                    elementInfo.Add(new ImmediateUITemplate.ElementInfo { GameObject_Name = t.name, Element_ID = t.ElementData.ID });
+                }
+                buildParams.Toggles = elementInfo.ToArray();
+            }
+            {
+                var elements = element.GetComponentsInChildren<ElementSlider>();
+                var elementInfo = new List<ImmediateUITemplate.ElementInfo>();
+                foreach (var t in elements) {
+                    elementInfo.Add(new ImmediateUITemplate.ElementInfo { GameObject_Name = t.name, Element_ID = t.ElementData.ID });
+                }
+                buildParams.Sliders = elementInfo.ToArray();
+            }
+            {
+                var elements = element.GetComponentsInChildren<ElementDragDrop>();
+                var elementInfo = new List<ImmediateUITemplate.ElementInfo>();
+                foreach (var t in elements) {
+                    elementInfo.Add(new ImmediateUITemplate.ElementInfo { GameObject_Name = t.name, Element_ID = t.ElementData.ID });
+                }
+                buildParams.DragDrops = elementInfo.ToArray();
+            }
+            {
+                var elements = element.GetComponentsInChildren<ElementDropdown>();
+                var elementInfo = new List<ImmediateUITemplate.ElementInfo>();
+                foreach (var t in elements) {
+                    elementInfo.Add(new ImmediateUITemplate.ElementInfo { GameObject_Name = t.name, Element_ID = t.ElementData.ID });
+                }
+                buildParams.Dropdowns = elementInfo.ToArray();
+            }
+            {
+                var elements = element.GetComponentsInChildren<ElementInputField>();
+                var elementInfo = new List<ImmediateUITemplate.ElementInfo>();
+                foreach (var t in elements) {
+                    elementInfo.Add(new ImmediateUITemplate.ElementInfo { GameObject_Name = t.name, Element_ID = t.ElementData.ID });
+                }
+                buildParams.InputFields = elementInfo.ToArray();
+            }
+
+            var code = ImmediateUITemplate.BuildString(buildParams, ImmediateUITemplate.Name.ElementsExtension);
+            Helper.ClipboardText = code;
+        }
+
+        private void CreateElementTemplate()
+        {
+            var element = (ElementCanvasGroup)target;
+            ImmediateUITemplate.BuildParams buildParams = default;
+            buildParams.RootCanvasGroup.GameObject_Name = element.name;
+            buildParams.RootCanvasGroup.Element_ID = element.ElementData.ID;
+            buildParams.RootMapping_ID = element.GetComponent<RootMapping>() != null ? element.GetComponent<RootMapping>().ID : string.Empty;
+            {
+                var elements = element.GetComponentsInChildren<ElementText>();
+                var elementInfo = new List<ImmediateUITemplate.ElementInfo>();
+                foreach (var t in elements) {
+                    elementInfo.Add(new ImmediateUITemplate.ElementInfo { GameObject_Name = t.name, Element_ID = t.ElementData.ID });
+                }
+                buildParams.Texts = elementInfo.ToArray();
+            }
+            {
+                var elements = element.GetComponentsInChildren<ElementImage>();
+                var elementInfo = new List<ImmediateUITemplate.ElementInfo>();
+                foreach (var t in elements) {
+                    elementInfo.Add(new ImmediateUITemplate.ElementInfo { GameObject_Name = t.name, Element_ID = t.ElementData.ID });
+                }
+                buildParams.Images = elementInfo.ToArray();
+            }
+            {
+                var elements = element.GetComponentsInChildren<ElementCanvasGroup>();
+                var elementInfo = new List<ImmediateUITemplate.ElementInfo>();
+
+                var items = new HashSet<ElementCanvasGroup>(elements);
+                items.Remove(element);
+                elements = items.ToArray();
+
+                foreach (var t in elements) {
+                    elementInfo.Add(new ImmediateUITemplate.ElementInfo { GameObject_Name = t.name, Element_ID = t.ElementData.ID });
+                }
+                buildParams.CanvasGroups = elementInfo.ToArray();
+            }
+            {
+                var elements = element.GetComponentsInChildren<ElementButton>();
+                var elementInfo = new List<ImmediateUITemplate.ElementInfo>();
+                foreach (var t in elements) {
+                    elementInfo.Add(new ImmediateUITemplate.ElementInfo { GameObject_Name = t.name, Element_ID = t.ElementData.ID });
+                }
+                buildParams.Buttons = elementInfo.ToArray();
+            }
+            {
+                var elements = element.GetComponentsInChildren<ElementToggle>();
+                var elementInfo = new List<ImmediateUITemplate.ElementInfo>();
+                foreach (var t in elements) {
+                    elementInfo.Add(new ImmediateUITemplate.ElementInfo { GameObject_Name = t.name, Element_ID = t.ElementData.ID });
+                }
+                buildParams.Toggles = elementInfo.ToArray();
+            }
+            {
+                var elements = element.GetComponentsInChildren<ElementSlider>();
+                var elementInfo = new List<ImmediateUITemplate.ElementInfo>();
+                foreach (var t in elements) {
+                    elementInfo.Add(new ImmediateUITemplate.ElementInfo { GameObject_Name = t.name, Element_ID = t.ElementData.ID });
+                }
+                buildParams.Sliders = elementInfo.ToArray();
+            }
+            {
+                var elements = element.GetComponentsInChildren<ElementDragDrop>();
+                var elementInfo = new List<ImmediateUITemplate.ElementInfo>();
+                foreach (var t in elements) {
+                    elementInfo.Add(new ImmediateUITemplate.ElementInfo { GameObject_Name = t.name, Element_ID = t.ElementData.ID });
+                }
+                buildParams.DragDrops = elementInfo.ToArray();
+            }
+            {
+                var elements = element.GetComponentsInChildren<ElementDropdown>();
+                var elementInfo = new List<ImmediateUITemplate.ElementInfo>();
+                foreach (var t in elements) {
+                    elementInfo.Add(new ImmediateUITemplate.ElementInfo { GameObject_Name = t.name, Element_ID = t.ElementData.ID });
+                }
+                buildParams.Dropdowns = elementInfo.ToArray();
+            }
+            {
+                var elements = element.GetComponentsInChildren<ElementInputField>();
+                var elementInfo = new List<ImmediateUITemplate.ElementInfo>();
+                foreach (var t in elements) {
+                    elementInfo.Add(new ImmediateUITemplate.ElementInfo { GameObject_Name = t.name, Element_ID = t.ElementData.ID });
+                }
+                buildParams.InputFields = elementInfo.ToArray();
+            }
+
+            var code = ImmediateUITemplate.BuildString(buildParams, ImmediateUITemplate.Name.ElementsExtension);
+            Helper.ClipboardText = code;
+        }
+
+        private void CreateFileTemplate()
+        {
+            var element = (ElementCanvasGroup)target;
+            ImmediateUITemplate.BuildParams buildParams = default;
+            buildParams.RootCanvasGroup.GameObject_Name = element.name;
+            buildParams.RootCanvasGroup.Element_ID = element.ElementData.ID;
+            buildParams.RootMapping_ID = element.GetComponent<RootMapping>() != null ? element.GetComponent<RootMapping>().ID : string.Empty;
+            {
+                var elements = element.GetComponentsInChildren<ElementText>();
+                var elementInfo = new List<ImmediateUITemplate.ElementInfo>();
+                foreach (var t in elements) {
+                    elementInfo.Add(new ImmediateUITemplate.ElementInfo { GameObject_Name = t.name, Element_ID = t.ElementData.ID });
+                }
+                buildParams.Texts = elementInfo.ToArray();
+            }
+            {
+                var elements = element.GetComponentsInChildren<ElementImage>();
+                var elementInfo = new List<ImmediateUITemplate.ElementInfo>();
+                foreach (var t in elements) {
+                    elementInfo.Add(new ImmediateUITemplate.ElementInfo { GameObject_Name = t.name, Element_ID = t.ElementData.ID });
+                }
+                buildParams.Images = elementInfo.ToArray();
+            }
+            {
+                var elements = element.GetComponentsInChildren<ElementCanvasGroup>();
+                var elementInfo = new List<ImmediateUITemplate.ElementInfo>();
+
+                var items = new HashSet<ElementCanvasGroup>(elements);
+                items.Remove(element);
+                elements = items.ToArray();
+
+                foreach (var t in elements) {
+                    elementInfo.Add(new ImmediateUITemplate.ElementInfo { GameObject_Name = t.name, Element_ID = t.ElementData.ID });
+                }
+                buildParams.CanvasGroups = elementInfo.ToArray();
+            }
+            {
+                var elements = element.GetComponentsInChildren<ElementButton>();
+                var elementInfo = new List<ImmediateUITemplate.ElementInfo>();
+                foreach (var t in elements) {
+                    elementInfo.Add(new ImmediateUITemplate.ElementInfo { GameObject_Name = t.name, Element_ID = t.ElementData.ID });
+                }
+                buildParams.Buttons = elementInfo.ToArray();
+            }
+            {
+                var elements = element.GetComponentsInChildren<ElementToggle>();
+                var elementInfo = new List<ImmediateUITemplate.ElementInfo>();
+                foreach (var t in elements) {
+                    elementInfo.Add(new ImmediateUITemplate.ElementInfo { GameObject_Name = t.name, Element_ID = t.ElementData.ID });
+                }
+                buildParams.Toggles = elementInfo.ToArray();
+            }
+            {
+                var elements = element.GetComponentsInChildren<ElementSlider>();
+                var elementInfo = new List<ImmediateUITemplate.ElementInfo>();
+                foreach (var t in elements) {
+                    elementInfo.Add(new ImmediateUITemplate.ElementInfo { GameObject_Name = t.name, Element_ID = t.ElementData.ID });
+                }
+                buildParams.Sliders = elementInfo.ToArray();
+            }
+            {
+                var elements = element.GetComponentsInChildren<ElementDragDrop>();
+                var elementInfo = new List<ImmediateUITemplate.ElementInfo>();
+                foreach (var t in elements) {
+                    elementInfo.Add(new ImmediateUITemplate.ElementInfo { GameObject_Name = t.name, Element_ID = t.ElementData.ID });
+                }
+                buildParams.DragDrops = elementInfo.ToArray();
+            }
+            {
+                var elements = element.GetComponentsInChildren<ElementDropdown>();
+                var elementInfo = new List<ImmediateUITemplate.ElementInfo>();
+                foreach (var t in elements) {
+                    elementInfo.Add(new ImmediateUITemplate.ElementInfo { GameObject_Name = t.name, Element_ID = t.ElementData.ID });
+                }
+                buildParams.Dropdowns = elementInfo.ToArray();
+            }
+            {
+                var elements = element.GetComponentsInChildren<ElementInputField>();
+                var elementInfo = new List<ImmediateUITemplate.ElementInfo>();
+                foreach (var t in elements) {
+                    elementInfo.Add(new ImmediateUITemplate.ElementInfo { GameObject_Name = t.name, Element_ID = t.ElementData.ID });
+                }
+                buildParams.InputFields = elementInfo.ToArray();
+            }
+
+            ImmediateUITemplate.Build(buildParams);
         }
     }
 
@@ -853,63 +807,7 @@ namespace MoonlitSystem.Editors
     [CanEditMultipleObjects]
     public class ReferenceEditor : Editor
     {
-        public override void OnInspectorGUI()
-        {
-            ElementDataEditor.Render(targets);
-
-            var choice = RenderButtons();
-            if (choice == Choice.CopyID) {
-                Helper.ClipboardText = Builder.BuildConstantStatements(targets);
-            } else if (choice == Choice.CopyCode) {
-                var statements = string.Empty;
-                var settings = ImmediateStyleSettings.LoadInstance();
-                foreach (var t in targets) {
-                    var element = (Reference)t;
-                    var id = element.ElementData.ID;
-                    var (constantStatement, constant) = Builder.BuildConstantStatement(id);
-                    if (settings.inlineClipboardGUIDS) {
-                        constantStatement = string.Empty;
-                        constant = $"\"{id}\"";
-                    }
-                    if (element.GetComponent<CanvasGroup>() != null) {
-                        var elementStatement = Builder.BuildReferenceStatement(constant, nameof(CanvasGroup));
-                        statements += constantStatement + Environment.NewLine + elementStatement;
-                    } else if (element.GetComponent<Button>() != null) {
-                        var elementStatement = Builder.BuildReferenceStatement(constant, nameof(Button));
-                        statements += constantStatement + Environment.NewLine + elementStatement;
-                    } else {
-                        // Default to the first other component we come across
-                        var components = element.gameObject.GetComponents<Component>();
-                        Debug.Assert(components.Length >= 2, "Have reference and at least Transform");
-                        var result = 0;
-                        for (var i = components.Length - 1; i >= 0; i--) {
-                            if (components[i] == element) continue;
-                            if (components[i].GetType().Name == nameof(CanvasRenderer)) continue;
-                            if (components[i].GetType().Name == nameof(Element)) continue;
-                            if (components[i].GetType().Name == nameof(ElementButton)) continue;
-                            if (components[i].GetType().Name == nameof(ElementCanvasGroup)) continue;
-                            if (components[i].GetType().Name == nameof(ElementDragDrop)) continue;
-                            if (components[i].GetType().Name == nameof(ElementDropdown)) continue;
-                            if (components[i].GetType().Name == nameof(ElementImage)) continue;
-                            if (components[i].GetType().Name == nameof(ElementInputField)) continue;
-                            if (components[i].GetType().Name == nameof(ElementSlider)) continue;
-                            if (components[i].GetType().Name == nameof(ElementText)) continue;
-                            if (components[i].GetType().Name == nameof(ElementToggle)) continue;
-
-                            result = i;
-                            break;
-                        }
-                        var elementStatement = Builder.BuildReferenceStatement(constant, components[result].GetType().Name);
-                        statements += constantStatement + Environment.NewLine + elementStatement;
-                    }
-                    Helper.ClipboardText = statements + Environment.NewLine;
-                }
-            } else if (choice == Choice.RegenerateRandomID) {
-                Builder.RegenerateRandomIDsForTargets(targets);
-            } else if (choice == Choice.UseGameObjectNameID) {
-                Builder.UseGameObjectNameIDsForTargets(targets);
-            }
-        }
+        public override void OnInspectorGUI() => Builder.HandleUserChoice(RenderUserSelections(targets), targets, GetType());
     }
 
     public enum RootMappingChoice { UseRandomForID = 1, UseGameObjectNameforID, UseSiblingIndexforID }
