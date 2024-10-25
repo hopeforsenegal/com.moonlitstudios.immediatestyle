@@ -5,13 +5,11 @@ using UnityEngine.UI;
 namespace MoonlitSystem.UI.Immediate
 {
     [DisallowMultipleComponent]
-    public class ElementSlider : MonoBehaviour, IPointerUpHandler
+    public class ElementSlider : BaseEditorData, IPointerUpHandler
     {
         public Slider UIBehaviour { get; private set; }
         public bool IsMouseUp { get; internal set; }
         private RootMapping RootMapping { get; set; }
-
-        public ElementData ElementData = new ElementData();
 
         protected void Awake()
         {

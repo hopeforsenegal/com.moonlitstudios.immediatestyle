@@ -7,15 +7,13 @@ using TMPro;
 namespace MoonlitSystem.UI.Immediate
 {
     [DisallowMultipleComponent]
-    public class ElementText : MonoBehaviour
+    public class ElementText : BaseEditorData
     {
         public Text Text { get; private set; }   // Can only have one graphic
 #if TMP_PRESENT
         public TMP_Text TextPro { get; private set; }   // Can only have one graphic
 #endif
         private RootMapping RootMapping { get; set; }
-
-        public ElementData ElementData = new ElementData();
 
         protected void Awake()
         {

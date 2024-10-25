@@ -3,12 +3,10 @@
 namespace MoonlitSystem.UI.Immediate
 {
     [DisallowMultipleComponent]
-    public class ElementDragDrop : MonoBehaviour
+    public class ElementDragDrop : BaseEditorData
     {
         public DragDrop UIBehaviour { get; private set; }
         private RootMapping RootMapping { get; set; }
-
-        public ElementData ElementData = new ElementData();
 
         protected void Awake()
         {

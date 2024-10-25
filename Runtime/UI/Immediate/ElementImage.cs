@@ -4,12 +4,10 @@ using UnityEngine.UI;
 namespace MoonlitSystem.UI.Immediate
 {
     [DisallowMultipleComponent]
-    public class ElementImage : MonoBehaviour
+    public class ElementImage : BaseEditorData
     {
         public Image Image { get; private set; }
         private RootMapping RootMapping { get; set; }
-
-        public ElementData ElementData = new ElementData();
 
         // NOTE: to my future self who might randomly see this one day...
         // its completely trivial to move all this functionality into Immediate Style...

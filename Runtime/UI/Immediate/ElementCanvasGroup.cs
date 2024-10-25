@@ -3,12 +3,10 @@
 namespace MoonlitSystem.UI.Immediate
 {
     [DisallowMultipleComponent]
-    public class ElementCanvasGroup : MonoBehaviour
+    public class ElementCanvasGroup : BaseEditorData
     {
         public CanvasGroup CanvasGroup { get; private set; }
         private RootMapping RootMapping { get; set; }
-
-        public ElementData ElementData = new ElementData();
 
         protected void Awake()
         {

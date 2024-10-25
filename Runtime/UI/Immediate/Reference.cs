@@ -4,10 +4,8 @@ using UnityEngine;
 namespace MoonlitSystem.UI.Immediate
 {
     [DisallowMultipleComponent]
-    public class Reference : MonoBehaviour
+    public class Reference : BaseEditorData
     {
-        public ElementData ElementData = new ElementData();
-
         protected void Reset()
         {
             ElementData.SetupElementData(ElementData, transform);

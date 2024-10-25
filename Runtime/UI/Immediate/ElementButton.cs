@@ -5,10 +5,8 @@ using UnityEngine.UI;
 namespace MoonlitSystem.UI.Immediate
 {
     [DisallowMultipleComponent]
-    public class ElementButton : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IPointerEnterHandler, IPointerExitHandler, ISubmitHandler, ISelectHandler, IDeselectHandler
+    public class ElementButton : BaseEditorData, IPointerDownHandler, IPointerUpHandler, IPointerEnterHandler, IPointerExitHandler, ISubmitHandler, ISelectHandler, IDeselectHandler
     {
-        public ElementData ElementData = new ElementData(); // NOTE: The 'readonly' modifier makes things unserializable
-
         // Button.onClick (The only callback Unity provides us) fires on OnPointerClick.
         // However for ImmediateStyle and responsive GUIs we operate  on OnPointerDown.
         // https://x.com/ID_AA_Carmack/status/1787850053912064005  

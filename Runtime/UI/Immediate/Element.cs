@@ -101,4 +101,17 @@ namespace MoonlitSystem.UI.Immediate
             return GetGameObjectFullPathHierarchy(current.parent) + "/" + current.name.Replace("-", "").Replace("<", ""); // remove "-" because it messes with constants that get created
         }
     }
+
+    public interface IEditorData
+    {   // Unity doesn't have type information on Object (which is returned by target)
+        // So since we have to do runtime dispatch anyways, we might as well
+        // make the type information return what we want
+        public Transform transform { get; }
+        public ElementData Data { get; }
+    }
+    public abstract class BaseEditorData : MonoBehaviour, IEditorData
+    {   // If it wasn't obvious already. I am not a big fan of OOP, but again we are forced to do so here. This is both Unity and C# knocking us down a few pegs
+        public ElementData ElementData = new ElementData(); // NOTE: The 'readonly' modifier makes things unserializable
+        public ElementData Data => ElementData;
+    }
 }

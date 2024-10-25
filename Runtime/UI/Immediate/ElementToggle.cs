@@ -5,12 +5,11 @@ using UnityEngine.UI;
 namespace MoonlitSystem.UI.Immediate
 {
     [DisallowMultipleComponent]
-    public class ElementToggle : MonoBehaviour, IPointerDownHandler, ISubmitHandler
+    public class ElementToggle : BaseEditorData, IPointerDownHandler, ISubmitHandler
     {
         public Toggle UIBehaviour { get; private set; }
         private RootMapping RootMapping { get; set; }
 
-        public ElementData ElementData = new ElementData();
         public bool IsClicked { get; internal set; }
 
         protected void Awake()

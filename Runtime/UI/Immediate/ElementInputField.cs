@@ -5,13 +5,12 @@ using UnityEngine.UI;
 namespace MoonlitSystem.UI.Immediate
 {
     [DisallowMultipleComponent]
-    public class ElementInputField : MonoBehaviour, ISubmitHandler, IPointerClickHandler
+    public class ElementInputField : BaseEditorData, ISubmitHandler, IPointerClickHandler
     {
         public Image Image { get; private set; }
         public InputField UIBehaviour { get; private set; }
         private RootMapping RootMapping { get; set; }
 
-        public ElementData ElementData = new ElementData();
         internal bool WasFocused;
 
         public bool HasSubmitted { get; internal set; }

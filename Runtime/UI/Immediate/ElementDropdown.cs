@@ -5,12 +5,11 @@ using UnityEngine.UI;
 namespace MoonlitSystem.UI.Immediate
 {
     [DisallowMultipleComponent]
-    public class ElementDropdown : MonoBehaviour, ISelectHandler
+    public class ElementDropdown : BaseEditorData, ISelectHandler
     {
         public Dropdown UIBehaviour { get; private set; }
         private RootMapping RootMapping { get; set; }
 
-        public ElementData ElementData = new ElementData();
         public bool HasSubmitted { get; internal set; }
         public int Index { get; internal set; }
 

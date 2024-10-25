@@ -14,6 +14,19 @@ namespace MoonlitSystem.Editors
 {
     public static class Builder
     {
+        public static string BuildConstantStatements(Object[] targets)
+        {
+            var statements = string.Empty;
+            foreach (var t in targets) {
+                var element = (IEditorData)t;
+                var id = element.Data.ID;
+                var (constantStatement, _) = BuildConstantStatement(id);
+                statements += constantStatement + Environment.NewLine;
+            }
+
+            return statements;
+        }
+
         public static string RemoveChars(this string s, IEnumerable<char> separators)
         {
             var sb = new StringBuilder(s);
@@ -106,17 +119,17 @@ namespace MoonlitSystem.Editors
             if (o == null && gameObject != null) {
                 // Remove Dependents
                 Object.DestroyImmediate(gameObject.GetComponent<Element>());
-                Debug.Log("The component and dependent (Element) was removed.");
+                Debug.Log($"The component and dependent ({nameof(Element)}) was removed.");
             } else if (o == null && gameObject == null) {
                 // The gameobject was deleted
-                Debug.Log("The gameobject was deleted from the scene.");
+                Debug.Log("The GameObject was deleted from the scene.");
             }
         }
     }
 
     [CustomEditor(typeof(ElementButton), true)]
     [CanEditMultipleObjects]
-    public class ElementButtonEditor : UnityEditor.Editor
+    public class ElementButtonEditor : Editor
     {
         private GameObject m_ThisObjRef;
         private void OnEnable()
@@ -135,14 +148,7 @@ namespace MoonlitSystem.Editors
 
             var choice = RenderButtons();
             if (choice == Choice.CopyID) {
-                var statements = string.Empty;
-                foreach (var t in targets) {
-                    var element = (ElementButton)t;
-                    var id = element.ElementData.ID;
-                    var (constantStatement, _) = Builder.BuildConstantStatement(id);
-                    statements += constantStatement + Environment.NewLine;
-                }
-                Helper.ClipboardText = statements;
+                Helper.ClipboardText = Builder.BuildConstantStatements(targets);
             } else if (choice == Choice.CopyCode) {
                 var constantStatements = string.Empty;
                 var elementStatements = string.Empty;
@@ -175,11 +181,12 @@ namespace MoonlitSystem.Editors
                 }
             }
         }
+
     }
 
     [CustomEditor(typeof(ElementCanvasGroup), true)]
     [CanEditMultipleObjects]
-    public class ElementCanvasGroupEditor : UnityEditor.Editor
+    public class ElementCanvasGroupEditor : Editor
     {
         private GameObject m_ThisObjRef;
         private void OnEnable()
@@ -209,14 +216,7 @@ namespace MoonlitSystem.Editors
             if (GUILayout.Button("Create Full Code File")) choice = Choice.FileTemplate;
 
             if (choice == Choice.CopyID) {
-                var statements = string.Empty;
-                foreach (var t in targets) {
-                    var element = (ElementCanvasGroup)t;
-                    var id = element.ElementData.ID;
-                    var (constantStatement, _) = Builder.BuildConstantStatement(id);
-                    statements += constantStatement + Environment.NewLine;
-                }
-                Helper.ClipboardText = statements;
+                Helper.ClipboardText = Builder.BuildConstantStatements(targets);
             } else if (choice == Choice.CopyCode) {
                 var constantStatements = string.Empty;
                 var elementStatements = string.Empty;
@@ -505,7 +505,7 @@ namespace MoonlitSystem.Editors
 
     [CustomEditor(typeof(ElementImage), true)]
     [CanEditMultipleObjects]
-    public class ElementImageEditor : UnityEditor.Editor
+    public class ElementImageEditor : Editor
     {
         private GameObject m_ThisObjRef;
         private void OnEnable()
@@ -524,14 +524,7 @@ namespace MoonlitSystem.Editors
 
             var choice = RenderButtons();
             if (choice == Choice.CopyID) {
-                var statements = string.Empty;
-                foreach (var t in targets) {
-                    var element = (ElementImage)t;
-                    var id = element.ElementData.ID;
-                    var (constantStatement, _) = Builder.BuildConstantStatement(id);
-                    statements += constantStatement + Environment.NewLine;
-                }
-                Helper.ClipboardText = statements;
+                Helper.ClipboardText = Builder.BuildConstantStatements(targets);
             } else if (choice == Choice.CopyCode) {
                 var constantStatements = string.Empty;
                 var elementStatements = string.Empty;
@@ -568,7 +561,7 @@ namespace MoonlitSystem.Editors
 
     [CustomEditor(typeof(ElementToggle), true)]
     [CanEditMultipleObjects]
-    public class ElementToggleEditor : UnityEditor.Editor
+    public class ElementToggleEditor : Editor
     {
         private GameObject m_ThisObjRef;
         private void OnEnable()
@@ -587,14 +580,7 @@ namespace MoonlitSystem.Editors
 
             var choice = RenderButtons();
             if (choice == Choice.CopyID) {
-                var statements = string.Empty;
-                foreach (var t in targets) {
-                    var element = (ElementToggle)t;
-                    var id = element.ElementData.ID;
-                    var (constantStatement, _) = Builder.BuildConstantStatement(id);
-                    statements += constantStatement + Environment.NewLine;
-                }
-                Helper.ClipboardText = statements;
+                Helper.ClipboardText = Builder.BuildConstantStatements(targets);
             } else if (choice == Choice.CopyCode) {
                 var constantStatements = string.Empty;
                 var elementStatements = string.Empty;
@@ -631,7 +617,7 @@ namespace MoonlitSystem.Editors
 
     [CustomEditor(typeof(ElementDragDrop), true)]
     [CanEditMultipleObjects]
-    public class ElementDragDropEditor : UnityEditor.Editor
+    public class ElementDragDropEditor : Editor
     {
         private GameObject m_ThisObjRef;
         private void OnEnable()
@@ -650,14 +636,7 @@ namespace MoonlitSystem.Editors
 
             var choice = RenderButtons();
             if (choice == Choice.CopyID) {
-                var statements = string.Empty;
-                foreach (var t in targets) {
-                    var element = (ElementDragDrop)t;
-                    var id = element.ElementData.ID;
-                    var (constantStatement, _) = Builder.BuildConstantStatement(id);
-                    statements += constantStatement + Environment.NewLine;
-                }
-                Helper.ClipboardText = statements;
+                Helper.ClipboardText = Builder.BuildConstantStatements(targets);
             } else if (choice == Choice.CopyCode) {
                 var constantStatements = string.Empty;
                 var elementStatements = string.Empty;
@@ -694,7 +673,7 @@ namespace MoonlitSystem.Editors
 
     [CustomEditor(typeof(ElementText), true)]
     [CanEditMultipleObjects]
-    public class ElementTextEditor : UnityEditor.Editor
+    public class ElementTextEditor : Editor
     {
         private GameObject m_ThisObjRef;
         private void OnEnable()
@@ -713,14 +692,7 @@ namespace MoonlitSystem.Editors
 
             var choice = RenderButtons();
             if (choice == Choice.CopyID) {
-                var statements = string.Empty;
-                foreach (var t in targets) {
-                    var element = (ElementText)t;
-                    var id = element.ElementData.ID;
-                    var (constantStatement, _) = Builder.BuildConstantStatement(id);
-                    statements += constantStatement + Environment.NewLine;
-                }
-                Helper.ClipboardText = statements;
+                Helper.ClipboardText = Builder.BuildConstantStatements(targets);
             } else if (choice == Choice.CopyCode) {
                 var constantStatements = string.Empty;
                 var elementStatements = string.Empty;
@@ -758,7 +730,7 @@ namespace MoonlitSystem.Editors
 
     [CustomEditor(typeof(ElementInputField), true)]
     [CanEditMultipleObjects]
-    public class ElementInputFieldEditor : UnityEditor.Editor
+    public class ElementInputFieldEditor : Editor
     {
         private GameObject m_ThisObjRef;
         private void OnEnable()
@@ -777,14 +749,7 @@ namespace MoonlitSystem.Editors
 
             var choice = RenderButtons();
             if (choice == Choice.CopyID) {
-                var statements = string.Empty;
-                foreach (var t in targets) {
-                    var element = (ElementInputField)t;
-                    var id = element.ElementData.ID;
-                    var (constantStatement, _) = Builder.BuildConstantStatement(id);
-                    statements += constantStatement + Environment.NewLine;
-                }
-                Helper.ClipboardText = statements;
+                Helper.ClipboardText = Builder.BuildConstantStatements(targets);
             } else if (choice == Choice.CopyCode) {
                 var constantStatements = string.Empty;
                 var elementStatements = string.Empty;
@@ -821,7 +786,7 @@ namespace MoonlitSystem.Editors
 
     [CustomEditor(typeof(ElementSlider), true)]
     [CanEditMultipleObjects]
-    public class ElementSliderEditor : UnityEditor.Editor
+    public class ElementSliderEditor : Editor
     {
         private GameObject m_ThisObjRef;
         private void OnEnable()
@@ -840,14 +805,7 @@ namespace MoonlitSystem.Editors
 
             var choice = RenderButtons();
             if (choice == Choice.CopyID) {
-                var statements = string.Empty;
-                foreach (var t in targets) {
-                    var element = (ElementSlider)t;
-                    var id = element.ElementData.ID;
-                    var (constantStatement, _) = Builder.BuildConstantStatement(id);
-                    statements += constantStatement + Environment.NewLine;
-                }
-                Helper.ClipboardText = statements;
+                Helper.ClipboardText = Builder.BuildConstantStatements(targets);
             } else if (choice == Choice.CopyCode) {
                 var constantStatements = string.Empty;
                 var elementStatements = string.Empty;
@@ -885,7 +843,7 @@ namespace MoonlitSystem.Editors
 
     [CustomEditor(typeof(ElementDropdown), true)]
     [CanEditMultipleObjects]
-    public class ElementDropdownEditor : UnityEditor.Editor
+    public class ElementDropdownEditor : Editor
     {
         private GameObject m_ThisObjRef;
         private void OnEnable()
@@ -904,14 +862,7 @@ namespace MoonlitSystem.Editors
 
             var choice = RenderButtons();
             if (choice == Choice.CopyID) {
-                var statements = string.Empty;
-                foreach (var t in targets) {
-                    var element = (ElementDropdown)t;
-                    var id = element.ElementData.ID;
-                    var (constantStatement, _) = Builder.BuildConstantStatement(id);
-                    statements += constantStatement + Environment.NewLine;
-                }
-                Helper.ClipboardText = statements;
+                Helper.ClipboardText = Builder.BuildConstantStatements(targets);
             } else if (choice == Choice.CopyCode) {
                 var constantStatements = string.Empty;
                 var elementStatements = string.Empty;
@@ -946,49 +897,10 @@ namespace MoonlitSystem.Editors
         }
     }
 
-    public enum RootMappingChoice { UseRandomForID = 1, UseGameObjectNameforID, UseSiblingIndexforID }
-    [CustomEditor(typeof(RootMapping), true)]
-    [CanEditMultipleObjects]
-    public class RootMappingEditor : Editor
-    {
-        private string prefix_go, prefix_si;
-
-        public override void OnInspectorGUI()
-        {
-            base.OnInspectorGUI();
-
-            RootMappingChoice choice = default;
-            if (GUILayout.Button("Use Random for ID")) choice = RootMappingChoice.UseRandomForID;
-            using (new HorizontalScope())
-            using (new LabelWidthScope(40)) {
-                prefix_go = EditorGUILayout.TextField("Prefix", prefix_go);
-
-                if (GUILayout.Button("Use GameObject Name for ID")) choice = RootMappingChoice.UseGameObjectNameforID;
-            }
-            using (new HorizontalScope())
-            using (new LabelWidthScope(40)) {
-                prefix_si = EditorGUILayout.TextField("Prefix", prefix_si);
-
-                if (GUILayout.Button("Use Sibling Index for ID")) choice = RootMappingChoice.UseSiblingIndexforID;
-            }
-
-            foreach (var t in targets) {
-                var element = (RootMapping)t;
-                if (choice == RootMappingChoice.UseRandomForID) { element.Reset(); }
-                if (choice == RootMappingChoice.UseGameObjectNameforID) { element.ID = $"{prefix_go}{t.name}"; }
-                if (choice == RootMappingChoice.UseSiblingIndexforID) { element.ID = $"{prefix_si}{element.transform.GetSiblingIndex()}"; }
-
-                if (choice != default) {
-                    EditorUtility.SetDirty(element);
-                }
-            }
-        }
-    }
-
 
     [CustomEditor(typeof(Reference), true)]
     [CanEditMultipleObjects]
-    public class ReferenceEditor : UnityEditor.Editor
+    public class ReferenceEditor : Editor
     {
         public override void OnInspectorGUI()
         {
@@ -996,14 +908,7 @@ namespace MoonlitSystem.Editors
 
             var choice = RenderButtons();
             if (choice == Choice.CopyID) {
-                var statements = string.Empty;
-                foreach (var t in targets) {
-                    var element = (Reference)t;
-                    var id = element.ElementData.ID;
-                    var (constantStatement, _) = Builder.BuildConstantStatement(id);
-                    statements += constantStatement + Environment.NewLine;
-                }
-                Helper.ClipboardText = statements;
+                Helper.ClipboardText = Builder.BuildConstantStatements(targets);
             } else if (choice == Choice.CopyCode) {
                 var statements = string.Empty;
                 var settings = ImmediateStyleSettings.LoadInstance();
@@ -1052,6 +957,45 @@ namespace MoonlitSystem.Editors
                 foreach (var t in targets) {
                     var element = (Reference)t;
                     ElementData.SetupElementData(element.ElementData, element.transform);
+                    EditorUtility.SetDirty(element);
+                }
+            }
+        }
+    }
+
+    public enum RootMappingChoice { UseRandomForID = 1, UseGameObjectNameforID, UseSiblingIndexforID }
+    [CustomEditor(typeof(RootMapping), true)]
+    [CanEditMultipleObjects]
+    public class RootMappingEditor : Editor
+    {
+        private string prefix_go, prefix_si;
+
+        public override void OnInspectorGUI()
+        {
+            base.OnInspectorGUI();
+
+            RootMappingChoice choice = default;
+            if (GUILayout.Button("Use Random for ID")) choice = RootMappingChoice.UseRandomForID;
+            using (new HorizontalScope())
+            using (new LabelWidthScope(40)) {
+                prefix_go = EditorGUILayout.TextField("Prefix", prefix_go);
+
+                if (GUILayout.Button("Use GameObject Name for ID")) choice = RootMappingChoice.UseGameObjectNameforID;
+            }
+            using (new HorizontalScope())
+            using (new LabelWidthScope(40)) {
+                prefix_si = EditorGUILayout.TextField("Prefix", prefix_si);
+
+                if (GUILayout.Button("Use Sibling Index for ID")) choice = RootMappingChoice.UseSiblingIndexforID;
+            }
+
+            foreach (var t in targets) {
+                var element = (RootMapping)t;
+                if (choice == RootMappingChoice.UseRandomForID) { element.Reset(); }
+                if (choice == RootMappingChoice.UseGameObjectNameforID) { element.ID = $"{prefix_go}{t.name}"; }
+                if (choice == RootMappingChoice.UseSiblingIndexforID) { element.ID = $"{prefix_si}{element.transform.GetSiblingIndex()}"; }
+
+                if (choice != default) {
                     EditorUtility.SetDirty(element);
                 }
             }
