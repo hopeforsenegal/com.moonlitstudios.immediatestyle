@@ -2,7 +2,9 @@
     "name": "com.moonlitstudios.immediatestyle",
     "rootNamespace": "MoonlitSystem",
     "references": [
-        "GUID:6055be8ebefd69e48b49212b09b47b2f"
+        "GUID:6055be8ebefd69e48b49212b09b47b2f",
+        "GUID:75469ad4d38634e559750d17036d5f7c",
+        "GUID:09dcc9c0126b6b34ab2a877b8f2277f5"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

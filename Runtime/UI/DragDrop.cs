@@ -36,13 +36,19 @@ namespace MoonlitSystem.UI
 
         protected void Update()
         {
+#if ENABLE_INPUT_SYSTEM
+            Vector3 mousePosition = UnityEngine.InputSystem.Mouse.current.position.ReadValue();
+#else
+            Vector3 mousePosition = Input.mousePosition;
+#endif
+
             if (FollowMouseCursor && IsDragging) {
-                var v3 = Immediate.ImmediateStyle.CpyWithZ(Input.mousePosition, 10f);
+                var v3 = Immediate.ImmediateStyle.CpyWithZ(mousePosition, 10f);
                 transform.position = v3;
                 // In order to appear over other UI elements it must be the last sibling. So plan accordingly                
                 transform.SetAsLastSibling();
             }
-            IsMouseHovering = RectTransformUtility.RectangleContainsScreenPoint(RectTransform, Input.mousePosition);
+            IsMouseHovering = RectTransformUtility.RectangleContainsScreenPoint(RectTransform, mousePosition);
         }
 
         protected void LateUpdate()

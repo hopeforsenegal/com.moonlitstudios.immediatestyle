@@ -210,7 +210,12 @@ namespace MoonlitSystem.UI.Immediate
         // In order to appear over other UI elements it must be the last sibling. So plan accordingly.
         public static void FollowCursor(Transform transform)
         {
-            transform.position = CpyWithZ(Input.mousePosition, 10f);
+#if ENABLE_INPUT_SYSTEM
+            Vector3 mousePosition = UnityEngine.InputSystem.Mouse.current.position.ReadValue();
+#else
+            Vector3 mousePosition = Input.mousePosition;
+#endif
+            transform.position = CpyWithZ(mousePosition, 10f);
             transform.SetAsLastSibling();
         }
 
@@ -626,11 +631,30 @@ namespace MoonlitSystem.UI.Immediate
             }
         }
 
+#if ENABLE_INPUT_SYSTEM
+        public static UnityEngine.InputSystem.Key ConvertKeyCodeToKey(KeyCode keyCode)
+        {
+            switch (keyCode) {
+                case KeyCode.Space:  return UnityEngine.InputSystem.Key.Space;
+                case KeyCode.Return: return UnityEngine.InputSystem.Key.Enter;
+                case KeyCode.KeypadEnter: return UnityEngine.InputSystem.Key.Enter;
+                case KeyCode.Escape: return UnityEngine.InputSystem.Key.Escape;
+
+                // Add more cases as needed
+                default: Debug.LogWarning($"No direct conversion for KeyCode {keyCode}"); return UnityEngine.InputSystem.Key.None;
+            }
+        }
+#endif
+
         private static bool FromKeycode(IEnumerable<KeyCode> keyCodes)
         {
-            foreach (var k in keyCodes)
-                if (Input.GetKeyDown(k))
-                    return true;
+            foreach (var k in keyCodes) {
+#if ENABLE_INPUT_SYSTEM
+                if (UnityEngine.InputSystem.Keyboard.current[ConvertKeyCodeToKey(k)].wasPressedThisFrame) return true;
+#else      
+                if (Input.GetKeyDown(k)) return true;
+#endif
+            }
             return false;
         }
 
