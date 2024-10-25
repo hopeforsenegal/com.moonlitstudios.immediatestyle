@@ -1,5 +1,5 @@
 # Style Comparison
-Here we are just showing the stylistic code changes and workflow changes that is entailed in different UI workflows.
+Here we are just showing the stylistic code changes and workflow changes that would be entailed in approaching the different UI workflows. These are **premade** examples (so all the functionality is already within it) just to really show the differences between.
 First... A quick recap
 
 ### Design Example
@@ -15,7 +15,7 @@ ___
 ### Immediate Example
 This is the ***new way*** that we provide you to interact with the UI. Less steps. Less code. Straightforward "if statements" if you desire.
 ___
-Below, each step is approximately what you would do in order to achieve the functionality that you see in those scenes. We've broken it up into the roughly same comparible steps and functionality. You can now evaluate which method or style best fits your needs. (We do recommend opening up the scenes and give them a spin after reading the steps in case you are not familiar with one of the styles)
+Below, each step is approximately what you would do in order to achieve the functionality that you see in those scenes. We've broken it up into the roughly same comparible steps and functionality. You can now evaluate which method or style best fits your needs. (We do recommend opening up the scenes and give them a spin after reading the steps in case you are not familiar with one of the styles. **NOTE:** You will ***not*** need to code gen the Immediate Example since _all_ the examples are already fully working)
 
 **Design Example**
 
