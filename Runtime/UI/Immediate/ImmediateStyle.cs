@@ -135,6 +135,8 @@ namespace MoonlitSystem.UI.Immediate
 #if TMP_PRESENT
                     if (element.Text == null) {
                         element.TextPro.color = Instance.m_Color;
+                    } else {
+                        element.Text.color = Instance.m_Color;
                     }
 #else
                     element.Text.color = Instance.m_Color;
@@ -154,6 +156,11 @@ namespace MoonlitSystem.UI.Immediate
                     element.TextPro.text = text;
                     if (Instance.m_HasSetColor) {
                         element.TextPro.color = Instance.m_Color;
+                    }
+                } else {
+                    element.Text.text = text;
+                    if (Instance.m_HasSetColor) {
+                        element.Text.color = Instance.m_Color;
                     }
                 }
 #else
