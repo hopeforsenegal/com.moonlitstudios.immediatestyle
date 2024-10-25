@@ -20,49 +20,49 @@ namespace MoonlitSystem.UI.Immediate
                 t = e.transform;
                 ed = e.ElementData;
             }
-            if (GetComponent<Text>() != null && GetComponent<ElementText>() == null) {
+            if (t == null && GetComponent<Text>() != null && GetComponent<ElementText>() == null) {
                 var e = gameObject.AddComponent<ElementText>();
                 t = e.transform;
                 ed = e.ElementData;
             }
 #if TMP_PRESENT
-            if (GetComponent<TMP_Text>() != null && GetComponent<ElementText>() == null) {
+            if (t == null && GetComponent<TMP_Text>() != null && GetComponent<ElementText>() == null) {
                 var e = gameObject.AddComponent<ElementText>();
                 t = e.transform;
                 ed = e.ElementData;
             }
 #endif
-            if (GetComponent<Toggle>() != null && GetComponent<ElementToggle>() == null) {
+            if (t == null && GetComponent<Toggle>() != null && GetComponent<ElementToggle>() == null) {
                 var e = gameObject.AddComponent<ElementToggle>();
                 t = e.transform;
                 ed = e.ElementData;
             }
-            if (GetComponent<DragDrop>() != null && GetComponent<ElementDragDrop>() == null) {
+            if (t == null && GetComponent<DragDrop>() != null && GetComponent<ElementDragDrop>() == null) {
                 var e = gameObject.AddComponent<ElementDragDrop>();
                 t = e.transform;
                 ed = e.ElementData;
             }
-            if (GetComponent<InputField>() != null && GetComponent<ElementInputField>() == null) {
+            if (t == null && GetComponent<InputField>() != null && GetComponent<ElementInputField>() == null) {
                 var e = gameObject.AddComponent<ElementInputField>();
                 t = e.transform;
                 ed = e.ElementData;
             }
-            if (GetComponent<Slider>() != null && GetComponent<ElementSlider>() == null) {
+            if (t == null && GetComponent<Slider>() != null && GetComponent<ElementSlider>() == null) {
                 var e = gameObject.AddComponent<ElementSlider>();
                 t = e.transform;
                 ed = e.ElementData;
             }
-            if (GetComponent<Dropdown>() != null && GetComponent<ElementDropdown>() == null) {
+            if (t == null && GetComponent<Dropdown>() != null && GetComponent<ElementDropdown>() == null) {
                 var e = gameObject.AddComponent<ElementDropdown>();
                 t = e.transform;
                 ed = e.ElementData;
             }
-            if (GetComponent<CanvasGroup>() != null && GetComponent<ElementCanvasGroup>() == null) {
+            if (t == null && GetComponent<CanvasGroup>() != null && GetComponent<ElementCanvasGroup>() == null) {
                 var e = gameObject.AddComponent<ElementCanvasGroup>();
                 t = e.transform;
                 ed = e.ElementData;
             }
-            if (GetComponent<Image>() != null && GetComponent<ElementImage>() == null) {
+            if (t == null && GetComponent<Image>() != null && GetComponent<ElementImage>() == null) {
                 var e = gameObject.AddComponent<ElementImage>();
                 t = e.transform;
                 ed = e.ElementData;

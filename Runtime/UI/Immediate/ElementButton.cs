@@ -9,8 +9,8 @@ namespace MoonlitSystem.UI.Immediate
     {
         public ElementData ElementData = new ElementData(); // NOTE: The 'readonly' modifier makes things unserializable
 
-        // onClick fires on OnPointerClick.
-        // However for ImmediateStyle and responsive GUIs we operate on OnPointerDown
+        // Button.onClick (The only callback Unity provides us) fires on OnPointerClick.
+        // However for ImmediateStyle and responsive GUIs we operate  on OnPointerDown.
         // https://x.com/ID_AA_Carmack/status/1787850053912064005  
         //
         // Therefore  IsMouseDown is true on OnPointerDown and NOT OnPointerClick... 
