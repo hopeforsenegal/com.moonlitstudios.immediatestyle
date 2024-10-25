@@ -38,7 +38,7 @@ With this API you can (& more!)
 
 
 <p align="center">
-<b>Respond to actions of user input without creating Enitre Classes or Writing Function Callbacks - Be FASTER and more Minimal
+<b>Respond to actions of user input without creating Entire Classes or Writing Function Callbacks - Be FASTER and more Minimal
 </b>
 <br>
 </p>
