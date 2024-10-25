@@ -146,13 +146,19 @@ namespace MoonlitSystem.Editors
             } else if (choice == Choice.CopyCode) {
                 var constantStatements = string.Empty;
                 var elementStatements = string.Empty;
+                var settings = ImmediateStyleSettings.LoadInstance();
                 foreach (var t in targets) {
                     var element = (ElementButton)t;
                     var id = element.ElementData.ID;
                     var (constantStatement, constant) = Builder.BuildConstantStatement(id);
-                    var elementStatement = Builder.BuildButtonStatement(constant);
-                    constantStatements += constantStatement + Environment.NewLine;
-                    elementStatements += elementStatement + Environment.NewLine;
+                    if (!settings.inlineClipboardGUIDS) {
+                        var elementStatement = Builder.BuildButtonStatement(constant);
+                        constantStatements += constantStatement + Environment.NewLine;
+                        elementStatements += elementStatement + Environment.NewLine;
+                    } else {
+                        var elementStatement = Builder.BuildButtonStatement($"\"{id}\"");
+                        elementStatements += elementStatement + Environment.NewLine;
+                    }
                 }
                 Helper.ClipboardText = constantStatements + elementStatements;
             } else if (choice == Choice.RegenerateRandomID) {
@@ -214,13 +220,19 @@ namespace MoonlitSystem.Editors
             } else if (choice == Choice.CopyCode) {
                 var constantStatements = string.Empty;
                 var elementStatements = string.Empty;
+                var settings = ImmediateStyleSettings.LoadInstance();
                 foreach (var t in targets) {
                     var element = (ElementCanvasGroup)t;
                     var id = element.ElementData.ID;
                     var (constantStatement, constant) = Builder.BuildConstantStatement(id);
-                    var elementStatement = Builder.BuildCanvasGroupStatement(constant);
-                    constantStatements += constantStatement + Environment.NewLine;
-                    elementStatements += elementStatement + Environment.NewLine;
+                    if (!settings.inlineClipboardGUIDS) {
+                        var elementStatement = Builder.BuildButtonStatement(constant);
+                        constantStatements += constantStatement + Environment.NewLine;
+                        elementStatements += elementStatement + Environment.NewLine;
+                    } else {
+                        var elementStatement = Builder.BuildButtonStatement($"\"{id}\"");
+                        elementStatements += elementStatement + Environment.NewLine;
+                    }
                 }
                 Helper.ClipboardText = constantStatements + elementStatements;
             } else if (choice == Choice.RegenerateRandomID) {
@@ -523,13 +535,19 @@ namespace MoonlitSystem.Editors
             } else if (choice == Choice.CopyCode) {
                 var constantStatements = string.Empty;
                 var elementStatements = string.Empty;
+                var settings = ImmediateStyleSettings.LoadInstance();
                 foreach (var t in targets) {
                     var element = (ElementImage)t;
                     var id = element.ElementData.ID;
                     var (constantStatement, constant) = Builder.BuildConstantStatement(id);
-                    var elementStatement = Builder.BuildImageStatement(constant);
-                    constantStatements += constantStatement + Environment.NewLine;
-                    elementStatements += elementStatement + Environment.NewLine;
+                    if (!settings.inlineClipboardGUIDS) {
+                        var elementStatement = Builder.BuildButtonStatement(constant);
+                        constantStatements += constantStatement + Environment.NewLine;
+                        elementStatements += elementStatement + Environment.NewLine;
+                    } else {
+                        var elementStatement = Builder.BuildButtonStatement($"\"{id}\"");
+                        elementStatements += elementStatement + Environment.NewLine;
+                    }
                 }
                 Helper.ClipboardText = constantStatements + elementStatements;
             } else if (choice == Choice.RegenerateRandomID) {
@@ -580,13 +598,19 @@ namespace MoonlitSystem.Editors
             } else if (choice == Choice.CopyCode) {
                 var constantStatements = string.Empty;
                 var elementStatements = string.Empty;
+                var settings = ImmediateStyleSettings.LoadInstance();
                 foreach (var t in targets) {
                     var element = (ElementToggle)t;
                     var id = element.ElementData.ID;
                     var (constantStatement, constant) = Builder.BuildConstantStatement(id);
-                    var elementStatement = Builder.BuildToggleStatement(constant);
-                    constantStatements += constantStatement + Environment.NewLine;
-                    elementStatements += elementStatement + Environment.NewLine;
+                    if (!settings.inlineClipboardGUIDS) {
+                        var elementStatement = Builder.BuildButtonStatement(constant);
+                        constantStatements += constantStatement + Environment.NewLine;
+                        elementStatements += elementStatement + Environment.NewLine;
+                    } else {
+                        var elementStatement = Builder.BuildButtonStatement($"\"{id}\"");
+                        elementStatements += elementStatement + Environment.NewLine;
+                    }
                 }
                 Helper.ClipboardText = constantStatements + elementStatements;
             } else if (choice == Choice.RegenerateRandomID) {
@@ -637,13 +661,19 @@ namespace MoonlitSystem.Editors
             } else if (choice == Choice.CopyCode) {
                 var constantStatements = string.Empty;
                 var elementStatements = string.Empty;
+                var settings = ImmediateStyleSettings.LoadInstance();
                 foreach (var t in targets) {
                     var element = (ElementDragDrop)t;
                     var id = element.ElementData.ID;
                     var (constantStatement, constant) = Builder.BuildConstantStatement(id);
-                    var elementStatement = Builder.BuildDragDropStatement(constant);
-                    constantStatements += constantStatement + Environment.NewLine;
-                    elementStatements += elementStatement + Environment.NewLine;
+                    if (!settings.inlineClipboardGUIDS) {
+                        var elementStatement = Builder.BuildButtonStatement(constant);
+                        constantStatements += constantStatement + Environment.NewLine;
+                        elementStatements += elementStatement + Environment.NewLine;
+                    } else {
+                        var elementStatement = Builder.BuildButtonStatement($"\"{id}\"");
+                        elementStatements += elementStatement + Environment.NewLine;
+                    }
                 }
                 Helper.ClipboardText = constantStatements + elementStatements;
             } else if (choice == Choice.RegenerateRandomID) {
@@ -694,13 +724,19 @@ namespace MoonlitSystem.Editors
             } else if (choice == Choice.CopyCode) {
                 var constantStatements = string.Empty;
                 var elementStatements = string.Empty;
+                var settings = ImmediateStyleSettings.LoadInstance();
                 foreach (var t in targets) {
                     var element = (ElementText)t;
                     var id = element.ElementData.ID;
                     var (constantStatement, constant) = Builder.BuildConstantStatement(id);
-                    var elementStatement = Builder.BuildTextStatement(constant);
-                    constantStatements += constantStatement + Environment.NewLine;
-                    elementStatements += elementStatement + Environment.NewLine;
+                    if (!settings.inlineClipboardGUIDS) {
+                        var elementStatement = Builder.BuildButtonStatement(constant);
+                        constantStatements += constantStatement + Environment.NewLine;
+                        elementStatements += elementStatement + Environment.NewLine;
+                    } else {
+                        var elementStatement = Builder.BuildButtonStatement($"\"{id}\"");
+                        elementStatements += elementStatement + Environment.NewLine;
+                    }
                 }
                 Helper.ClipboardText = constantStatements + elementStatements;
             } else if (choice == Choice.RegenerateRandomID) {
@@ -752,13 +788,19 @@ namespace MoonlitSystem.Editors
             } else if (choice == Choice.CopyCode) {
                 var constantStatements = string.Empty;
                 var elementStatements = string.Empty;
+                var settings = ImmediateStyleSettings.LoadInstance();
                 foreach (var t in targets) {
                     var element = (ElementInputField)t;
                     var id = element.ElementData.ID;
                     var (constantStatement, constant) = Builder.BuildConstantStatement(id);
-                    var elementStatement = Builder.BuildInputFieldStatement(constant);
-                    constantStatements += constantStatement + Environment.NewLine;
-                    elementStatements += elementStatement + Environment.NewLine;
+                    if (!settings.inlineClipboardGUIDS) {
+                        var elementStatement = Builder.BuildButtonStatement(constant);
+                        constantStatements += constantStatement + Environment.NewLine;
+                        elementStatements += elementStatement + Environment.NewLine;
+                    } else {
+                        var elementStatement = Builder.BuildButtonStatement($"\"{id}\"");
+                        elementStatements += elementStatement + Environment.NewLine;
+                    }
                 }
                 Helper.ClipboardText = constantStatements + elementStatements;
             } else if (choice == Choice.RegenerateRandomID) {
@@ -809,13 +851,19 @@ namespace MoonlitSystem.Editors
             } else if (choice == Choice.CopyCode) {
                 var constantStatements = string.Empty;
                 var elementStatements = string.Empty;
+                var settings = ImmediateStyleSettings.LoadInstance();
                 foreach (var t in targets) {
                     var element = (ElementSlider)t;
                     var id = element.ElementData.ID;
                     var (constantStatement, constant) = Builder.BuildConstantStatement(id);
-                    var elementStatement = Builder.BuildSliderStatement(constant);
-                    constantStatements += constantStatement + Environment.NewLine;
-                    elementStatements += elementStatement + Environment.NewLine;
+                    if (!settings.inlineClipboardGUIDS) {
+                        var elementStatement = Builder.BuildButtonStatement(constant);
+                        constantStatements += constantStatement + Environment.NewLine;
+                        elementStatements += elementStatement + Environment.NewLine;
+                    } else {
+                        var elementStatement = Builder.BuildButtonStatement($"\"{id}\"");
+                        elementStatements += elementStatement + Environment.NewLine;
+                    }
                 }
                 Helper.ClipboardText = constantStatements + elementStatements;
             } else if (choice == Choice.RegenerateRandomID) {
@@ -867,13 +915,19 @@ namespace MoonlitSystem.Editors
             } else if (choice == Choice.CopyCode) {
                 var constantStatements = string.Empty;
                 var elementStatements = string.Empty;
+                var settings = ImmediateStyleSettings.LoadInstance();
                 foreach (var t in targets) {
                     var element = (ElementDropdown)t;
                     var id = element.ElementData.ID;
                     var (constantStatement, constant) = Builder.BuildConstantStatement(id);
-                    var elementStatement = Builder.BuildDropdownStatement(constant);
-                    constantStatements += constantStatement + Environment.NewLine;
-                    elementStatements += elementStatement + Environment.NewLine;
+                    if (!settings.inlineClipboardGUIDS) {
+                        var elementStatement = Builder.BuildButtonStatement(constant);
+                        constantStatements += constantStatement + Environment.NewLine;
+                        elementStatements += elementStatement + Environment.NewLine;
+                    } else {
+                        var elementStatement = Builder.BuildButtonStatement($"\"{id}\"");
+                        elementStatements += elementStatement + Environment.NewLine;
+                    }
                 }
                 Helper.ClipboardText = constantStatements + elementStatements;
             } else if (choice == Choice.RegenerateRandomID) {
@@ -960,10 +1014,15 @@ namespace MoonlitSystem.Editors
                 Helper.ClipboardText = statements;
             } else if (choice == Choice.CopyCode) {
                 var statements = string.Empty;
+                var settings = ImmediateStyleSettings.LoadInstance();
                 foreach (var t in targets) {
                     var element = (Reference)t;
                     var id = element.ElementData.ID;
                     var (constantStatement, constant) = Builder.BuildConstantStatement(id);
+                    if (settings.inlineClipboardGUIDS) {
+                        constantStatement = string.Empty;
+                        constant = $"\"{id}\"";
+                    }
                     if (element.GetComponent<CanvasGroup>() != null) {
                         var elementStatement = Builder.BuildReferenceStatement(constant, nameof(CanvasGroup));
                         statements += constantStatement + Environment.NewLine + elementStatement;

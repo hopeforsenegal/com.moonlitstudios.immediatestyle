@@ -160,11 +160,6 @@ if(component.IsDragging) ImmediateStyle.FollowCursor(component.transform);
             public ElementInfo[] Dropdowns;
             public ElementInfo[] CanvasGroups;
             internal bool ForLoop;
-
-            // No DragDrops
-            // We don't file or element create DragDrop because anything using it
-            // typically does so in a for loop with a root mapping. Meaning that it must be done separately anyways.
-            // we might handle this in the future the day we come up on this issue.
         }
 
 
