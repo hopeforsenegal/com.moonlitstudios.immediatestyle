@@ -1,4 +1,16 @@
 Here we are just showing the stylistic code changes and workflow changes that is entailed in different UI workflows.
+First... A quick recap
+
+Design Example - This is how a **designer** might interact with UI based on a Unity tutorial such as this
+https://learn.unity.com/tutorial/creating-ui-buttons
+___
+Standard Example - This is how a **programmer** might interact with the UI based on a Unity tutorial such as this
+https://docs.unity3d.com/2022.3/Documentation/ScriptReference/UIElements.Button-clicked.html
+or this (for older versions of Unity)
+https://docs.unity3d.com/2018.1/Documentation/ScriptReference/UI.Button-onClick.html
+___
+Immediate Example - This is the new way that we provide you to interact with the UI. Less steps. Less code. Straightforward if statements if you desire.
+
 Each Step is approximately what you would do in order to achieve the functionality that you see in those scenes. Open up the scenes and give them a shot :-)
 
 **Design Example**
