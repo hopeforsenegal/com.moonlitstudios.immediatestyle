@@ -1,17 +1,21 @@
+# Style Comparison
 Here we are just showing the stylistic code changes and workflow changes that is entailed in different UI workflows.
 First... A quick recap
 
-Design Example - This is how a **designer** might interact with UI based on a Unity tutorial such as this
+### Design Example
+This is how a **designer** might interact with UI based on a Unity tutorial such as this
 https://learn.unity.com/tutorial/creating-ui-buttons
 ___
-Standard Example - This is how a **programmer** might interact with the UI based on a Unity tutorial such as this
+### Standard Example 
+This is how a **programmer** might interact with the UI based on a Unity tutorial such as this
 https://docs.unity3d.com/2022.3/Documentation/ScriptReference/UIElements.Button-clicked.html
 or this (for older versions of Unity)
 https://docs.unity3d.com/2018.1/Documentation/ScriptReference/UI.Button-onClick.html
 ___
-Immediate Example - This is the new way that we provide you to interact with the UI. Less steps. Less code. Straightforward if statements if you desire.
-
-Each Step is approximately what you would do in order to achieve the functionality that you see in those scenes. Open up the scenes and give them a shot :-)
+### Immediate Example
+This is the *new way* that we provide you to interact with the UI. Less steps. Less code. Straightforward "if statements" if you desire.
+___
+Below, each step is approximately what you would do in order to achieve the functionality that you see in those scenes. We've broken it up into the roughly same comparible steps and functionality. You can now evaluate which method or style best fits your needs. (We do recommend opening up the scenes and give them a spin after reading the steps in case you are not familiar with one of the styles)
 
 **Design Example**
 
@@ -55,5 +59,7 @@ Step 2. (The thing to note is that we don't need to get back to the editor and "
 
 <img width="600" alt="Screenshot 2024-10-10 at 9 48 01 AM" src="https://github.com/user-attachments/assets/d277dbb7-29eb-4522-b3c9-904c56a47e7c">
 
-
+___
 From here you can now hit **Play** without getting missing reference exceptions and get the responsive UI funuctionality that was intended.
+
+Note: Remember you can mix all three style if you would like. See Guessing Game if you would like to see that in action
