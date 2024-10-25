@@ -101,7 +101,7 @@ namespace MoonlitSystem.UI.Immediate
         {
             var hasElement = Instance.m_InteractImages.TryGetValue(id, out var element);
             Debug.Assert(hasElement, !hasElement ? $"{id} is not mapped. Did start get called? Does the caller need a root id?" : "");
-            Debug.Assert(sprite, "sprite was null");
+            Debug.Assert(sprite, "sprite was null. Did you mean to use the overloaded method Image(id) vs Image(id,sprite)?");
             if (hasElement) {
                 element.ElementData.MarkedForDisplay = true;
                 element.Image.sprite = sprite;
