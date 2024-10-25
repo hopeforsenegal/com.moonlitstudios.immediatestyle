@@ -85,6 +85,24 @@ namespace MoonlitSystem.Editors
         {
             return $"Reference.Find<{theType}>(this, {constant});";
         }
+
+        public static void RegenerateRandomIDsForTargets(Object[] targets)
+        {
+            foreach (var t in targets) {
+                var element = (IEditorData)t;
+                ElementData.SetupElementData(element.Data, element.transform);
+                EditorUtility.SetDirty(t);
+            }
+        }
+
+        internal static void UseGameObjectNameIDsForTargets(Object[] targets)
+        {
+            foreach (var t in targets) {
+                var element = (IEditorData)t;
+                ElementData.SetupElementDataGameObjectName(element.Data, element.transform);
+                EditorUtility.SetDirty(t);
+            }
+        }
     }
 
     public static class UI
@@ -146,42 +164,35 @@ namespace MoonlitSystem.Editors
         {
             ElementDataEditor.Render(targets);
 
-            var choice = RenderButtons();
-            if (choice == Choice.CopyID) {
-                Helper.ClipboardText = Builder.BuildConstantStatements(targets);
-            } else if (choice == Choice.CopyCode) {
-                var constantStatements = string.Empty;
-                var elementStatements = string.Empty;
-                var settings = ImmediateStyleSettings.LoadInstance();
-                foreach (var t in targets) {
-                    var element = (ElementButton)t;
-                    var id = element.ElementData.ID;
-                    var (constantStatement, constant) = Builder.BuildConstantStatement(id);
-                    if (!settings.inlineClipboardGUIDS) {
-                        var elementStatement = Builder.BuildButtonStatement(constant);
-                        constantStatements += constantStatement + Environment.NewLine;
-                        elementStatements += elementStatement + Environment.NewLine;
-                    } else {
-                        var elementStatement = Builder.BuildButtonStatement($"\"{id}\"");
-                        elementStatements += elementStatement + Environment.NewLine;
-                    }
-                }
-                Helper.ClipboardText = constantStatements + elementStatements;
-            } else if (choice == Choice.RegenerateRandomID) {
-                foreach (var t in targets) {
-                    var element = (ElementButton)t;
-                    ElementData.SetupElementData(element.ElementData, element.transform);
-                    EditorUtility.SetDirty(element);
-                }
-            } else if (choice == Choice.UseGameObjectNameID) {
-                foreach (var t in targets) {
-                    var element = (ElementButton)t;
-                    ElementData.SetupElementDataGameObjectName(element.ElementData, element.transform);
-                    EditorUtility.SetDirty(element);
-                }
+            switch (RenderButtons()) {
+                case Choice.CopyID: Helper.ClipboardText = Builder.BuildConstantStatements(targets); break;
+                case Choice.CopyCode: Helper.ClipboardText = CopyCodeButtonStatement(targets); break;
+                case Choice.RegenerateRandomID: Builder.RegenerateRandomIDsForTargets(targets); break;
+                case Choice.UseGameObjectNameID: Builder.UseGameObjectNameIDsForTargets(targets); break;
             }
         }
 
+        private static string CopyCodeButtonStatement(Object[] objects)
+        {
+            var constantStatements = string.Empty;
+            var elementStatements = string.Empty;
+            var settings = ImmediateStyleSettings.LoadInstance();
+            foreach (var t in objects) {
+                var element = (ElementButton)t;
+                var id = element.ElementData.ID;
+                var (constantStatement, constant) = Builder.BuildConstantStatement(id);
+                if (!settings.inlineClipboardGUIDS) {
+                    var elementStatement = Builder.BuildButtonStatement(constant);
+                    constantStatements += constantStatement + Environment.NewLine;
+                    elementStatements += elementStatement + Environment.NewLine;
+                } else {
+                    var elementStatement = Builder.BuildButtonStatement($"\"{id}\"");
+                    elementStatements += elementStatement + Environment.NewLine;
+                }
+            }
+
+            return constantStatements + elementStatements;
+        }
     }
 
     [CustomEditor(typeof(ElementCanvasGroup), true)]
@@ -226,21 +237,17 @@ namespace MoonlitSystem.Editors
                     var id = element.ElementData.ID;
                     var (constantStatement, constant) = Builder.BuildConstantStatement(id);
                     if (!settings.inlineClipboardGUIDS) {
-                        var elementStatement = Builder.BuildButtonStatement(constant);
+                        var elementStatement = Builder.BuildCanvasGroupStatement(constant);
                         constantStatements += constantStatement + Environment.NewLine;
                         elementStatements += elementStatement + Environment.NewLine;
                     } else {
-                        var elementStatement = Builder.BuildButtonStatement($"\"{id}\"");
+                        var elementStatement = Builder.BuildCanvasGroupStatement($"\"{id}\"");
                         elementStatements += elementStatement + Environment.NewLine;
                     }
                 }
                 Helper.ClipboardText = constantStatements + elementStatements;
             } else if (choice == Choice.RegenerateRandomID) {
-                foreach (var t in targets) {
-                    var element = (ElementCanvasGroup)t;
-                    ElementData.SetupElementData(element.ElementData, element.transform);
-                    EditorUtility.SetDirty(element);
-                }
+                Builder.RegenerateRandomIDsForTargets(targets);
             } else if (choice == Choice.FileTemplate) {
                 var element = (ElementCanvasGroup)target;
                 ImmediateUITemplate.BuildParams buildParams = default;
@@ -534,27 +541,19 @@ namespace MoonlitSystem.Editors
                     var id = element.ElementData.ID;
                     var (constantStatement, constant) = Builder.BuildConstantStatement(id);
                     if (!settings.inlineClipboardGUIDS) {
-                        var elementStatement = Builder.BuildButtonStatement(constant);
+                        var elementStatement = Builder.BuildImageStatement(constant);
                         constantStatements += constantStatement + Environment.NewLine;
                         elementStatements += elementStatement + Environment.NewLine;
                     } else {
-                        var elementStatement = Builder.BuildButtonStatement($"\"{id}\"");
+                        var elementStatement = Builder.BuildImageStatement($"\"{id}\"");
                         elementStatements += elementStatement + Environment.NewLine;
                     }
                 }
                 Helper.ClipboardText = constantStatements + elementStatements;
             } else if (choice == Choice.RegenerateRandomID) {
-                foreach (var t in targets) {
-                    var element = (ElementImage)t;
-                    ElementData.SetupElementData(element.ElementData, element.transform);
-                    EditorUtility.SetDirty(element);
-                }
+                Builder.RegenerateRandomIDsForTargets(targets);
             } else if (choice == Choice.UseGameObjectNameID) {
-                foreach (var t in targets) {
-                    var element = (ElementImage)t;
-                    ElementData.SetupElementDataGameObjectName(element.ElementData, element.transform);
-                    EditorUtility.SetDirty(element);
-                }
+                Builder.UseGameObjectNameIDsForTargets(targets);
             }
         }
     }
@@ -590,27 +589,19 @@ namespace MoonlitSystem.Editors
                     var id = element.ElementData.ID;
                     var (constantStatement, constant) = Builder.BuildConstantStatement(id);
                     if (!settings.inlineClipboardGUIDS) {
-                        var elementStatement = Builder.BuildButtonStatement(constant);
+                        var elementStatement = Builder.BuildToggleStatement(constant);
                         constantStatements += constantStatement + Environment.NewLine;
                         elementStatements += elementStatement + Environment.NewLine;
                     } else {
-                        var elementStatement = Builder.BuildButtonStatement($"\"{id}\"");
+                        var elementStatement = Builder.BuildToggleStatement($"\"{id}\"");
                         elementStatements += elementStatement + Environment.NewLine;
                     }
                 }
                 Helper.ClipboardText = constantStatements + elementStatements;
             } else if (choice == Choice.RegenerateRandomID) {
-                foreach (var t in targets) {
-                    var element = (ElementToggle)t;
-                    ElementData.SetupElementData(element.ElementData, element.transform);
-                    EditorUtility.SetDirty(element);
-                }
+                Builder.RegenerateRandomIDsForTargets(targets);
             } else if (choice == Choice.UseGameObjectNameID) {
-                foreach (var t in targets) {
-                    var element = (ElementToggle)t;
-                    ElementData.SetupElementDataGameObjectName(element.ElementData, element.transform);
-                    EditorUtility.SetDirty(element);
-                }
+                Builder.UseGameObjectNameIDsForTargets(targets);
             }
         }
     }
@@ -646,27 +637,19 @@ namespace MoonlitSystem.Editors
                     var id = element.ElementData.ID;
                     var (constantStatement, constant) = Builder.BuildConstantStatement(id);
                     if (!settings.inlineClipboardGUIDS) {
-                        var elementStatement = Builder.BuildButtonStatement(constant);
+                        var elementStatement = Builder.BuildDragDropStatement(constant);
                         constantStatements += constantStatement + Environment.NewLine;
                         elementStatements += elementStatement + Environment.NewLine;
                     } else {
-                        var elementStatement = Builder.BuildButtonStatement($"\"{id}\"");
+                        var elementStatement = Builder.BuildDragDropStatement($"\"{id}\"");
                         elementStatements += elementStatement + Environment.NewLine;
                     }
                 }
                 Helper.ClipboardText = constantStatements + elementStatements;
             } else if (choice == Choice.RegenerateRandomID) {
-                foreach (var t in targets) {
-                    var element = (ElementDragDrop)t;
-                    ElementData.SetupElementData(element.ElementData, element.transform);
-                    EditorUtility.SetDirty(element);
-                }
+                Builder.RegenerateRandomIDsForTargets(targets);
             } else if (choice == Choice.UseGameObjectNameID) {
-                foreach (var t in targets) {
-                    var element = (ElementDragDrop)t;
-                    ElementData.SetupElementDataGameObjectName(element.ElementData, element.transform);
-                    EditorUtility.SetDirty(element);
-                }
+                Builder.UseGameObjectNameIDsForTargets(targets);
             }
         }
     }
@@ -702,27 +685,19 @@ namespace MoonlitSystem.Editors
                     var id = element.ElementData.ID;
                     var (constantStatement, constant) = Builder.BuildConstantStatement(id);
                     if (!settings.inlineClipboardGUIDS) {
-                        var elementStatement = Builder.BuildButtonStatement(constant);
+                        var elementStatement = Builder.BuildTextStatement(constant);
                         constantStatements += constantStatement + Environment.NewLine;
                         elementStatements += elementStatement + Environment.NewLine;
                     } else {
-                        var elementStatement = Builder.BuildButtonStatement($"\"{id}\"");
+                        var elementStatement = Builder.BuildTextStatement($"\"{id}\"");
                         elementStatements += elementStatement + Environment.NewLine;
                     }
                 }
                 Helper.ClipboardText = constantStatements + elementStatements;
             } else if (choice == Choice.RegenerateRandomID) {
-                foreach (var t in targets) {
-                    var element = (ElementText)t;
-                    ElementData.SetupElementData(element.ElementData, element.transform);
-                    EditorUtility.SetDirty(element);
-                }
+                Builder.RegenerateRandomIDsForTargets(targets);
             } else if (choice == Choice.UseGameObjectNameID) {
-                foreach (var t in targets) {
-                    var element = (ElementText)t;
-                    ElementData.SetupElementDataGameObjectName(element.ElementData, element.transform);
-                    EditorUtility.SetDirty(element);
-                }
+                Builder.UseGameObjectNameIDsForTargets(targets);
             }
         }
     }
@@ -759,27 +734,19 @@ namespace MoonlitSystem.Editors
                     var id = element.ElementData.ID;
                     var (constantStatement, constant) = Builder.BuildConstantStatement(id);
                     if (!settings.inlineClipboardGUIDS) {
-                        var elementStatement = Builder.BuildButtonStatement(constant);
+                        var elementStatement = Builder.BuildInputFieldStatement(constant);
                         constantStatements += constantStatement + Environment.NewLine;
                         elementStatements += elementStatement + Environment.NewLine;
                     } else {
-                        var elementStatement = Builder.BuildButtonStatement($"\"{id}\"");
+                        var elementStatement = Builder.BuildInputFieldStatement($"\"{id}\"");
                         elementStatements += elementStatement + Environment.NewLine;
                     }
                 }
                 Helper.ClipboardText = constantStatements + elementStatements;
             } else if (choice == Choice.RegenerateRandomID) {
-                foreach (var t in targets) {
-                    var element = (ElementInputField)t;
-                    ElementData.SetupElementData(element.ElementData, element.transform);
-                    EditorUtility.SetDirty(element);
-                }
+                Builder.RegenerateRandomIDsForTargets(targets);
             } else if (choice == Choice.UseGameObjectNameID) {
-                foreach (var t in targets) {
-                    var element = (ElementInputField)t;
-                    ElementData.SetupElementDataGameObjectName(element.ElementData, element.transform);
-                    EditorUtility.SetDirty(element);
-                }
+                Builder.UseGameObjectNameIDsForTargets(targets);
             }
         }
     }
@@ -815,27 +782,19 @@ namespace MoonlitSystem.Editors
                     var id = element.ElementData.ID;
                     var (constantStatement, constant) = Builder.BuildConstantStatement(id);
                     if (!settings.inlineClipboardGUIDS) {
-                        var elementStatement = Builder.BuildButtonStatement(constant);
+                        var elementStatement = Builder.BuildSliderStatement(constant);
                         constantStatements += constantStatement + Environment.NewLine;
                         elementStatements += elementStatement + Environment.NewLine;
                     } else {
-                        var elementStatement = Builder.BuildButtonStatement($"\"{id}\"");
+                        var elementStatement = Builder.BuildSliderStatement($"\"{id}\"");
                         elementStatements += elementStatement + Environment.NewLine;
                     }
                 }
                 Helper.ClipboardText = constantStatements + elementStatements;
             } else if (choice == Choice.RegenerateRandomID) {
-                foreach (var t in targets) {
-                    var element = (ElementSlider)t;
-                    ElementData.SetupElementData(element.ElementData, element.transform);
-                    EditorUtility.SetDirty(element);
-                }
+                Builder.RegenerateRandomIDsForTargets(targets);
             } else if (choice == Choice.UseGameObjectNameID) {
-                foreach (var t in targets) {
-                    var element = (ElementSlider)t;
-                    ElementData.SetupElementDataGameObjectName(element.ElementData, element.transform);
-                    EditorUtility.SetDirty(element);
-                }
+                Builder.UseGameObjectNameIDsForTargets(targets);
             }
         }
     }
@@ -872,27 +831,19 @@ namespace MoonlitSystem.Editors
                     var id = element.ElementData.ID;
                     var (constantStatement, constant) = Builder.BuildConstantStatement(id);
                     if (!settings.inlineClipboardGUIDS) {
-                        var elementStatement = Builder.BuildButtonStatement(constant);
+                        var elementStatement = Builder.BuildDropdownStatement(constant);
                         constantStatements += constantStatement + Environment.NewLine;
                         elementStatements += elementStatement + Environment.NewLine;
                     } else {
-                        var elementStatement = Builder.BuildButtonStatement($"\"{id}\"");
+                        var elementStatement = Builder.BuildDropdownStatement($"\"{id}\"");
                         elementStatements += elementStatement + Environment.NewLine;
                     }
                 }
                 Helper.ClipboardText = constantStatements + elementStatements;
             } else if (choice == Choice.RegenerateRandomID) {
-                foreach (var t in targets) {
-                    var element = (ElementDropdown)t;
-                    ElementData.SetupElementData(element.ElementData, element.transform);
-                    EditorUtility.SetDirty(element);
-                }
+                Builder.RegenerateRandomIDsForTargets(targets);
             } else if (choice == Choice.UseGameObjectNameID) {
-                foreach (var t in targets) {
-                    var element = (ElementDropdown)t;
-                    ElementData.SetupElementDataGameObjectName(element.ElementData, element.transform);
-                    EditorUtility.SetDirty(element);
-                }
+                Builder.UseGameObjectNameIDsForTargets(targets);
             }
         }
     }
@@ -954,11 +905,9 @@ namespace MoonlitSystem.Editors
                     Helper.ClipboardText = statements + Environment.NewLine;
                 }
             } else if (choice == Choice.RegenerateRandomID) {
-                foreach (var t in targets) {
-                    var element = (Reference)t;
-                    ElementData.SetupElementData(element.ElementData, element.transform);
-                    EditorUtility.SetDirty(element);
-                }
+                Builder.RegenerateRandomIDsForTargets(targets);
+            } else if (choice == Choice.UseGameObjectNameID) {
+                Builder.UseGameObjectNameIDsForTargets(targets);
             }
         }
     }
