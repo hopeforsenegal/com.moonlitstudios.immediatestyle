@@ -16,7 +16,7 @@ namespace MoonlitSystem
                 Directory.CreateDirectory(ImmediateStyleSettingsResDir);
                 var assetPath = Path.Combine(ImmediateStyleSettingsResDir, $"{nameof(ImmediateStyleSettings)}.asset");
                 instance = CreateInstance<ImmediateStyleSettings>();
-                instance.unused = "Here temporarily until real settings get added.";
+                instance.removeElementAutomatically = false;
 #if UNITY_EDITOR
                 AssetDatabase.CreateAsset(instance, assetPath);
                 AssetDatabase.SaveAssetIfDirty(instance);
@@ -26,6 +26,10 @@ namespace MoonlitSystem
             return instance;
         }
 
-        public string unused; // @placeholder. Here temporarily until real settings get added.
+        // We have this as false by default
+        // Reasons why you might have this set to 'false'?
+        // Because you find the component you meant to add not actually being the one you added?
+        // A new user (to Unity) might get tripped on this. But in reality you should probably just set this to 'true'.
+        public bool removeElementAutomatically;
     }
 }

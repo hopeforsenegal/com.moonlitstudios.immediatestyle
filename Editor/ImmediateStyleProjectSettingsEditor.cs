@@ -21,21 +21,21 @@ namespace MoonlitSystem
         public const string MenuLocationInProjectSettings = "Project/ImmediateStyle";
 
         private SerializedObject m_ProjectSettings;
-        private SerializedProperty m_Unused;
+        private SerializedProperty m_RemoveElementAutomatically;
 
         private ImmediateStyleSettingsProvider(string path, SettingsScope scope = SettingsScope.Project) : base(path, scope) { }
 
         public override void OnActivate(string searchContext, VisualElement rootElement)
         {
             m_ProjectSettings = new SerializedObject(ImmediateStyleSettings.LoadInstance());  // GetSerializedSettings();
-            m_Unused = m_ProjectSettings.FindProperty(nameof(ImmediateStyleSettings.unused));
+            m_RemoveElementAutomatically = m_ProjectSettings.FindProperty(nameof(ImmediateStyleSettings.removeElementAutomatically));
         }
 
         public override void OnGUI(string searchContext)
         {
-            EditorGUI.BeginDisabledGroup(true);
-            EditorGUILayout.PropertyField(m_Unused, new GUIContent("-Placeholder-"));
-            EditorGUI.EndDisabledGroup();
+            GUILayout.Label("The Element Component is actually inert (its there to save users time on selecting multiple components of different types):", EditorStyles.boldLabel);
+            GUILayout.Space(10);
+            EditorGUILayout.PropertyField(m_RemoveElementAutomatically);
 
             m_ProjectSettings.ApplyModifiedProperties();
         }

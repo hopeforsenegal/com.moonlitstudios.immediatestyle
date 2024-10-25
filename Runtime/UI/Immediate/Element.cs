@@ -12,58 +12,66 @@ namespace MoonlitSystem.UI.Immediate
     {
         protected void Reset()
         {
-            if (GetComponent<Button>() != null && GetComponent<ElementButton>() == null) {
+            var settings = ImmediateStyleSettings.LoadInstance();
+            Transform t = null;
+            ElementData ed = null;
+            if (t == null && GetComponent<Button>() != null && GetComponent<ElementButton>() == null) {
                 var e = gameObject.AddComponent<ElementButton>();
-                ElementData.SetupElementData(e.ElementData, e.transform);
-                return;
+                t = e.transform;
+                ed = e.ElementData;
             }
             if (GetComponent<Text>() != null && GetComponent<ElementText>() == null) {
                 var e = gameObject.AddComponent<ElementText>();
-                ElementData.SetupElementData(e.ElementData, e.transform);
-                return;
+                t = e.transform;
+                ed = e.ElementData;
             }
 #if TMP_PRESENT
             if (GetComponent<TMP_Text>() != null && GetComponent<ElementText>() == null) {
                 var e = gameObject.AddComponent<ElementText>();
-                ElementData.SetupElementData(e.ElementData, e.transform);
-                return;
+                t = e.transform;
+                ed = e.ElementData;
             }
 #endif
             if (GetComponent<Toggle>() != null && GetComponent<ElementToggle>() == null) {
                 var e = gameObject.AddComponent<ElementToggle>();
-                ElementData.SetupElementData(e.ElementData, e.transform);
-                return;
+                t = e.transform;
+                ed = e.ElementData;
             }
             if (GetComponent<DragDrop>() != null && GetComponent<ElementDragDrop>() == null) {
                 var e = gameObject.AddComponent<ElementDragDrop>();
-                ElementData.SetupElementData(e.ElementData, e.transform);
-                return;
+                t = e.transform;
+                ed = e.ElementData;
             }
             if (GetComponent<InputField>() != null && GetComponent<ElementInputField>() == null) {
                 var e = gameObject.AddComponent<ElementInputField>();
-                ElementData.SetupElementData(e.ElementData, e.transform);
-                return;
+                t = e.transform;
+                ed = e.ElementData;
             }
             if (GetComponent<Slider>() != null && GetComponent<ElementSlider>() == null) {
                 var e = gameObject.AddComponent<ElementSlider>();
-                ElementData.SetupElementData(e.ElementData, e.transform);
-                return;
+                t = e.transform;
+                ed = e.ElementData;
             }
             if (GetComponent<Dropdown>() != null && GetComponent<ElementDropdown>() == null) {
                 var e = gameObject.AddComponent<ElementDropdown>();
-                ElementData.SetupElementData(e.ElementData, e.transform);
-                return;
+                t = e.transform;
+                ed = e.ElementData;
             }
             if (GetComponent<CanvasGroup>() != null && GetComponent<ElementCanvasGroup>() == null) {
                 var e = gameObject.AddComponent<ElementCanvasGroup>();
-                ElementData.SetupElementData(e.ElementData, e.transform);
-                return;
+                t = e.transform;
+                ed = e.ElementData;
             }
             if (GetComponent<Image>() != null && GetComponent<ElementImage>() == null) {
                 var e = gameObject.AddComponent<ElementImage>();
-                ElementData.SetupElementData(e.ElementData, e.transform);
-                // ReSharper disable once RedundantJumpStatement
-                return;
+                t = e.transform;
+                ed = e.ElementData;
+            }
+            if (t != null) {
+                ElementData.SetupElementData(ed, t);
+                if (settings.removeElementAutomatically) {
+                    DestroyImmediate(this);
+                }
             }
         }
     }
@@ -89,8 +97,8 @@ namespace MoonlitSystem.UI.Immediate
         private static string GetGameObjectFullPathHierarchy(Transform current)
         {
             if (current.parent == null)
-                return "/" + current.name.Replace("-", "");
-            return GetGameObjectFullPathHierarchy(current.parent) + "/" + current.name.Replace("-", ""); // remove "-" because it messes with constants that get created
+                return "/" + current.name.Replace("-", "").Replace("<","");
+            return GetGameObjectFullPathHierarchy(current.parent) + "/" + current.name.Replace("-", "").Replace("<", ""); // remove "-" because it messes with constants that get created
         }
     }
 }
