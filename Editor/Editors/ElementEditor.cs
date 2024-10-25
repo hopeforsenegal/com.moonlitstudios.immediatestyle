@@ -946,6 +946,7 @@ namespace MoonlitSystem.Editors
         }
     }
 
+    public enum RootMappingChoice { UseRandomForID = 1, UseGameObjectNameforID, UseSiblingIndexforID }
     [CustomEditor(typeof(RootMapping), true)]
     [CanEditMultipleObjects]
     public class RootMappingEditor : Editor
@@ -954,32 +955,30 @@ namespace MoonlitSystem.Editors
 
         public override void OnInspectorGUI()
         {
-            bool useGameObjectNameforID = false;
-            bool useSiblingIndexforID = false;
-
             base.OnInspectorGUI();
 
-            var useRandomForID = GUILayout.Button("Use Random for ID");
+            RootMappingChoice choice = default;
+            if (GUILayout.Button("Use Random for ID")) choice = RootMappingChoice.UseRandomForID;
             using (new HorizontalScope())
             using (new LabelWidthScope(40)) {
                 prefix_go = EditorGUILayout.TextField("Prefix", prefix_go);
 
-                useGameObjectNameforID = GUILayout.Button("Use GameObject Name for ID");
+                if (GUILayout.Button("Use GameObject Name for ID")) choice = RootMappingChoice.UseGameObjectNameforID;
             }
             using (new HorizontalScope())
             using (new LabelWidthScope(40)) {
                 prefix_si = EditorGUILayout.TextField("Prefix", prefix_si);
 
-                useSiblingIndexforID = GUILayout.Button("Use Sibling Index for ID");
+                if (GUILayout.Button("Use Sibling Index for ID")) choice = RootMappingChoice.UseSiblingIndexforID;
             }
 
             foreach (var t in targets) {
                 var element = (RootMapping)t;
-                if (useRandomForID) { element.Reset(); }
-                if (useGameObjectNameforID) { element.ID = $"{prefix_go}{t.name}"; }
-                if (useSiblingIndexforID) { element.ID = $"{prefix_si}{element.transform.GetSiblingIndex()}"; }
+                if (choice == RootMappingChoice.UseRandomForID) { element.Reset(); }
+                if (choice == RootMappingChoice.UseGameObjectNameforID) { element.ID = $"{prefix_go}{t.name}"; }
+                if (choice == RootMappingChoice.UseSiblingIndexforID) { element.ID = $"{prefix_si}{element.transform.GetSiblingIndex()}"; }
 
-                if (useRandomForID || useGameObjectNameforID || useSiblingIndexforID) {
+                if (choice != default) {
                     EditorUtility.SetDirty(element);
                 }
             }
