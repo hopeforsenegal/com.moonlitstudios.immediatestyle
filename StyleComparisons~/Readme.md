@@ -55,7 +55,7 @@ Step 1a. (This is step 1a because you haven't left the editor and is a simple cl
 <img width="300" alt="Screenshot 2024-10-10 at 9 47 29 AM" src="https://github.com/user-attachments/assets/fe88d97d-dd7a-4ee4-a3aa-9f83e333152b">
 
 Step 2. (The thing to note is that we don't need to get back to the editor and "set references")
-https://github.com/hopeforsenegal/com.moonlitstudios.immediatestyle/blob/bfed9a33207350af9ccad8d7b7e556578ee120a8/StyleComparisons~/ImmediateExample.cs#L15-L29
+https://github.com/hopeforsenegal/com.moonlitstudios.immediatestyle/blob/58e1170048bc053f666362046af42db4171b9282/StyleComparisons~/ImmediateExample.cs#L12-L25
 
 ___
 From here you can now hit **Play** without getting missing reference exceptions and get the responsive UI funuctionality that was intended.
