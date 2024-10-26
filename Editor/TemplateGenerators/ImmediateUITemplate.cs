@@ -162,6 +162,21 @@ if(component.IsDragging) ImmediateStyle.FollowCursor(component.transform);
             internal bool ForLoop;
         }
 
+        public static string RemoveExtraNewLines(string code)
+        {
+            var codeSplit = code.Split(Environment.NewLine);
+            var trimmedEndingSpaces = string.Empty;
+            foreach (var line in codeSplit) {
+                var after = line.TrimEnd(' ');
+                trimmedEndingSpaces += line.TrimEnd(' ') + Environment.NewLine;
+            }
+            code = trimmedEndingSpaces;
+            code = code.Replace("\r\n", "\n").Replace("\r", "\n");
+            while (code.Contains("\n\n")) code = code.Replace("\n\n", "\n");
+            code = code.Replace("\n", Environment.NewLine);
+            return code;
+        }
+
         public static string BuildString(BuildParams build, string extension)
         {
             var templatePath = Name.GetTemplatePackagePath($"{extension}.cs.tmpl");
@@ -385,6 +400,7 @@ if(component.IsDragging) ImmediateStyle.FollowCursor(component.transform);
             var path = Path.Combine(Application.dataPath, Name.AssetsPath);
             path = path.Substring(0, path.Length - Path.GetFileName(path).Length);
             path = path + Builder.CleanString(build.RootCanvasGroup.GameObject_Name) + ".cs";
+            code = RemoveExtraNewLines(code);
 
             File.WriteAllText(path, code);
             AssetDatabase.Refresh();
