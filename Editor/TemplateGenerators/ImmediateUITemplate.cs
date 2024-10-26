@@ -12,10 +12,9 @@ namespace MoonlitSystem.TemplateGenerators
     {
         public static string ToTitleCase(this string str)
         {
-            if (!string.IsNullOrEmpty(str) && str.Length > 1) {
-                return char.ToUpperInvariant(str[0]) + str.Substring(1);
-            }
-            return str;
+            if (string.IsNullOrEmpty(str)) return str;
+            if (str.Length <= 1) return str;
+            return char.ToUpperInvariant(str[0]) + str.Substring(1);
         }
         public static string RemoveChars(this string s, IEnumerable<char> separators)
         {
@@ -27,7 +26,7 @@ namespace MoonlitSystem.TemplateGenerators
         public static class Name
         {
             private const string PackageName = "com.moonlitstudios.immediatestyle";
-            private static string TemplatePackagePath => $"Packages/{PackageName}/Editor/Template";
+            private static string TemplatePackagePath { get; } = $"Packages/{PackageName}/Editor/Template";
             internal const string ScreenExtension = "ImmediateUI";
             internal const string ElementsExtension = "ImmediateUIElement";
             internal const string AssetsPath = "Assets";
@@ -49,9 +48,11 @@ namespace MoonlitSystem.TemplateGenerators
                 if (int.TryParse(gameObjectName, out var number)) gameObjectName = $"{type}{number}";
                 return gameObjectName;
             }
-            public static string BuildConstantStatement(string id)
+            public static string BuildConstantStatement(string extra, string id)
             {
-                return CleanString(id);
+                var settings = ImmediateStyleSettings.LoadInstance(); // load instance again for the 15th time :-/
+                if (settings.inlineClipboardGUIDS) return extra + $"\"{id}\"";
+                return CleanString(extra + id);
             }
             public static string BuildPrivateConstantStatement(string id)
             {
@@ -105,7 +106,7 @@ if(component.IsDragging) ImmediateStyle.FollowCursor(component.transform);
             }
             public static string BuildButtonReadEvent(string name, string buttonID, string eventName)
             {
-                var constant = BuildConstantStatement(buttonID);
+                var constant = BuildConstantStatement(string.Empty, buttonID);
                 var buttonStatement = BuildButtonStatement(constant);
                 buttonStatement = buttonStatement.Replace(";", "");
                 name = CleanString(name);
@@ -114,7 +115,7 @@ if(component.IsDragging) ImmediateStyle.FollowCursor(component.transform);
             }
             public static string BuildToggleReadEvent(string name, string buttonID, string eventName)
             {
-                var constant = BuildConstantStatement(buttonID);
+                var constant = BuildConstantStatement(string.Empty, buttonID);
                 var buttonStatement = BuildToggleStatement(constant);
                 buttonStatement = buttonStatement.Replace(";", "");
                 name = CleanString(name);
@@ -123,7 +124,7 @@ if(component.IsDragging) ImmediateStyle.FollowCursor(component.transform);
             }
             internal static string BuildInputFieldsReadEvent(string name, string buttonID, string eventName)
             {
-                var constant = BuildConstantStatement(buttonID);
+                var constant = BuildConstantStatement(string.Empty, buttonID);
                 var statement = BuildInputFieldStatement(constant);
                 statement = statement.Replace(";", "");
                 name = CleanString(name);
@@ -142,8 +143,7 @@ if(component.IsDragging) ImmediateStyle.FollowCursor(component.transform);
         [SuppressMessage("ReSharper", "InconsistentNaming")]
         public struct ElementInfo
         {
-            public string GameObject_Name;
-            public string Element_ID;
+            public string GameObject_Name, Element_ID;
         }
 
         public struct BuildParams
@@ -162,7 +162,6 @@ if(component.IsDragging) ImmediateStyle.FollowCursor(component.transform);
             internal bool ForLoop;
         }
 
-
         public static string BuildString(BuildParams build, string extension)
         {
             var templatePath = Name.GetTemplatePackagePath($"{extension}.cs.tmpl");
@@ -172,6 +171,9 @@ if(component.IsDragging) ImmediateStyle.FollowCursor(component.transform);
                 code = code.Replace("{name}", Builder.CleanString(build.RootCanvasGroup.GameObject_Name));
             }
             {
+                var constantIds = "";
+                var constantIdsNoConst = "";
+                var settings = ImmediateStyleSettings.LoadInstance(); // load instance again for the 15th time :-/
                 var allData = new List<ElementInfo>();
                 allData.AddRange(build.Buttons);
                 allData.AddRange(build.Toggles);
@@ -184,17 +186,17 @@ if(component.IsDragging) ImmediateStyle.FollowCursor(component.transform);
                 allData.AddRange(build.CanvasGroups);
                 allData.Add(build.RootCanvasGroup);
 
-                var constantIds = "";
-                foreach (var elementInfo in allData) {
-                    var constantStatement = Builder.BuildPrivateConstantStatement(elementInfo.Element_ID);
-                    constantIds += constantStatement + Environment.NewLine;
+                if (!settings.inlineClipboardGUIDS) {
+                    foreach (var elementInfo in allData) {
+                        var constantStatement = Builder.BuildPrivateConstantStatement(elementInfo.Element_ID);
+                        constantIds += constantStatement + Environment.NewLine;
+                    }
+                    foreach (var elementInfo in allData) {
+                        var constantStatement = Builder.BuildNonPrivateConstantStatement(elementInfo.Element_ID);
+                        constantIdsNoConst += constantStatement + Environment.NewLine;
+                    }
                 }
                 code = code.Replace("{id_names_and_values}", constantIds);
-                var constantIdsNoConst = "";
-                foreach (var elementInfo in allData) {
-                    var constantStatement = Builder.BuildNonPrivateConstantStatement(elementInfo.Element_ID);
-                    constantIdsNoConst += constantStatement + Environment.NewLine;
-                }
                 code = code.Replace("{id_names_and_values_no_const}", constantIdsNoConst);
             }
             {
@@ -245,7 +247,7 @@ if(component.IsDragging) ImmediateStyle.FollowCursor(component.transform);
             }
 
             {
-                var constant = Builder.BuildConstantStatement(extraConstant + build.RootCanvasGroup.Element_ID);
+                var constant = Builder.BuildConstantStatement(extraConstant, build.RootCanvasGroup.Element_ID);
                 var elementStatement = Builder.BuildCanvasGroupStatement(constant);
                 code = code.Replace("{root_canvas_group}", elementStatement + Environment.NewLine);
             }
@@ -253,7 +255,7 @@ if(component.IsDragging) ImmediateStyle.FollowCursor(component.transform);
             {
                 var texts = "";
                 foreach (var text in build.CanvasGroups) {
-                    var constant = Builder.BuildConstantStatement(extraConstant + text.Element_ID);
+                    var constant = Builder.BuildConstantStatement(extraConstant, text.Element_ID);
                     var elementStatement = Builder.BuildCanvasGroupStatement(constant);
                     texts += elementStatement + Environment.NewLine;
                 }
@@ -262,7 +264,7 @@ if(component.IsDragging) ImmediateStyle.FollowCursor(component.transform);
             {
                 var texts = "";
                 foreach (var text in build.Texts) {
-                    var constant = Builder.BuildConstantStatement(extraConstant + text.Element_ID);
+                    var constant = Builder.BuildConstantStatement(extraConstant, text.Element_ID);
                     var elementStatement = Builder.BuildTextStatement(constant);
                     texts += elementStatement + Environment.NewLine;
                 }
@@ -271,7 +273,7 @@ if(component.IsDragging) ImmediateStyle.FollowCursor(component.transform);
             {
                 var images = "";
                 foreach (var image in build.Images) {
-                    var constant = Builder.BuildConstantStatement(extraConstant + image.Element_ID);
+                    var constant = Builder.BuildConstantStatement(extraConstant, image.Element_ID);
                     var elementStatement = Builder.BuildImageStatement(constant);
                     images += elementStatement + Environment.NewLine;
                 }
@@ -287,8 +289,7 @@ if(component.IsDragging) ImmediateStyle.FollowCursor(component.transform);
 
                 var buttonsNoEvent = "";
                 foreach (var button in build.Buttons) {
-
-                    var constant = Builder.BuildConstantStatement(extraConstant + button.Element_ID);
+                    var constant = Builder.BuildConstantStatement(extraConstant, button.Element_ID);
                     var buttonStatement = Builder.BuildButtonStatement(constant);
                     buttonStatement = buttonStatement.Replace(";", "");
                     buttonStatement = $"{ buttonStatement}.IsMouseDown;";
@@ -307,8 +308,7 @@ if(component.IsDragging) ImmediateStyle.FollowCursor(component.transform);
 
                 var buttonsNoEvent = "";
                 foreach (var button in build.Toggles) {
-
-                    var constant = Builder.BuildConstantStatement(extraConstant + button.Element_ID);
+                    var constant = Builder.BuildConstantStatement(extraConstant, button.Element_ID);
                     var buttonStatement = Builder.BuildToggleStatement(constant);
                     buttonStatement = buttonStatement.Replace(";", "");
                     buttonStatement = $"{ buttonStatement}.IsClicked;";
@@ -327,7 +327,7 @@ if(component.IsDragging) ImmediateStyle.FollowCursor(component.transform);
 
                 var buttonsNoEvent = "";
                 foreach (var button in build.InputFields) {
-                    var constant = Builder.BuildConstantStatement(extraConstant + button.Element_ID);
+                    var constant = Builder.BuildConstantStatement(extraConstant, button.Element_ID);
                     var buttonStatement = Builder.BuildInputFieldStatement(constant);
                     buttonStatement = buttonStatement.Replace(";", "");
                     buttonStatement = $"{ buttonStatement}.HasSubmitted;";
@@ -351,7 +351,7 @@ if(component.IsDragging) ImmediateStyle.FollowCursor(component.transform);
             {
                 var components = "";
                 foreach (var text in build.Sliders) {
-                    var constant = Builder.BuildConstantStatement(extraConstant + text.Element_ID);
+                    var constant = Builder.BuildConstantStatement(extraConstant, text.Element_ID);
                     var elementStatement = Builder.BuildSliderStatement(constant);
                     components += elementStatement + Environment.NewLine;
                 }
@@ -360,7 +360,7 @@ if(component.IsDragging) ImmediateStyle.FollowCursor(component.transform);
             {
                 var components = "";
                 foreach (var text in build.DragDrops) {
-                    var constant = Builder.BuildConstantStatement(extraConstant + text.Element_ID);
+                    var constant = Builder.BuildConstantStatement(extraConstant, text.Element_ID);
                     var elementStatement = Builder.BuildDragDropStatement(constant);
                     components += elementStatement + Environment.NewLine;
                 }
@@ -369,7 +369,7 @@ if(component.IsDragging) ImmediateStyle.FollowCursor(component.transform);
             {
                 var components = "";
                 foreach (var text in build.Dropdowns) {
-                    var constant = Builder.BuildConstantStatement(extraConstant + text.Element_ID);
+                    var constant = Builder.BuildConstantStatement(extraConstant, text.Element_ID);
                     var elementStatement = Builder.BuildDropdownStatement(constant);
                     components += elementStatement + Environment.NewLine;
                 }
@@ -381,11 +381,10 @@ if(component.IsDragging) ImmediateStyle.FollowCursor(component.transform);
 
         public static void Build(BuildParams build)
         {
+            var code = BuildString(build, Name.ScreenExtension);
             var path = Path.Combine(Application.dataPath, Name.AssetsPath);
             path = path.Substring(0, path.Length - Path.GetFileName(path).Length);
             path = path + Builder.CleanString(build.RootCanvasGroup.GameObject_Name) + ".cs";
-
-            var code = BuildString(build, Name.ScreenExtension);
 
             File.WriteAllText(path, code);
             AssetDatabase.Refresh();
