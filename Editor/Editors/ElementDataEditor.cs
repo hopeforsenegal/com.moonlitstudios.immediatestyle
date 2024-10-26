@@ -7,45 +7,21 @@ namespace MoonlitSystem.Editors
 {
     public static class ElementDataEditor
     {
-        public static string[] GetIDSFromTargets(Object[] targets)
+        public static (string[], string[]) GetIDSFromTargets(Object[] targets)
         {
-            var ids = new List<string>();
+            var elementIds = new List<string>();
+            var rootMappingIDs = new HashSet<string>();
             foreach (var t in targets) {
-                if (t is Reference r) {
-                    ids.Add(r.ElementData.ID);
-                }
-                if (t is ElementButton eb) {
-                    ids.Add(eb.ElementData.ID);
-                }
-                if (t is ElementText et) {
-                    ids.Add(et.ElementData.ID);
-                }
-                if (t is ElementToggle et2) {
-                    ids.Add(et2.ElementData.ID);
-                }
-                if (t is ElementDragDrop edd) {
-                    ids.Add(edd.ElementData.ID);
-                }
-                if (t is ElementInputField eif) {
-                    ids.Add(eif.ElementData.ID);
-                }
-                if (t is ElementSlider es) {
-                    ids.Add(es.ElementData.ID);
-                }
-                if (t is ElementDropdown ed) {
-                    ids.Add(ed.ElementData.ID);
-                }
-                if (t is ElementCanvasGroup ecg) {
-                    ids.Add(ecg.ElementData.ID);
-                }
-                if (t is ElementImage ei) {
-                    ids.Add(ei.ElementData.ID);
-                }
-                // This will break when we add a new element and forget to place it here
-            }
-            return ids.ToArray();
-        }
+                if (!(t is BaseEditorData ed)) continue;
 
+                var rootMapping = RootMapping.GetFirstParentOrAssert(ed);
+                if (rootMapping != null) {
+                    if (!rootMappingIDs.Contains(rootMapping.ID)) rootMappingIDs.Add(rootMapping.ID);
+                }
+                elementIds.Add(ed.ElementData.ID);
+            }
+            return (elementIds.ToArray(), new List<string>(rootMappingIDs).ToArray());
+        }
 
         private static bool IsAllUniqueGuid(string[] guids)
         {
@@ -62,20 +38,33 @@ namespace MoonlitSystem.Editors
         //   otherwise show a dash to show they differ
         public static void Render(Object[] targets)
         {
-            var ids = GetIDSFromTargets(targets);
-            var isSingle = ids.Length <= 1;
-            var value = "-";
-            if (isSingle) value = ids[0];
-            if (!isSingle && !IsAllUniqueGuid(ids)) value = ids[0];
+            var (elementIds, rootMappingIDs) = GetIDSFromTargets(targets);
+            var isSingleElement = elementIds.Length <= 1;
+            var isSingleRootMapping = rootMappingIDs.Length <= 1;
+            var hasNoSingleRootMapping = rootMappingIDs.Length == 0;
+            var elementValue = "-";
+            var rootMappingValue = "-";
+            if (isSingleElement) elementValue = elementIds[0];
+            if (!isSingleElement && !IsAllUniqueGuid(elementIds)) elementValue = elementIds[0];
 
+            if (!hasNoSingleRootMapping) {
+                if (isSingleRootMapping) rootMappingValue = rootMappingIDs[0];
+                if (!isSingleRootMapping && !IsAllUniqueGuid(rootMappingIDs)) rootMappingValue = rootMappingIDs[0];
+                using (new HorizontalScope()) {
+                    GUILayout.Label("[RM]", new GUIStyle(EditorStyles.boldLabel) { fixedWidth = 40 });
+                    EditorGUI.BeginDisabledGroup(true);
+                    GUILayout.TextField(rootMappingValue, GUI.skin.textField);
+                    EditorGUI.EndDisabledGroup();
+                }
+            }
             using (new HorizontalScope()) {
                 var s = new GUIStyle(EditorStyles.boldLabel);
-                if (string.IsNullOrWhiteSpace(value)) s.normal.textColor = Color.red;
+                if (string.IsNullOrWhiteSpace(elementValue)) s.normal.textColor = Color.red;
 
                 s.fixedWidth = 40;
                 GUILayout.Label("[GUID]", s);
                 EditorGUI.BeginDisabledGroup(true);
-                GUILayout.TextField(value, GUI.skin.textField);
+                GUILayout.TextField(elementValue, GUI.skin.textField);
                 EditorGUI.EndDisabledGroup();
             }
             EditorGUILayout.Space();

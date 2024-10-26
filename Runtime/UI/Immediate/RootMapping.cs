@@ -7,8 +7,6 @@ namespace MoonlitSystem.UI.Immediate
     // This is super useful when using for loops (so think listing things in a for loop like a character select where the elements are the same).
     // If you are using Prefabs for instance you might make the parent of the prefab have this component so you don't have to manually change each member of the prefab to have a unique GUID/
     // Please look at GuessingGame.cs (and its corresponding scene) and its for loop to understand exactly how to use this!
-
-    // NOTE: This component applies to BOTH Element and Reference
     [DisallowMultipleComponent]
     public class RootMapping : MonoBehaviour
     {
@@ -46,8 +44,7 @@ namespace MoonlitSystem.UI.Immediate
             foreach (var elementRootMapping in elementRootMappings) {
                 foreach (var id in ids) {
                     if (id != elementRootMapping.ID) continue;
-                    results.Add(elementRootMapping);
-                    break;
+                    results.Add(elementRootMapping); break;
                 }
             }
             Debug.Assert(results != null && results.Count > 0, $"Unable to find a reference. '{string.Join("|", ids)}'", context);
