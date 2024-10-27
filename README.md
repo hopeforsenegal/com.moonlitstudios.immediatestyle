@@ -8,8 +8,10 @@ This allows you to interact with Unity UI GameObjects in an Immediate *Style* (s
 Why only be limited to different "Callback" or "Design" styles?
 
 ```cs    
-rightButton.onClick.AddListener(OnAction);
-...
+protected void Start()
+{
+    rightButton.onClick.AddListener(OnAction);
+}
 private void OnAction()
 {
     Debug.Log("Hello World!");
