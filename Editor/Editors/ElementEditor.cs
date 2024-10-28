@@ -622,7 +622,6 @@ namespace MoonlitSystem.Editors
 
             var code = ImmediateUITemplate.BuildString(buildParams, ImmediateUITemplate.Name.ElementsExtension);
             code = ImmediateUITemplate.RemoveExtraNewLines(code);
-
             Helper.ClipboardText = code;
         }
 

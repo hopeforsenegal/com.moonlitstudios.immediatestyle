@@ -166,10 +166,7 @@ if(component.IsDragging) ImmediateStyle.FollowCursor(component.transform);
         {
             var codeSplit = code.Split(Environment.NewLine);
             var trimmedEndingSpaces = string.Empty;
-            foreach (var line in codeSplit) {
-                var after = line.TrimEnd(' ');
-                trimmedEndingSpaces += line.TrimEnd(' ') + Environment.NewLine;
-            }
+            foreach (var line in codeSplit) trimmedEndingSpaces += line.TrimEnd(' ') + Environment.NewLine;
             code = trimmedEndingSpaces;
             code = code.Replace("\r\n", "\n").Replace("\r", "\n");
             while (code.Contains("\n\n")) code = code.Replace("\n\n", "\n");
@@ -181,7 +178,6 @@ if(component.IsDragging) ImmediateStyle.FollowCursor(component.transform);
         {
             var templatePath = Name.GetTemplatePackagePath($"{extension}.cs.tmpl");
             var code = File.ReadAllText(templatePath);
-
             {
                 code = code.Replace("{name}", Builder.CleanString(build.RootCanvasGroup.GameObject_Name));
             }
