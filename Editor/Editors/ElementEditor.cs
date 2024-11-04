@@ -9,6 +9,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using Object = UnityEngine.Object;
 using static MoonlitSystem.Editors.UI;
+using UnityEditor.SceneManagement;
 
 namespace MoonlitSystem.Editors
 {
@@ -387,6 +388,46 @@ namespace MoonlitSystem.Editors
         }
 
         private static readonly Color HighlightButton = new Color(235 / 255f, 235 / 255f, 255 / 255f);
+
+        [MenuItem("GameObject/ImmediateStyle/Regenerate selected GUIDs", false, 20000)]
+        private static void RegenerateSelectedGUID(MenuCommand _)
+        {
+            foreach (var go in Selection.gameObjects) {
+                if (go.TryGetComponent<BaseEditorData>(out var c)) {
+                    ElementData.SetupElementData(c.ElementData, c.transform);
+                }
+            }
+
+            EditorSceneManager.MarkSceneDirty(EditorSceneManager.GetActiveScene());
+        }
+
+        [MenuItem("GameObject/ImmediateStyle/Regenerate children GUIDs", false, 20000)]
+        private static void RegenerateChildrenGUIDs(MenuCommand _)
+        {
+            foreach (var go in Selection.gameObjects) {
+                foreach (var c in go.GetComponentsInChildren<BaseEditorData>()) {
+                    if (c == null) continue;
+                    ElementData.SetupElementData(c.ElementData, c.transform);
+                }
+            }
+
+            EditorSceneManager.MarkSceneDirty(EditorSceneManager.GetActiveScene());
+        }
+
+        [MenuItem("GameObject/ImmediateStyle/Regenerate selected GUIDs", true)]
+        private static bool ValidateRegenerateSelectedGUID() => HasAllElements();
+
+        [MenuItem("GameObject/ImmediateStyle/Regenerate children GUIDs", true)]
+        private static bool ValidateRegenerateChildrenGUIDs() => HasAllElements();
+
+        private static bool HasAllElements()
+        {
+            foreach (var go in Selection.gameObjects) {
+                if (go.GetComponent<BaseEditorData>() == null) return false;
+            }
+            return true;
+        }
+
         public static Choice RenderUserSelections(Object[] targets, ref bool isIDOptionsExpanded)
         {
             Choice choice = RenderCodeSnippet(targets, ref isIDOptionsExpanded);
