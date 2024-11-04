@@ -7,7 +7,7 @@ namespace MoonlitSystem.Editors
 {
     public static class ElementDataEditor
     {
-        public static (string[], string[]) GetIDSFromTargets(Object[] targets)
+        private static (string[], string[]) GetIDSFromTargets(Object[] targets)
         {
             var elementIds = new List<string>();
             var rootMappingIDs = new HashSet<string>();

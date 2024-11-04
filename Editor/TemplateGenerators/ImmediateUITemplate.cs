@@ -10,13 +10,14 @@ namespace MoonlitSystem.TemplateGenerators
 {
     public static class ImmediateUITemplate
     {
-        public static string ToTitleCase(this string str)
+        private static string ToTitleCase(this string str)
         {
             if (string.IsNullOrEmpty(str)) return str;
             if (str.Length <= 1) return str;
             return char.ToUpperInvariant(str[0]) + str.Substring(1);
         }
-        public static string RemoveChars(this string s, IEnumerable<char> separators)
+
+        private static string RemoveChars(this string s, IEnumerable<char> separators)
         {
             var sb = new StringBuilder(s);
             foreach (var c in separators) { sb.Replace(c.ToString(), ""); }

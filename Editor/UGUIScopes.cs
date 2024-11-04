@@ -27,13 +27,4 @@ namespace MoonlitSystem
 
         protected override void CloseScope() => EditorGUILayout.EndHorizontal();
     }
-
-    public class ToggleGroupScope : GUI.Scope
-    {
-        public bool Enabled { get; }
-
-        public ToggleGroupScope(string label, bool toggle) => Enabled = EditorGUILayout.BeginToggleGroup(label, toggle);
-        public ToggleGroupScope(GUIContent label, bool toggle) => Enabled = EditorGUILayout.BeginToggleGroup(label, toggle);
-        protected override void CloseScope() => EditorGUILayout.EndToggleGroup();
-    }
 }

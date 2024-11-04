@@ -211,9 +211,9 @@ namespace MoonlitSystem.UI.Immediate
         public static void FollowCursor(Transform transform)
         {
 #if ENABLE_INPUT_SYSTEM
-            Vector3 mousePosition = UnityEngine.InputSystem.Mouse.current.position.ReadValue();
+            var mousePosition = UnityEngine.InputSystem.Mouse.current.position.ReadValue();
 #else
-            Vector3 mousePosition = Input.mousePosition;
+            var mousePosition = Input.mousePosition;
 #endif
             transform.position = CpyWithZ(mousePosition, 10f);
             transform.SetAsLastSibling();
@@ -371,7 +371,6 @@ namespace MoonlitSystem.UI.Immediate
         private readonly HashSet<string> m_RootMappings = new HashSet<string>();
         private bool m_HasSetColor;
         private Color m_Color;
-        private static ImmediateStyleSettings sImmediateStyleProjectSettings;
 
         private static ImmediateStyle Instance
         {
@@ -384,8 +383,6 @@ namespace MoonlitSystem.UI.Immediate
             if (Instance == null) {
                 Instance = this;
                 Instance.m_Color = Color.white; // default color
-                // Load in project settings
-                sImmediateStyleProjectSettings = ImmediateStyleSettings.LoadInstance();
                 DontDestroyOnLoad(gameObject);
             } else if (Instance != this) {
                 Destroy(gameObject);

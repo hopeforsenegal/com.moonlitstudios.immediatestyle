@@ -18,7 +18,7 @@ namespace MoonlitSystem
             return new ImmediateStyleSettingsProvider(MenuLocationInProjectSettings);
         }
 
-        public const string MenuLocationInProjectSettings = "Project/ImmediateStyle";
+        private const string MenuLocationInProjectSettings = "Project/ImmediateStyle";
 
         private SerializedObject m_ProjectSettings;
         private SerializedProperty m_RemoveElementAutomatically;
@@ -40,7 +40,7 @@ namespace MoonlitSystem
             EditorGUILayout.PropertyField(m_RemoveElementAutomatically);
 
             GUILayout.Space(20);
-            GUILayout.Label("Stop creating a seperate const for GUIDs (instead of having them seperately from being on the ImmediateStyle._Action_() call for ex.)", EditorStyles.boldLabel);
+            GUILayout.Label("Stop creating a separate const for GUIDs (instead of having them separately from being on the ImmediateStyle._Action_() call for ex.)", EditorStyles.boldLabel);
             GUILayout.Label("ImmediateStyle.Text(\"guid_as_string\") vs ImmediateStyle.Text(guid_as_const_var)", EditorStyles.boldLabel);
             GUILayout.Space(10);
             EditorGUILayout.PropertyField(m_InlineClipboardGUIDs);
