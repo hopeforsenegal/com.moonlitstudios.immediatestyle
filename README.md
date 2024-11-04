@@ -1,4 +1,4 @@
-# ImmediateStyle 
+# Immediate Style 
 [![License](https://img.shields.io/badge/license-MIT-green)](https://github.com/hopeforsenegal/immediatestyle/blob/master/LICENSE.md)
 
 ImmediateStyle is a convenient style wrapper around Unity's UI components. All the benefits of an [Immediate Mode GUI](https://caseymuratori.com/blog_0001) but without having to give up the power of the Unity Editor Layout System. Layout your UI in the typical Unity way and then, using code generation, immediately start coding response behaviors.
