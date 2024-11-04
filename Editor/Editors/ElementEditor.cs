@@ -386,31 +386,58 @@ namespace MoonlitSystem.Editors
             ForLoopTemplate,
         }
 
-        public static Choice RenderUserSelections(Object[] targets)
+        private static readonly Color HighlightButton = new Color(235 / 255f, 235 / 255f, 255 / 255f);
+        public static Choice RenderUserSelections(Object[] targets, ref bool isIDOptionsExpanded)
         {
+            Choice choice = RenderCodeSnippet(targets, ref isIDOptionsExpanded);
+            RenderGUIDOptions(ref isIDOptionsExpanded, ref choice);
+            return choice;
+        }
+        public static Choice RenderCodeSnippet(Object[] targets, ref bool isIDOptionsExpanded)
+        {
+            Choice choice = default;
             ElementDataEditor.Render(targets);
-            if (GUILayout.Button("Copy ID")) return Choice.CopyID;
-            if (GUILayout.Button("Regenerate ID")) return Choice.RegenerateRandomID;
-            if (GUILayout.Button("Use Game Object Name as ID")) return Choice.UseGameObjectNameID;
-            EditorGUILayout.Space();
-            if (GUILayout.Button("Clipboard Code Snippet")) return Choice.CopyCode;
-            return default;
+            var originalColor = GUI.backgroundColor;
+            GUI.backgroundColor = HighlightButton;
+            if (GUILayout.Button("Clipboard Copy Code Snippet")) choice = Choice.CopyCode;
+            GUI.backgroundColor = originalColor;
+            return choice;
         }
 
-        public static Choice RenderCanvasGroupUserSelections(Object[] targets, ref bool isExpanded)
+        private static void RenderGUIDOptions(ref bool isIDOptionsExpanded, ref Choice choice)
         {
-            RenderUserSelections(targets);
-            EditorGUILayout.Space();
-            GUILayout.Label("Code Generate using Children", EditorStyles.boldLabel);
-            isExpanded = EditorGUILayout.Foldout(isExpanded, string.Empty, true);
-            if (isExpanded) {
-                using (new HorizontalScope()) {
-                    if (GUILayout.Button("Code For-Loop")) return Choice.ForLoopTemplate;
-                    if (GUILayout.Button("Code Individual")) return Choice.ElementTemplate;
-                }
-                if (GUILayout.Button("Create Full Code File")) return Choice.FileTemplate;
+            using (new HorizontalScope()) {
+                isIDOptionsExpanded = EditorGUILayout.Foldout(isIDOptionsExpanded, string.Empty, true);
+                GUILayout.Label("GUID Options", EditorStyles.boldLabel);
+                GUILayout.FlexibleSpace();
             }
-            return default;
+            if (isIDOptionsExpanded) {
+                if (GUILayout.Button("Copy ID")) choice = Choice.CopyID;
+                if (GUILayout.Button("Regenerate ID")) choice = Choice.RegenerateRandomID;
+                if (GUILayout.Button("Use Game Object Name as ID")) choice = Choice.UseGameObjectNameID;
+            }
+        }
+
+        public static Choice RenderCanvasGroupUserSelections(Object[] targets, ref bool isIDOptionsExpanded, ref bool isChildrenExpanded)
+        {
+            Choice choice = RenderCodeSnippet(targets, ref isIDOptionsExpanded);
+            using (new HorizontalScope()) {
+                isChildrenExpanded = EditorGUILayout.Foldout(isChildrenExpanded, string.Empty, true);
+                GUILayout.Label("Code Generate using Children", EditorStyles.boldLabel);
+                GUILayout.FlexibleSpace();
+            }
+            if (isChildrenExpanded) {
+                using (new HorizontalScope()) {
+                    var originalColor = GUI.backgroundColor;
+                    GUI.backgroundColor = HighlightButton;
+                    if (GUILayout.Button("Clipboard Individual")) choice = Choice.ElementTemplate;
+                    GUI.backgroundColor = originalColor;
+                    if (GUILayout.Button("Clipboard For-Loop")) choice = Choice.ForLoopTemplate;
+                }
+                if (GUILayout.Button("Create Full Code File")) choice = Choice.FileTemplate;
+            }
+            RenderGUIDOptions(ref isIDOptionsExpanded, ref choice);
+            return choice;
         }
 
         public static void ElementDestroy(GameObject gameObject, Object o)
@@ -434,94 +461,103 @@ namespace MoonlitSystem.Editors
     [CanEditMultipleObjects]
     public class ElementButtonEditor : Editor
     {
+        private bool isIDOptionsExpanded = false;
         private GameObject m_ThisObjRef;
         private void OnEnable() => m_ThisObjRef = ((ElementButton)target).gameObject;
         private void OnDestroy() => ElementDestroy(m_ThisObjRef, target);
-        public override void OnInspectorGUI() => Builder.HandleUserChoice(RenderUserSelections(targets), targets, GetType());
+        public override void OnInspectorGUI() => Builder.HandleUserChoice(RenderUserSelections(targets, ref isIDOptionsExpanded), targets, GetType());
     }
 
     [CustomEditor(typeof(ElementImage), true)]
     [CanEditMultipleObjects]
     public class ElementImageEditor : Editor
     {
+        private bool isIDOptionsExpanded = false;
         private GameObject m_ThisObjRef;
         private void OnEnable() => m_ThisObjRef = ((ElementImage)target).gameObject;
         private void OnDestroy() => ElementDestroy(m_ThisObjRef, target);
-        public override void OnInspectorGUI() => Builder.HandleUserChoice(RenderUserSelections(targets), targets, GetType());
+        public override void OnInspectorGUI() => Builder.HandleUserChoice(RenderUserSelections(targets, ref isIDOptionsExpanded), targets, GetType());
     }
 
     [CustomEditor(typeof(ElementToggle), true)]
     [CanEditMultipleObjects]
     public class ElementToggleEditor : Editor
     {
+        private bool isIDOptionsExpanded = false;
         private GameObject m_ThisObjRef;
         private void OnEnable() => m_ThisObjRef = ((ElementToggle)target).gameObject;
         private void OnDestroy() => ElementDestroy(m_ThisObjRef, target);
-        public override void OnInspectorGUI() => Builder.HandleUserChoice(RenderUserSelections(targets), targets, GetType());
+        public override void OnInspectorGUI() => Builder.HandleUserChoice(RenderUserSelections(targets, ref isIDOptionsExpanded), targets, GetType());
     }
 
     [CustomEditor(typeof(ElementDragDrop), true)]
     [CanEditMultipleObjects]
     public class ElementDragDropEditor : Editor
     {
+        private bool isIDOptionsExpanded = false;
         private GameObject m_ThisObjRef;
         private void OnEnable() => m_ThisObjRef = ((ElementDragDrop)target).gameObject;
         private void OnDestroy() => ElementDestroy(m_ThisObjRef, target);
-        public override void OnInspectorGUI() => Builder.HandleUserChoice(RenderUserSelections(targets), targets, GetType());
+        public override void OnInspectorGUI() => Builder.HandleUserChoice(RenderUserSelections(targets, ref isIDOptionsExpanded), targets, GetType());
     }
 
     [CustomEditor(typeof(ElementText), true)]
     [CanEditMultipleObjects]
     public class ElementTextEditor : Editor
     {
+        private bool isIDOptionsExpanded = false;
         private GameObject m_ThisObjRef;
         private void OnEnable() => m_ThisObjRef = ((ElementText)target).gameObject;
         private void OnDestroy() => ElementDestroy(m_ThisObjRef, target);
-        public override void OnInspectorGUI() => Builder.HandleUserChoice(RenderUserSelections(targets), targets, GetType());
+        public override void OnInspectorGUI() => Builder.HandleUserChoice(RenderUserSelections(targets, ref isIDOptionsExpanded), targets, GetType());
     }
 
     [CustomEditor(typeof(ElementInputField), true)]
     [CanEditMultipleObjects]
     public class ElementInputFieldEditor : Editor
     {
+        private bool isIDOptionsExpanded = false;
         private GameObject m_ThisObjRef;
         private void OnEnable() => m_ThisObjRef = ((ElementInputField)target).gameObject;
         private void OnDestroy() => ElementDestroy(m_ThisObjRef, target);
-        public override void OnInspectorGUI() => Builder.HandleUserChoice(RenderUserSelections(targets), targets, GetType());
+        public override void OnInspectorGUI() => Builder.HandleUserChoice(RenderUserSelections(targets, ref isIDOptionsExpanded), targets, GetType());
     }
 
     [CustomEditor(typeof(ElementSlider), true)]
     [CanEditMultipleObjects]
     public class ElementSliderEditor : Editor
     {
+        private bool isIDOptionsExpanded = false;
         private GameObject m_ThisObjRef;
         private void OnEnable() => m_ThisObjRef = ((ElementSlider)target).gameObject;
         private void OnDestroy() => ElementDestroy(m_ThisObjRef, target);
-        public override void OnInspectorGUI() => Builder.HandleUserChoice(RenderUserSelections(targets), targets, GetType());
+        public override void OnInspectorGUI() => Builder.HandleUserChoice(RenderUserSelections(targets, ref isIDOptionsExpanded), targets, GetType());
     }
 
     [CustomEditor(typeof(ElementDropdown), true)]
     [CanEditMultipleObjects]
     public class ElementDropdownEditor : Editor
     {
+        private bool isIDOptionsExpanded = false;
         private GameObject m_ThisObjRef;
         private void OnEnable() => m_ThisObjRef = ((ElementDropdown)target).gameObject;
         private void OnDestroy() => ElementDestroy(m_ThisObjRef, target);
-        public override void OnInspectorGUI() => Builder.HandleUserChoice(RenderUserSelections(targets), targets, GetType());
+        public override void OnInspectorGUI() => Builder.HandleUserChoice(RenderUserSelections(targets, ref isIDOptionsExpanded), targets, GetType());
     }
 
     [CustomEditor(typeof(ElementCanvasGroup), true)]
     [CanEditMultipleObjects]
     public class ElementCanvasGroupEditor : Editor
     {
-        private bool isExpanded = true;
+        private bool isChildrenExpanded = true;
+        private bool isIDOptionsExpanded = false;
         private GameObject m_ThisObjRef;
         private void OnEnable() => m_ThisObjRef = ((ElementCanvasGroup)target).gameObject;
         private void OnDestroy() => ElementDestroy(m_ThisObjRef, target);
 
         public override void OnInspectorGUI()
         {
-            var choice = RenderCanvasGroupUserSelections(targets, ref isExpanded);
+            var choice = RenderCanvasGroupUserSelections(targets, ref isIDOptionsExpanded, ref isChildrenExpanded);
             Builder.HandleUserChoice(choice, targets, GetType());
             // Falls out and handles additional CanvasGroup only choices here (yea got lazy)
             switch (choice) {
@@ -715,7 +751,8 @@ namespace MoonlitSystem.Editors
     [CanEditMultipleObjects]
     public class ReferenceEditor : Editor
     {
-        public override void OnInspectorGUI() => Builder.HandleUserChoice(RenderUserSelections(targets), targets, GetType());
+        private bool isIDOptionsExpanded = false;
+        public override void OnInspectorGUI() => Builder.HandleUserChoice(RenderUserSelections(targets, ref isIDOptionsExpanded), targets, GetType());
     }
 
     public enum RootMappingChoice { UseRandomForID = 1, UseGameObjectNameforID, UseSiblingIndexforID }
