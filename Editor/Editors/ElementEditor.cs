@@ -286,7 +286,7 @@ namespace MoonlitSystem.Editors
             return resultStatement;
         }
 
-        public static string BuildConstantStatements(Object[] targets)
+        private static string BuildConstantStatements(Object[] targets)
         {
             var statements = string.Empty;
             foreach (var t in targets) {
@@ -299,7 +299,7 @@ namespace MoonlitSystem.Editors
             return statements;
         }
 
-        public static string RemoveChars(this string s, IEnumerable<char> separators)
+        private static string RemoveChars(this string s, IEnumerable<char> separators)
         {
             var sb = new StringBuilder(s);
             foreach (var c in separators) { sb.Replace(c.ToString(), ""); }
@@ -309,56 +309,52 @@ namespace MoonlitSystem.Editors
         {
             return str.RemoveChars(new[] { '/', '(', ')', ' ' });
         }
-        public static (string, string) BuildConstantStatement(string id)
+        private static (string, string) BuildConstantStatement(string id)
         {
             return ($"const string {CleanString(id)} = \"{id}\";", CleanString(id));
         }
-        public static string BuildButtonStatement(string constant)
+        private static string BuildButtonStatement(string constant)
         {
             return $"ImmediateStyle.Button({constant});";
         }
-        public static string BuildCanvasGroupStatement(string constant)
+        private static string BuildCanvasGroupStatement(string constant)
         {
             return $"ImmediateStyle.CanvasGroup({constant});";
         }
-        public static string BuildImageStatement(string constant)
+        private static string BuildImageStatement(string constant)
         {
             return $"ImmediateStyle.Image({constant}, null);";
         }
-        public static string BuildToggleStatement(string constant)
+        private static string BuildToggleStatement(string constant)
         {
             return $"ImmediateStyle.Toggle({constant}, false);";
         }
-        public static string BuildSwappableStatement(string constant)
-        {
-            return $"ImmediateStyle.Swappable({constant});";
-        }
-        public static string BuildDragDropStatement(string constant)
+        private static string BuildDragDropStatement(string constant)
         {
             return $"ImmediateStyle.DragDrop({constant}, out _);";
         }
-        public static string BuildInputFieldStatement(string constant)
+        private static string BuildInputFieldStatement(string constant)
         {
             return $"ImmediateStyle.InputField({constant}, new []{{ KeyCode.Return, KeyCode.KeypadEnter }}, ref text);";
         }
-        public static string BuildTextStatement(string constant)
+        private static string BuildTextStatement(string constant)
         {
             return $"ImmediateStyle.Text({constant}, \"Placeholder\");";
         }
-        public static string BuildSliderStatement(string constant)
+        private static string BuildSliderStatement(string constant)
         {
             return $"ImmediateStyle.Slider({constant});";
         }
-        public static string BuildDropdownStatement(string constant)
+        private static string BuildDropdownStatement(string constant)
         {
             return $"ImmediateStyle.Dropdown({constant}, new UnityEngine.UI.Dropdown.OptionData[] {{ new(\"Thing\")}});";
         }
-        public static string BuildReferenceStatement(string constant, string theType = "")
+        private static string BuildReferenceStatement(string constant, string theType = "")
         {
             return $"Reference.Find<{theType}>(this, {constant});";
         }
 
-        public static void RegenerateRandomIDsForTargets(Object[] targets)
+        private static void RegenerateRandomIDsForTargets(Object[] targets)
         {
             foreach (var t in targets) {
                 var element = (IEditorData)t;
@@ -367,7 +363,7 @@ namespace MoonlitSystem.Editors
             }
         }
 
-        internal static void UseGameObjectNameIDsForTargets(Object[] targets)
+        private static void UseGameObjectNameIDsForTargets(Object[] targets)
         {
             foreach (var t in targets) {
                 var element = (IEditorData)t;
@@ -401,19 +397,19 @@ namespace MoonlitSystem.Editors
             return default;
         }
 
-        public static Choice RenderCanvasGroupUserSelections(Object[] targets)
+        public static Choice RenderCanvasGroupUserSelections(Object[] targets, ref bool isExpanded)
         {
-            ElementDataEditor.Render(targets);
-            if (GUILayout.Button("Copy ID")) return Choice.CopyID;
-            if (GUILayout.Button("Regenerate ID")) return Choice.RegenerateRandomID;
+            RenderUserSelections(targets);
             EditorGUILayout.Space();
-            if (GUILayout.Button("Clipboard Code Snippet")) return Choice.CopyCode;
-            GUILayout.Label("w/ Children");
-            using (new HorizontalScope()) {
-                if (GUILayout.Button("Code For-Loop")) return Choice.ForLoopTemplate;
-                if (GUILayout.Button("Code Individual")) return Choice.ElementTemplate;
+            GUILayout.Label("Code Generate using Children", EditorStyles.boldLabel);
+            isExpanded = EditorGUILayout.Foldout(isExpanded, string.Empty, true);
+            if (isExpanded) {
+                using (new HorizontalScope()) {
+                    if (GUILayout.Button("Code For-Loop")) return Choice.ForLoopTemplate;
+                    if (GUILayout.Button("Code Individual")) return Choice.ElementTemplate;
+                }
+                if (GUILayout.Button("Create Full Code File")) return Choice.FileTemplate;
             }
-            if (GUILayout.Button("Create Full Code File")) return Choice.FileTemplate;
             return default;
         }
 
@@ -440,7 +436,7 @@ namespace MoonlitSystem.Editors
     {
         private GameObject m_ThisObjRef;
         private void OnEnable() => m_ThisObjRef = ((ElementButton)target).gameObject;
-        private void OnDestroy() => UI.ElementDestroy(m_ThisObjRef, target);
+        private void OnDestroy() => ElementDestroy(m_ThisObjRef, target);
         public override void OnInspectorGUI() => Builder.HandleUserChoice(RenderUserSelections(targets), targets, GetType());
     }
 
@@ -450,7 +446,7 @@ namespace MoonlitSystem.Editors
     {
         private GameObject m_ThisObjRef;
         private void OnEnable() => m_ThisObjRef = ((ElementImage)target).gameObject;
-        private void OnDestroy() => UI.ElementDestroy(m_ThisObjRef, target);
+        private void OnDestroy() => ElementDestroy(m_ThisObjRef, target);
         public override void OnInspectorGUI() => Builder.HandleUserChoice(RenderUserSelections(targets), targets, GetType());
     }
 
@@ -460,7 +456,7 @@ namespace MoonlitSystem.Editors
     {
         private GameObject m_ThisObjRef;
         private void OnEnable() => m_ThisObjRef = ((ElementToggle)target).gameObject;
-        private void OnDestroy() => UI.ElementDestroy(m_ThisObjRef, target);
+        private void OnDestroy() => ElementDestroy(m_ThisObjRef, target);
         public override void OnInspectorGUI() => Builder.HandleUserChoice(RenderUserSelections(targets), targets, GetType());
     }
 
@@ -470,7 +466,7 @@ namespace MoonlitSystem.Editors
     {
         private GameObject m_ThisObjRef;
         private void OnEnable() => m_ThisObjRef = ((ElementDragDrop)target).gameObject;
-        private void OnDestroy() => UI.ElementDestroy(m_ThisObjRef, target);
+        private void OnDestroy() => ElementDestroy(m_ThisObjRef, target);
         public override void OnInspectorGUI() => Builder.HandleUserChoice(RenderUserSelections(targets), targets, GetType());
     }
 
@@ -480,7 +476,7 @@ namespace MoonlitSystem.Editors
     {
         private GameObject m_ThisObjRef;
         private void OnEnable() => m_ThisObjRef = ((ElementText)target).gameObject;
-        private void OnDestroy() => UI.ElementDestroy(m_ThisObjRef, target);
+        private void OnDestroy() => ElementDestroy(m_ThisObjRef, target);
         public override void OnInspectorGUI() => Builder.HandleUserChoice(RenderUserSelections(targets), targets, GetType());
     }
 
@@ -490,7 +486,7 @@ namespace MoonlitSystem.Editors
     {
         private GameObject m_ThisObjRef;
         private void OnEnable() => m_ThisObjRef = ((ElementInputField)target).gameObject;
-        private void OnDestroy() => UI.ElementDestroy(m_ThisObjRef, target);
+        private void OnDestroy() => ElementDestroy(m_ThisObjRef, target);
         public override void OnInspectorGUI() => Builder.HandleUserChoice(RenderUserSelections(targets), targets, GetType());
     }
 
@@ -500,7 +496,7 @@ namespace MoonlitSystem.Editors
     {
         private GameObject m_ThisObjRef;
         private void OnEnable() => m_ThisObjRef = ((ElementSlider)target).gameObject;
-        private void OnDestroy() => UI.ElementDestroy(m_ThisObjRef, target);
+        private void OnDestroy() => ElementDestroy(m_ThisObjRef, target);
         public override void OnInspectorGUI() => Builder.HandleUserChoice(RenderUserSelections(targets), targets, GetType());
     }
 
@@ -510,7 +506,7 @@ namespace MoonlitSystem.Editors
     {
         private GameObject m_ThisObjRef;
         private void OnEnable() => m_ThisObjRef = ((ElementDropdown)target).gameObject;
-        private void OnDestroy() => UI.ElementDestroy(m_ThisObjRef, target);
+        private void OnDestroy() => ElementDestroy(m_ThisObjRef, target);
         public override void OnInspectorGUI() => Builder.HandleUserChoice(RenderUserSelections(targets), targets, GetType());
     }
 
@@ -518,13 +514,14 @@ namespace MoonlitSystem.Editors
     [CanEditMultipleObjects]
     public class ElementCanvasGroupEditor : Editor
     {
+        private bool isExpanded = true;
         private GameObject m_ThisObjRef;
         private void OnEnable() => m_ThisObjRef = ((ElementCanvasGroup)target).gameObject;
-        private void OnDestroy() => UI.ElementDestroy(m_ThisObjRef, target);
+        private void OnDestroy() => ElementDestroy(m_ThisObjRef, target);
 
         public override void OnInspectorGUI()
         {
-            var choice = RenderCanvasGroupUserSelections(targets);
+            var choice = RenderCanvasGroupUserSelections(targets, ref isExpanded);
             Builder.HandleUserChoice(choice, targets, GetType());
             // Falls out and handles additional CanvasGroup only choices here (yea got lazy)
             switch (choice) {
