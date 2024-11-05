@@ -50,14 +50,14 @@ namespace MoonlitSystem.Editors
             if (!hasNoSingleRootMapping) {
                 if (isSingleRootMapping) rootMappingValue = rootMappingIDs[0];
                 if (!isSingleRootMapping && !IsAllUniqueGuid(rootMappingIDs)) rootMappingValue = rootMappingIDs[0];
-                using (new HorizontalScope()) {
+                using (new EditorGUILayout.HorizontalScope()) {
                     GUILayout.Label("[RM]", new GUIStyle(EditorStyles.boldLabel) { fixedWidth = 40 });
                     EditorGUI.BeginDisabledGroup(true);
                     GUILayout.TextField(rootMappingValue, GUI.skin.textField);
                     EditorGUI.EndDisabledGroup();
                 }
             }
-            using (new HorizontalScope()) {
+            using (new EditorGUILayout.HorizontalScope()) {
                 var s = new GUIStyle(EditorStyles.boldLabel);
                 if (string.IsNullOrWhiteSpace(elementValue)) s.normal.textColor = Color.red;
 

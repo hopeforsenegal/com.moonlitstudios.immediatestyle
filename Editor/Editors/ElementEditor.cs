@@ -10,6 +10,7 @@ using UnityEngine.UI;
 using Object = UnityEngine.Object;
 using static MoonlitSystem.Editors.UI;
 using UnityEditor.SceneManagement;
+using UnityEngine.EventSystems;
 
 namespace MoonlitSystem.Editors
 {
@@ -414,6 +415,32 @@ namespace MoonlitSystem.Editors
             EditorSceneManager.MarkSceneDirty(EditorSceneManager.GetActiveScene());
         }
 
+        [MenuItem("GameObject/ImmediateStyle/Add Element to all UI children", false, 20000)]
+        private static void AddElementsToAllChildren(MenuCommand _)
+        {
+            foreach (var go in Selection.gameObjects) {
+                AddElementToUIGameObjects(go);
+                TraverseHierarchy(go.transform);
+            }
+
+            EditorSceneManager.MarkSceneDirty(EditorSceneManager.GetActiveScene());
+        }
+
+        static void TraverseHierarchy(Transform root)
+        {
+            foreach (Transform child in root) {
+                AddElementToUIGameObjects(child.gameObject);
+                TraverseHierarchy(child);
+            }
+        }
+
+        private static void AddElementToUIGameObjects(GameObject gameObject)
+        {
+            if (gameObject.GetComponent<BaseEditorData>()) return;
+            if (!gameObject.GetComponent<UIBehaviour>() && !gameObject.GetComponent<CanvasGroup>()) return;
+            gameObject.AddComponent<Element>();
+        }
+
         [MenuItem("GameObject/ImmediateStyle/Regenerate selected GUIDs", true)]
         private static bool ValidateRegenerateSelectedGUID() => HasAllElements();
 
@@ -447,7 +474,7 @@ namespace MoonlitSystem.Editors
 
         private static void RenderGUIDOptions(ref bool isIDOptionsExpanded, ref Choice choice)
         {
-            using (new HorizontalScope()) {
+            using (new EditorGUILayout.HorizontalScope()) {
                 isIDOptionsExpanded = EditorGUILayout.Foldout(isIDOptionsExpanded, string.Empty, true);
                 GUILayout.Label("GUID Options", EditorStyles.boldLabel);
                 GUILayout.FlexibleSpace();
@@ -462,13 +489,13 @@ namespace MoonlitSystem.Editors
         public static Choice RenderCanvasGroupUserSelections(Object[] targets, ref bool isIDOptionsExpanded, ref bool isChildrenExpanded)
         {
             Choice choice = RenderCodeSnippet(targets, ref isIDOptionsExpanded);
-            using (new HorizontalScope()) {
+            using (new EditorGUILayout.HorizontalScope()) {
                 isChildrenExpanded = EditorGUILayout.Foldout(isChildrenExpanded, string.Empty, true);
                 GUILayout.Label("Code Generate using Children", EditorStyles.boldLabel);
                 GUILayout.FlexibleSpace();
             }
             if (isChildrenExpanded) {
-                using (new HorizontalScope()) {
+                using (new EditorGUILayout.HorizontalScope()) {
                     var originalColor = GUI.backgroundColor;
                     GUI.backgroundColor = HighlightButton;
                     if (GUILayout.Button("Clipboard Individual")) choice = Choice.ElementTemplate;
@@ -809,13 +836,13 @@ namespace MoonlitSystem.Editors
 
             RootMappingChoice choice = default;
             if (GUILayout.Button("Use Random for ID")) choice = RootMappingChoice.UseRandomForID;
-            using (new HorizontalScope())
+            using (new EditorGUILayout.HorizontalScope())
             using (new LabelWidthScope(40)) {
                 prefix_go = EditorGUILayout.TextField("Prefix", prefix_go);
 
                 if (GUILayout.Button("Use GameObject Name for ID")) choice = RootMappingChoice.UseGameObjectNameforID;
             }
-            using (new HorizontalScope())
+            using (new EditorGUILayout.HorizontalScope())
             using (new LabelWidthScope(40)) {
                 prefix_si = EditorGUILayout.TextField("Prefix", prefix_si);
 
