@@ -1,14 +1,12 @@
 ﻿using UnityEngine;
-using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 namespace MoonlitSystem.UI.Immediate
 {
     [DisallowMultipleComponent]
-    public class ElementSlider : BaseEditorData, IPointerUpHandler
+    public class ElementSlider : BaseEditorData
     {
         public Slider UIBehaviour { get; private set; }
-        public bool IsMouseUp { get; internal set; }
         private RootMapping RootMapping { get; set; }
 
         protected void Awake()
@@ -32,11 +30,6 @@ namespace MoonlitSystem.UI.Immediate
         protected void OnDestroy()
         {
             ImmediateStyle.Unregister(this, RootMapping);
-        }
-
-        public void OnPointerUp(PointerEventData eventData)
-        {
-            IsMouseUp = true;
         }
     }
 }

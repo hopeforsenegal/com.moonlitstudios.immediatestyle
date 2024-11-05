@@ -426,7 +426,7 @@ namespace MoonlitSystem.Editors
             EditorSceneManager.MarkSceneDirty(EditorSceneManager.GetActiveScene());
         }
 
-        static void TraverseHierarchy(Transform root)
+        private static void TraverseHierarchy(Transform root)
         {
             foreach (Transform child in root) {
                 AddElementToUIGameObjects(child.gameObject);
@@ -436,8 +436,8 @@ namespace MoonlitSystem.Editors
 
         private static void AddElementToUIGameObjects(GameObject gameObject)
         {
-            if (gameObject.GetComponent<BaseEditorData>()) return;
             if (!gameObject.GetComponent<UIBehaviour>() && !gameObject.GetComponent<CanvasGroup>()) return;
+            if (gameObject.GetComponent<BaseEditorData>()) return;
             gameObject.AddComponent<Element>();
         }
 
@@ -457,11 +457,12 @@ namespace MoonlitSystem.Editors
 
         public static Choice RenderUserSelections(Object[] targets, ref bool isIDOptionsExpanded)
         {
-            Choice choice = RenderCodeSnippet(targets, ref isIDOptionsExpanded);
+            var choice = RenderCodeSnippet(targets);
             RenderGUIDOptions(ref isIDOptionsExpanded, ref choice);
             return choice;
         }
-        public static Choice RenderCodeSnippet(Object[] targets, ref bool isIDOptionsExpanded)
+
+        private static Choice RenderCodeSnippet(Object[] targets)
         {
             Choice choice = default;
             ElementDataEditor.Render(targets);
@@ -488,7 +489,7 @@ namespace MoonlitSystem.Editors
 
         public static Choice RenderCanvasGroupUserSelections(Object[] targets, ref bool isIDOptionsExpanded, ref bool isChildrenExpanded)
         {
-            Choice choice = RenderCodeSnippet(targets, ref isIDOptionsExpanded);
+            var choice = RenderCodeSnippet(targets);
             using (new EditorGUILayout.HorizontalScope()) {
                 isChildrenExpanded = EditorGUILayout.Foldout(isChildrenExpanded, string.Empty, true);
                 GUILayout.Label("Code Generate using Children", EditorStyles.boldLabel);

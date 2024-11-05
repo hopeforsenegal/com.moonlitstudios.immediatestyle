@@ -79,7 +79,7 @@ namespace MoonlitSystem.UI.Immediate
             Debug.Assert(hasElement, !hasElement ? $"{id} is not mapped. Did start get called? Does the caller need a root id?" : "");
             if (hasElement) {
                 element.ElementData.MarkedForDisplay = true;
-                element.ElementData.UpdateCGInLateUpdate = updateCanvasGroupInLateUpdate;
+                element.ElementData.UpdateCanvasGroupInLateUpdate = updateCanvasGroupInLateUpdate;
             }
         }
 
@@ -438,7 +438,7 @@ namespace MoonlitSystem.UI.Immediate
                 behavior.interactable = isOn;
                 behavior.alpha = isOn ? 1f : 0f;
                 if (isOn) {
-                    entry.Value.ElementData.UpdateCGInLateUpdate?.Invoke(behavior);
+                    entry.Value.ElementData.UpdateCanvasGroupInLateUpdate?.Invoke(behavior);
                 }
 
                 entry.Value.ElementData.MarkedForDisplay = false;
@@ -509,7 +509,6 @@ namespace MoonlitSystem.UI.Immediate
                 }
 
                 entry.Value.ElementData.MarkedForDisplay = false;
-                entry.Value.IsMouseUp = false;
             }
             foreach (var entry in m_InteractDropdowns) {
                 var behavior = entry.Value.UIBehaviour;

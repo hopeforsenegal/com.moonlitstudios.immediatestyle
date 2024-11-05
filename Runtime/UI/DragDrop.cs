@@ -37,9 +37,9 @@ namespace MoonlitSystem.UI
         protected void Update()
         {
 #if ENABLE_INPUT_SYSTEM
-            Vector3 mousePosition = UnityEngine.InputSystem.Mouse.current.position.ReadValue();
+            var mousePosition = UnityEngine.InputSystem.Mouse.current.position.ReadValue();
 #else
-            Vector3 mousePosition = Input.mousePosition;
+            var mousePosition = Input.mousePosition;
 #endif
 
             if (FollowMouseCursor && IsDragging) {
