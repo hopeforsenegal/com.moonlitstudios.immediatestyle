@@ -118,7 +118,7 @@ For **DragDrop**, we just simply make the gameobject that is clicked on follow t
 Feel free to just drop us a line on [Discord](https://discord.gg/8y87EEaftE). It's always better to have a real conversation and we can also screenshare there. It's also not hard to reach us through our various other socials. There we can talk about UI testing or about any additionaly performance considerations that you might have with your projects.
 
 ## Other Unity Packages
-Check out [Asset Stripper](https://github.com/hopeforsenegal/com.moonlitstudios.assetstripper)
+Check out [Asset Stripper](https://github.com/hopeforsenegal/com.moonlitstudios.assetstripper) & [Coordinator](https://github.com/hopeforsenegal/com.moonlitstudios.coordinator)
 
 ## Support this project 
 Please please please!! ⭐ Star this project! If you truly feel empowered at all by this project please give [our games](https://linktr.ee/moonlit_games) a shot (and drop 5 star reviews there too!). Each of these games are powered by this framework (I'll update this section to include additional games as they start to use this project)
