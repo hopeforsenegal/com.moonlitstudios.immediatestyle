@@ -9,6 +9,7 @@ namespace MoonlitSystem
     public class GuessingGame : MonoBehaviour
     {
         private const string CanvasGuessingGameRestartButton637f = "/Canvas/GuessingGame/RestartButton637f";
+        private const string CanvasGuessingGameExitButtonf275 = "/Canvas/GuessingGame/ExitButtonf275";
         private const string CanvasMainMenuPlay7538 = "/Canvas/MainMenu/Play7538";
         private const string CanvasMainMenuExitd391 = "/Canvas/MainMenu/Exitd391";
         private const string CanvasMainMenu8959 = "/Canvas/MainMenu8959";
