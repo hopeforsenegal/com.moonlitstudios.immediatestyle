@@ -81,7 +81,7 @@ namespace Editing.BotEditor.StyleComparisons
                     resultText = tempInputText; //@inputfield
                 }
                 for (var i = 0; i < 3; i++) {   // @radiobuttons
-                    radioIndex = ImmediateStyle.Toggle($"{i}{"/Canvas/CanvasGroup/RadioButtons/Toggle0a56"}", radioIndex == i).IsClicked ? i : radioIndex;
+                    radioIndex = ImmediateStyle.Toggle($"{i}/Canvas/CanvasGroup/RadioButtons/Toggle0a56", radioIndex == i).IsClicked ? i : radioIndex;
                 }
                 var dropdownData = ImmediateStyle.Dropdown("/Canvas/CanvasGroup/Dropdown (Legacy)55fc", new[] { new UnityEngine.UI.Dropdown.OptionData($"Color: {colors[0]}"), new UnityEngine.UI.Dropdown.OptionData($"Color: {colors[1]}"), new UnityEngine.UI.Dropdown.OptionData($"Color: {colors[2]}") });
                 dropdownIndex = dropdownData.HasSubmitted ? dropdownData.Index : dropdownIndex;

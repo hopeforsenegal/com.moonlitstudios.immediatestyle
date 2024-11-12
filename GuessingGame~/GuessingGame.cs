@@ -9,7 +9,6 @@ namespace MoonlitSystem
     public class GuessingGame : MonoBehaviour
     {
         private const string CanvasGuessingGameRestartButton637f = "/Canvas/GuessingGame/RestartButton637f";
-        private const string CanvasGuessingGameExitButtonf275 = "/Canvas/GuessingGame/ExitButtonf275";
         private const string CanvasMainMenuPlay7538 = "/Canvas/MainMenu/Play7538";
         private const string CanvasMainMenuExitd391 = "/Canvas/MainMenu/Exitd391";
         private const string CanvasMainMenu8959 = "/Canvas/MainMenu8959";
@@ -22,14 +21,14 @@ namespace MoonlitSystem
         private const string CanvasMainMenuPlay2d73 = "/Canvas/MainMenu/Play2d73";
         private const string SFX3814 = "/SFX3814";
 
-        public enum MainMenuEvent { Play = 1, Exit }
-        public struct GameEvent
+        private enum MainMenuEvent { Play = 1, Exit }
+        private struct GameEvent
         {
             public int? Guess;
             public bool Exit;
             internal bool Restart;
         }
-        public struct GameVisible
+        private struct GameVisible
         {
             public bool IsShow;
             public float FadeStartTime;
