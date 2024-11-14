@@ -56,6 +56,16 @@ namespace MoonlitSystem.UI.Immediate
             return default;
         }
 
+        public static void FocusButton(string id)
+        {
+            var hasElement = Instance.m_InteractButtons.TryGetValue(id, out var element);
+            Debug.Assert(hasElement, !hasElement ? $"{id} is not mapped. Did start get called? Does the caller need a root id?" : "");
+            if (hasElement)
+            {
+                element.Button.Select();
+            }
+        }
+
         public static void CanvasGroup(string id)
         {
             var hasElement = Instance.m_InteractCanvasGroups.TryGetValue(id, out var element);
