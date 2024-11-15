@@ -128,15 +128,18 @@ Please please please!! ⭐ Star this project! If you truly feel empowered at all
 
 If you have feedback, want to extend the API to handle more components, or would like the API to respond to more event types please feel free to reach out (or create an Issue).
 
-![icon512](https://github.com/user-attachments/assets/85141dc9-110e-4a8d-b684-6c9a686c278b)
+<img width="256" alt="Screenshot 2024-11-04 at 10 43 52 AM" src="https://github.com/user-attachments/assets/85141dc9-110e-4a8d-b684-6c9a686c278b">
+
 [Apple](https://apps.apple.com/us/app/caribbean-dominoes/id1588590418)
 [Android](https://play.google.com/store/apps/details?id=com.MoonlitStudios.CaribbeanDominoes)
 
-![appIcon](https://github.com/user-attachments/assets/4266f475-ac9b-4176-9f97-985b8e1025ce)
+<img width="256" alt="Screenshot 2024-11-04 at 10 43 52 AM" src="https://github.com/user-attachments/assets/4266f475-ac9b-4176-9f97-985b8e1025ce">
+
 [Apple](https://apps.apple.com/us/app/solitaire-islands/id6478837950)
 [Android](https://play.google.com/store/apps/details?id=com.MoonlitStudios.SolitaireIslands)
 
-![app_icon](https://github.com/user-attachments/assets/13ba91c7-53b4-4469-bdd0-9f0598048a28)
+<img width="256" alt="Screenshot 2024-11-04 at 10 43 52 AM" src="https://github.com/user-attachments/assets/13ba91c7-53b4-4469-bdd0-9f0598048a28">
+
 [Apple](https://apps.apple.com/us/app/ludi-classic/id1536964897)
 [Android](https://play.google.com/store/apps/details?id=com.MoonlitStudios.Ludi)
 
