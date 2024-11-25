@@ -80,7 +80,7 @@ namespace Editing.BotEditor.StyleComparisons
                 if (ImmediateStyle.InputField("/Canvas/CanvasGroup/InputField (Legacy)5474", new[] { KeyCode.Return, KeyCode.KeypadEnter }, ref tempInputText).HasSubmitted) {
                     resultText = tempInputText; //@inputfield
                 }
-                for (var i = 0; i < 3; i++) {   // @radiobuttons
+                for (var i = 0; i < 3; i++) {   // @radiobuttons @rootmapping
                     radioIndex = ImmediateStyle.Toggle($"{i}/Canvas/CanvasGroup/RadioButtons/Toggle0a56", radioIndex == i).IsClicked ? i : radioIndex;
                 }
                 var dropdownData = ImmediateStyle.Dropdown("/Canvas/CanvasGroup/Dropdown (Legacy)55fc", new[] { new UnityEngine.UI.Dropdown.OptionData($"Color: {colors[0]}"), new UnityEngine.UI.Dropdown.OptionData($"Color: {colors[1]}"), new UnityEngine.UI.Dropdown.OptionData($"Color: {colors[2]}") });
