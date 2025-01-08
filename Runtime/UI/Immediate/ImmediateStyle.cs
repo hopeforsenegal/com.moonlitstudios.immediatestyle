@@ -1,6 +1,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+// ReSharper disable ConditionIsAlwaysTrueOrFalse
+// ReSharper disable UseDeconstruction
 
 namespace MoonlitSystem.UI.Immediate
 {
@@ -60,8 +62,7 @@ namespace MoonlitSystem.UI.Immediate
         {
             var hasElement = Instance.m_InteractButtons.TryGetValue(id, out var element);
             Debug.Assert(hasElement, !hasElement ? $"{id} is not mapped. Did start get called? Does the caller need a root id?" : "");
-            if (hasElement)
-            {
+            if (hasElement) {
                 element.Button.Select();
             }
         }
@@ -206,12 +207,13 @@ namespace MoonlitSystem.UI.Immediate
             if (hasElement) {
                 element.ElementData.MarkedForDisplay = true;
                 dragDrop = element.UIBehaviour;
+                var position = dragDrop.transform.position;
                 return new DragDropData
                 {
                     IsMouseUp = dragDrop.IsMouseUp,
                     IsHovering = dragDrop.IsMouseHovering,
                     IsDragging = dragDrop.IsDragging,
-                    Position = new Vector2(dragDrop.transform.position.x, dragDrop.transform.position.y),
+                    Position = new Vector2(position.x, position.y),
                 };
             }
             return default;
@@ -237,10 +239,42 @@ namespace MoonlitSystem.UI.Immediate
             if (hasElement) {
                 element.ElementData.MarkedForDisplay = true;
                 var hasPressedSubmitKeyCode = FromKeycode(keyCodes);
+                var hasHitSubmit = false;
+                var isFocused = false;
+
+#if TMP_PRESENT
+                if (element.UIBehaviour != null) {
+                    var touchscreenKeyboard = element.UIBehaviour.touchScreenKeyboard;
+                    hasHitSubmit = hasPressedSubmitKeyCode
+                     || (touchscreenKeyboard != null && touchscreenKeyboard.status == TouchScreenKeyboard.Status.Done);
+                    isFocused = element.UIBehaviour.isFocused || element.WasFocused;
+
+                    if (isFocused) {
+                        text = element.UIBehaviour.text;
+                    } else {
+                        element.UIBehaviour.text = text;
+                    }
+
+                    // ReSharper disable once Unity.InefficientPropertyAccess
+                    element.WasFocused = element.UIBehaviour.isFocused;    // store for next frame
+                } else {
+                    hasHitSubmit = hasPressedSubmitKeyCode;
+                    isFocused = element.UIBehaviourPro.isFocused || element.WasFocused;
+
+                    if (isFocused) {
+                        text = element.UIBehaviourPro.text;
+                    } else {
+                        element.UIBehaviourPro.text = text;
+                    }
+
+                    // ReSharper disable once Unity.InefficientPropertyAccess
+                    element.WasFocused = element.UIBehaviourPro.isFocused;    // store for next frame
+                }
+#else
                 var touchscreenKeyboard = element.UIBehaviour.touchScreenKeyboard;
-                var hasHitSubmit = hasPressedSubmitKeyCode
-                    || (touchscreenKeyboard != null && touchscreenKeyboard.status == TouchScreenKeyboard.Status.Done);
-                var isFocused = element.UIBehaviour.isFocused || element.WasFocused;
+                hasHitSubmit = hasPressedSubmitKeyCode
+                 || (touchscreenKeyboard != null && touchscreenKeyboard.status == TouchScreenKeyboard.Status.Done);
+                isFocused = element.UIBehaviour.isFocused || element.WasFocused;
 
                 if (isFocused) {
                     text = element.UIBehaviour.text;
@@ -250,6 +284,7 @@ namespace MoonlitSystem.UI.Immediate
 
                 // ReSharper disable once Unity.InefficientPropertyAccess
                 element.WasFocused = element.UIBehaviour.isFocused;    // store for next frame
+#endif
                 if (element.HasSubmitted || isFocused && hasHitSubmit) {
                     hasSubmitted = true;
                 }
@@ -501,11 +536,24 @@ namespace MoonlitSystem.UI.Immediate
             }
 
             foreach (var entry in m_InteractInputFields) {
+#if TMP_PRESENT
+                var behavior2 = entry.Value.UIBehaviourPro;
+                var behavior = entry.Value.UIBehaviour;
+                if (behavior2 != null && entry.Value.ElementData.MarkedForDisplay != behavior2.enabled) {
+                    behavior2.enabled = entry.Value.ElementData.MarkedForDisplay;
+                    behavior2.interactable = entry.Value.ElementData.MarkedForDisplay;
+                }
+                if (behavior != null && entry.Value.ElementData.MarkedForDisplay != behavior.enabled) {
+                    behavior.enabled = entry.Value.ElementData.MarkedForDisplay;
+                    behavior.interactable = entry.Value.ElementData.MarkedForDisplay;
+                }
+#else
                 var behavior = entry.Value.UIBehaviour;
                 if (entry.Value.ElementData.MarkedForDisplay != behavior.enabled) {
                     behavior.enabled = entry.Value.ElementData.MarkedForDisplay;
                     behavior.interactable = entry.Value.ElementData.MarkedForDisplay;
                 }
+#endif
 
                 entry.Value.ElementData.MarkedForDisplay = false;
                 entry.Value.HasSubmitted = false;
@@ -657,7 +705,7 @@ namespace MoonlitSystem.UI.Immediate
             foreach (var k in keyCodes) {
 #if ENABLE_INPUT_SYSTEM
                 if (UnityEngine.InputSystem.Keyboard.current[ConvertKeyCodeToKey(k)].wasPressedThisFrame) return true;
-#else      
+#else
                 if (Input.GetKeyDown(k)) return true;
 #endif
             }

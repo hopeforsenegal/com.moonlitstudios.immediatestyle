@@ -47,6 +47,13 @@ namespace MoonlitSystem.UI.Immediate
                 t = e.transform;
                 ed = e.ElementData;
             }
+#if TMP_PRESENT
+            if (t == null && GetComponent<TMP_InputField>() != null && GetComponent<ElementInputField>() == null) {
+                var e = gameObject.AddComponent<ElementInputField>();
+                t = e.transform;
+                ed = e.ElementData;
+            }
+#endif
             if (t == null && GetComponent<Slider>() != null && GetComponent<ElementSlider>() == null) {
                 var e = gameObject.AddComponent<ElementSlider>();
                 t = e.transform;

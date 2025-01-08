@@ -636,14 +636,14 @@ namespace MoonlitSystem.Editors
             }
         }
 
-        private void CreateTemplate(bool isForloop)
+        private void CreateTemplate(bool isForLoop)
         {
             var element = (ElementCanvasGroup)target;
             ImmediateUITemplate.BuildParams buildParams = default;
             buildParams.RootCanvasGroup.GameObject_Name = element.name;
             buildParams.RootCanvasGroup.Element_ID = element.ElementData.ID;
             buildParams.RootMapping_ID = element.GetComponent<RootMapping>() != null ? element.GetComponent<RootMapping>().ID : string.Empty;
-            buildParams.ForLoop = isForloop;
+            buildParams.ForLoop = isForLoop;
             {
                 var elements = element.GetComponentsInChildren<ElementText>();
                 var elementInfo = new List<ImmediateUITemplate.ElementInfo>();
@@ -824,7 +824,7 @@ namespace MoonlitSystem.Editors
         public override void OnInspectorGUI() => Builder.HandleUserChoice(RenderUserSelections(targets, ref isIDOptionsExpanded), targets, GetType());
     }
 
-    public enum RootMappingChoice { UseRandomForID = 1, UseGameObjectNameforID, UseSiblingIndexforID }
+    public enum RootMappingChoice { UseRandomForID = 1, UseGameObjectNameForID, UseSiblingIndexForID }
     [CustomEditor(typeof(RootMapping), true)]
     [CanEditMultipleObjects]
     public class RootMappingEditor : Editor
@@ -841,20 +841,20 @@ namespace MoonlitSystem.Editors
             using (new LabelWidthScope(40)) {
                 prefix_go = EditorGUILayout.TextField("Prefix", prefix_go);
 
-                if (GUILayout.Button("Use GameObject Name for ID")) choice = RootMappingChoice.UseGameObjectNameforID;
+                if (GUILayout.Button("Use GameObject Name for ID")) choice = RootMappingChoice.UseGameObjectNameForID;
             }
             using (new EditorGUILayout.HorizontalScope())
             using (new LabelWidthScope(40)) {
                 prefix_si = EditorGUILayout.TextField("Prefix", prefix_si);
 
-                if (GUILayout.Button("Use Sibling Index for ID")) choice = RootMappingChoice.UseSiblingIndexforID;
+                if (GUILayout.Button("Use Sibling Index for ID")) choice = RootMappingChoice.UseSiblingIndexForID;
             }
 
             foreach (var t in targets) {
                 var element = (RootMapping)t;
                 if (choice == RootMappingChoice.UseRandomForID) { element.Reset(); }
-                if (choice == RootMappingChoice.UseGameObjectNameforID) { element.ID = $"{prefix_go}{t.name}"; }
-                if (choice == RootMappingChoice.UseSiblingIndexforID) { element.ID = $"{prefix_si}{element.transform.GetSiblingIndex()}"; }
+                if (choice == RootMappingChoice.UseGameObjectNameForID) { element.ID = $"{prefix_go}{t.name}"; }
+                if (choice == RootMappingChoice.UseSiblingIndexForID) { element.ID = $"{prefix_si}{element.transform.GetSiblingIndex()}"; }
 
                 if (choice != default) {
                     EditorUtility.SetDirty(element);
