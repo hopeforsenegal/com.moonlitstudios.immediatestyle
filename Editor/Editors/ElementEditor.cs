@@ -396,6 +396,7 @@ namespace MoonlitSystem.Editors
             foreach (var go in Selection.gameObjects) {
                 if (go.TryGetComponent<BaseEditorData>(out var c)) {
                     ElementData.SetupElementData(c.ElementData, c.transform);
+                    EditorUtility.SetDirty(go);
                 }
             }
 
@@ -409,6 +410,7 @@ namespace MoonlitSystem.Editors
                 foreach (var c in go.GetComponentsInChildren<BaseEditorData>()) {
                     if (c == null) continue;
                     ElementData.SetupElementData(c.ElementData, c.transform);
+                    EditorUtility.SetDirty(go);
                 }
             }
 

@@ -249,11 +249,8 @@ namespace MoonlitSystem.UI.Immediate
                      || (touchscreenKeyboard != null && touchscreenKeyboard.status == TouchScreenKeyboard.Status.Done);
                     isFocused = element.UIBehaviour.isFocused || element.WasFocused;
 
-                    if (isFocused) {
-                        text = element.UIBehaviour.text;
-                    } else {
-                        element.UIBehaviour.text = text;
-                    }
+                    if (isFocused) text = element.UIBehaviour.text;
+                    if (!isFocused) element.UIBehaviour.text = text;
 
                     // ReSharper disable once Unity.InefficientPropertyAccess
                     element.WasFocused = element.UIBehaviour.isFocused;    // store for next frame
@@ -261,11 +258,8 @@ namespace MoonlitSystem.UI.Immediate
                     hasHitSubmit = hasPressedSubmitKeyCode;
                     isFocused = element.UIBehaviourPro.isFocused || element.WasFocused;
 
-                    if (isFocused) {
-                        text = element.UIBehaviourPro.text;
-                    } else {
-                        element.UIBehaviourPro.text = text;
-                    }
+                    if (isFocused) text = element.UIBehaviourPro.text;
+                    if (!isFocused) element.UIBehaviourPro.text = text;
 
                     // ReSharper disable once Unity.InefficientPropertyAccess
                     element.WasFocused = element.UIBehaviourPro.isFocused;    // store for next frame
@@ -275,12 +269,9 @@ namespace MoonlitSystem.UI.Immediate
                 hasHitSubmit = hasPressedSubmitKeyCode
                  || (touchscreenKeyboard != null && touchscreenKeyboard.status == TouchScreenKeyboard.Status.Done);
                 isFocused = element.UIBehaviour.isFocused || element.WasFocused;
-
-                if (isFocused) {
-                    text = element.UIBehaviour.text;
-                } else {
-                    element.UIBehaviour.text = text;
-                }
+                
+                if (isFocused) text = element.UIBehaviour.text;
+                if (!isFocused) element.UIBehaviour.text = text;
 
                 // ReSharper disable once Unity.InefficientPropertyAccess
                 element.WasFocused = element.UIBehaviour.isFocused;    // store for next frame
