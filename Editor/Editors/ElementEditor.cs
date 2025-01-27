@@ -32,6 +32,7 @@ namespace MoonlitSystem.Editors
                         if (type == typeof(ElementSliderEditor)) Helper.ClipboardText = CopyCodeSliderStatement(targets);
                         if (type == typeof(ElementDropdownEditor)) Helper.ClipboardText = CopyCodeDropdownStatement(targets);
                         if (type == typeof(ElementCanvasGroupEditor)) Helper.ClipboardText = CopyCodeCanvasGroupStatement(targets);
+                        if (type == typeof(ElementCanvasEditor)) Helper.ClipboardText = CopyCodeCanvasGroupStatement(targets);
                         if (type == typeof(ReferenceEditor)) Helper.ClipboardText = CopyCodeReferenceStatement(targets);
                         break;
                     }
@@ -492,6 +493,21 @@ namespace MoonlitSystem.Editors
         public static Choice RenderCanvasGroupUserSelections(Object[] targets, ref bool isIDOptionsExpanded, ref bool isChildrenExpanded)
         {
             var choice = RenderCodeSnippet(targets);
+            RenderCanvasGroupUserSelectionsInner(ref isChildrenExpanded, ref choice);
+            RenderGUIDOptions(ref isIDOptionsExpanded, ref choice);
+            return choice;
+        }
+
+        public static Choice RenderCanvas_JustCanvas_UserSelections(ref bool isIDOptionsExpanded, ref bool isChildrenExpanded)
+        {
+            Choice choice = default;
+            RenderCanvasGroupUserSelectionsInner(ref isChildrenExpanded, ref choice);
+            RenderGUIDOptions(ref isIDOptionsExpanded, ref choice);
+            return choice;
+        }
+
+        private static void RenderCanvasGroupUserSelectionsInner(ref bool isChildrenExpanded, ref Choice choice)
+        {
             using (new EditorGUILayout.HorizontalScope()) {
                 isChildrenExpanded = EditorGUILayout.Foldout(isChildrenExpanded, string.Empty, true);
                 GUILayout.Label("Code Generate using Children", EditorStyles.boldLabel);
@@ -507,8 +523,6 @@ namespace MoonlitSystem.Editors
                 }
                 if (GUILayout.Button("Create Full Code File")) choice = Choice.FileTemplate;
             }
-            RenderGUIDOptions(ref isIDOptionsExpanded, ref choice);
-            return choice;
         }
 
         public static void ElementDestroy(GameObject gameObject, Object o)
@@ -670,6 +684,204 @@ namespace MoonlitSystem.Editors
                 items.Remove(element);
                 elements = items.ToArray();
 
+                foreach (var t in elements) {
+                    elementInfo.Add(new ImmediateUITemplate.ElementInfo { GameObject_Name = t.name, Element_ID = t.ElementData.ID });
+                }
+                buildParams.CanvasGroups = elementInfo.ToArray();
+            }
+            {
+                var elements = element.GetComponentsInChildren<ElementButton>();
+                var elementInfo = new List<ImmediateUITemplate.ElementInfo>();
+                foreach (var t in elements) {
+                    elementInfo.Add(new ImmediateUITemplate.ElementInfo { GameObject_Name = t.name, Element_ID = t.ElementData.ID });
+                }
+                buildParams.Buttons = elementInfo.ToArray();
+            }
+            {
+                var elements = element.GetComponentsInChildren<ElementToggle>();
+                var elementInfo = new List<ImmediateUITemplate.ElementInfo>();
+                foreach (var t in elements) {
+                    elementInfo.Add(new ImmediateUITemplate.ElementInfo { GameObject_Name = t.name, Element_ID = t.ElementData.ID });
+                }
+                buildParams.Toggles = elementInfo.ToArray();
+            }
+            {
+                var elements = element.GetComponentsInChildren<ElementSlider>();
+                var elementInfo = new List<ImmediateUITemplate.ElementInfo>();
+                foreach (var t in elements) {
+                    elementInfo.Add(new ImmediateUITemplate.ElementInfo { GameObject_Name = t.name, Element_ID = t.ElementData.ID });
+                }
+                buildParams.Sliders = elementInfo.ToArray();
+            }
+            {
+                var elements = element.GetComponentsInChildren<ElementDragDrop>();
+                var elementInfo = new List<ImmediateUITemplate.ElementInfo>();
+                foreach (var t in elements) {
+                    elementInfo.Add(new ImmediateUITemplate.ElementInfo { GameObject_Name = t.name, Element_ID = t.ElementData.ID });
+                }
+                buildParams.DragDrops = elementInfo.ToArray();
+            }
+            {
+                var elements = element.GetComponentsInChildren<ElementDropdown>();
+                var elementInfo = new List<ImmediateUITemplate.ElementInfo>();
+                foreach (var t in elements) {
+                    elementInfo.Add(new ImmediateUITemplate.ElementInfo { GameObject_Name = t.name, Element_ID = t.ElementData.ID });
+                }
+                buildParams.Dropdowns = elementInfo.ToArray();
+            }
+            {
+                var elements = element.GetComponentsInChildren<ElementInputField>();
+                var elementInfo = new List<ImmediateUITemplate.ElementInfo>();
+                foreach (var t in elements) {
+                    elementInfo.Add(new ImmediateUITemplate.ElementInfo { GameObject_Name = t.name, Element_ID = t.ElementData.ID });
+                }
+                buildParams.InputFields = elementInfo.ToArray();
+            }
+
+            var code = ImmediateUITemplate.BuildString(buildParams, ImmediateUITemplate.Name.ElementsExtension);
+            code = ImmediateUITemplate.RemoveExtraNewLines(code);
+            Helper.ClipboardText = code;
+        }
+
+        private void CreateFileTemplate()
+        {
+            var element = (ElementCanvasGroup)target;
+            ImmediateUITemplate.BuildParams buildParams = default;
+            buildParams.RootCanvasGroup.GameObject_Name = element.name;
+            buildParams.RootCanvasGroup.Element_ID = element.ElementData.ID;
+            buildParams.RootMapping_ID = element.GetComponent<RootMapping>() != null ? element.GetComponent<RootMapping>().ID : string.Empty;
+            {
+                var elements = element.GetComponentsInChildren<ElementText>();
+                var elementInfo = new List<ImmediateUITemplate.ElementInfo>();
+                foreach (var t in elements) {
+                    elementInfo.Add(new ImmediateUITemplate.ElementInfo { GameObject_Name = t.name, Element_ID = t.ElementData.ID });
+                }
+                buildParams.Texts = elementInfo.ToArray();
+            }
+            {
+                var elements = element.GetComponentsInChildren<ElementImage>();
+                var elementInfo = new List<ImmediateUITemplate.ElementInfo>();
+                foreach (var t in elements) {
+                    elementInfo.Add(new ImmediateUITemplate.ElementInfo { GameObject_Name = t.name, Element_ID = t.ElementData.ID });
+                }
+                buildParams.Images = elementInfo.ToArray();
+            }
+            {
+                var elements = element.GetComponentsInChildren<ElementCanvasGroup>();
+                var elementInfo = new List<ImmediateUITemplate.ElementInfo>();
+
+                var items = new HashSet<ElementCanvasGroup>(elements);
+                items.Remove(element);
+                elements = items.ToArray();
+
+                foreach (var t in elements) {
+                    elementInfo.Add(new ImmediateUITemplate.ElementInfo { GameObject_Name = t.name, Element_ID = t.ElementData.ID });
+                }
+                buildParams.CanvasGroups = elementInfo.ToArray();
+            }
+            {
+                var elements = element.GetComponentsInChildren<ElementButton>();
+                var elementInfo = new List<ImmediateUITemplate.ElementInfo>();
+                foreach (var t in elements) {
+                    elementInfo.Add(new ImmediateUITemplate.ElementInfo { GameObject_Name = t.name, Element_ID = t.ElementData.ID });
+                }
+                buildParams.Buttons = elementInfo.ToArray();
+            }
+            {
+                var elements = element.GetComponentsInChildren<ElementToggle>();
+                var elementInfo = new List<ImmediateUITemplate.ElementInfo>();
+                foreach (var t in elements) {
+                    elementInfo.Add(new ImmediateUITemplate.ElementInfo { GameObject_Name = t.name, Element_ID = t.ElementData.ID });
+                }
+                buildParams.Toggles = elementInfo.ToArray();
+            }
+            {
+                var elements = element.GetComponentsInChildren<ElementSlider>();
+                var elementInfo = new List<ImmediateUITemplate.ElementInfo>();
+                foreach (var t in elements) {
+                    elementInfo.Add(new ImmediateUITemplate.ElementInfo { GameObject_Name = t.name, Element_ID = t.ElementData.ID });
+                }
+                buildParams.Sliders = elementInfo.ToArray();
+            }
+            {
+                var elements = element.GetComponentsInChildren<ElementDragDrop>();
+                var elementInfo = new List<ImmediateUITemplate.ElementInfo>();
+                foreach (var t in elements) {
+                    elementInfo.Add(new ImmediateUITemplate.ElementInfo { GameObject_Name = t.name, Element_ID = t.ElementData.ID });
+                }
+                buildParams.DragDrops = elementInfo.ToArray();
+            }
+            {
+                var elements = element.GetComponentsInChildren<ElementDropdown>();
+                var elementInfo = new List<ImmediateUITemplate.ElementInfo>();
+                foreach (var t in elements) {
+                    elementInfo.Add(new ImmediateUITemplate.ElementInfo { GameObject_Name = t.name, Element_ID = t.ElementData.ID });
+                }
+                buildParams.Dropdowns = elementInfo.ToArray();
+            }
+            {
+                var elements = element.GetComponentsInChildren<ElementInputField>();
+                var elementInfo = new List<ImmediateUITemplate.ElementInfo>();
+                foreach (var t in elements) {
+                    elementInfo.Add(new ImmediateUITemplate.ElementInfo { GameObject_Name = t.name, Element_ID = t.ElementData.ID });
+                }
+                buildParams.InputFields = elementInfo.ToArray();
+            }
+
+            ImmediateUITemplate.Build(buildParams);
+        }
+    }
+
+
+    [CustomEditor(typeof(ElementCanvas), true)]
+    [CanEditMultipleObjects]
+    public class ElementCanvasEditor : Editor
+    {
+        private bool isChildrenExpanded = true;
+        private bool isIDOptionsExpanded = false;
+        private GameObject m_ThisObjRef;
+        private void OnEnable() => m_ThisObjRef = ((ElementCanvas)target).gameObject;
+        private void OnDestroy() => ElementDestroy(m_ThisObjRef, target);
+
+        public override void OnInspectorGUI()
+        {
+            var choice = RenderCanvas_JustCanvas_UserSelections(ref isIDOptionsExpanded, ref isChildrenExpanded);
+            Builder.HandleUserChoice(choice, targets, GetType());
+            // Falls out and handles additional CanvasGroup only choices here (yea got lazy)
+            switch (choice) {
+                case Choice.FileTemplate: CreateFileTemplate(); break;
+                case Choice.ElementTemplate: CreateTemplate(false); break;
+                case Choice.ForLoopTemplate: CreateTemplate(true); break;
+            }
+        }
+
+        private void CreateTemplate(bool isForLoop)
+        {
+            var element = (ElementCanvas)target;
+            ImmediateUITemplate.BuildParams buildParams = default;
+            buildParams.RootCanvasGroup.GameObject_Name = element.name;
+            buildParams.RootCanvasGroup.Element_ID = element.ElementData.ID;
+            buildParams.RootMapping_ID = element.GetComponent<RootMapping>() != null ? element.GetComponent<RootMapping>().ID : string.Empty;
+            buildParams.ForLoop = isForLoop;
+            {
+                var elements = element.GetComponentsInChildren<ElementText>();
+                var elementInfo = new List<ImmediateUITemplate.ElementInfo>();
+                foreach (var t in elements) {
+                    elementInfo.Add(new ImmediateUITemplate.ElementInfo { GameObject_Name = t.name, Element_ID = t.ElementData.ID });
+                }
+                buildParams.Texts = elementInfo.ToArray();
+            }
+            {
+                var elements = element.GetComponentsInChildren<ElementImage>();
+                var elementInfo = new List<ImmediateUITemplate.ElementInfo>();
+                foreach (var t in elements) {
+                    elementInfo.Add(new ImmediateUITemplate.ElementInfo { GameObject_Name = t.name, Element_ID = t.ElementData.ID });
+                }
+                buildParams.Images = elementInfo.ToArray();
+            }
+            {
+                var elements = element.GetComponentsInChildren<ElementCanvasGroup>();
+                var elementInfo = new List<ImmediateUITemplate.ElementInfo>();
                 foreach (var t in elements) {
                     elementInfo.Add(new ImmediateUITemplate.ElementInfo { GameObject_Name = t.name, Element_ID = t.ElementData.ID });
                 }

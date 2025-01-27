@@ -69,6 +69,11 @@ namespace MoonlitSystem.UI.Immediate
                 t = e.transform;
                 ed = e.ElementData;
             }
+            if (t == null && GetComponent<Canvas>() != null && GetComponent<ElementCanvas>() == null) {
+                var e = gameObject.AddComponent<ElementCanvas>();
+                t = e.transform;
+                ed = e.ElementData;
+            }
             if (t == null && GetComponent<Image>() != null && GetComponent<ElementImage>() == null) {
                 var e = gameObject.AddComponent<ElementImage>();
                 t = e.transform;
