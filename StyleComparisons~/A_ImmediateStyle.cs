@@ -15,11 +15,11 @@ namespace Editing.BotEditor.StyleComparisons
         int value;
         Sprite valueSprite;
         bool valueToggle;
-        int radioIndex;
         string tempInputText;
         string resultText;
+        int radioIndex;
+        int dropdownIndex;
         private readonly Color[] colors = { Color.red, Color.black, Color.green };
-        private int dropdownIndex;
         protected void Update()
         {
             if (ImmediateStyle.Toggle("/Canvas/CanvasGroup/Toggle74f8", valueToggle).IsClicked) { valueToggle = !valueToggle; } // @toggle
@@ -44,12 +44,8 @@ namespace Editing.BotEditor.StyleComparisons
                     var hasDropped2 = ImmediateStyle.DragDrop("/Canvas/CanvasGroup/DragAndDrop (1)2173", out var component2).IsMouseUp;
 
                     if (radioIndex == 0) {
-                        if (hasDropped1) {
-                            component.transform.position = component.PinnedPosition;
-                        }
-                        if (hasDropped2) {
-                            component2.transform.position = component2.PinnedPosition;
-                        }
+                        if (hasDropped1) component.transform.position = component.PinnedPosition;
+                        if (hasDropped2) component2.transform.position = component2.PinnedPosition;
                     }
                 }
 
