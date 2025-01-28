@@ -53,7 +53,6 @@ namespace Editing.BotEditor.StyleComparisons
                 for (var i = 0; i < 4; i++) {
                     ImmediateStyle.DragDrop($"swap{i}" + "/Canvas/CanvasGroup/Swappables/Swap1be93", out var swappable);
                     components.Add(swappable);
-                    if (swappable.IsDragging) ImmediateStyle.FollowCursor(swappable.transform);
                 }
                 for (var i = 0; i < 4; i++) {
                     var swappable = components[i];
