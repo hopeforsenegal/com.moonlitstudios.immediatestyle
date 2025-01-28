@@ -199,6 +199,12 @@ namespace MoonlitSystem.UI.Immediate
             return new ToggleData { IsOn = isOn, IsClicked = isClicked };
         }
 
+        // |Special caveat compared to the other UI elements|
+        // Instead of rendering, this is about simulation.
+        // So frames where this isn't called means that the Gameobject doesn't follow the cursor
+        //      So to make it drag and stay in place called PinnedPosition = dragged.transform.position every frame
+        //      Where as to make it drag and snap back don't update the PinnedPosition
+        //      To not have it drag at all simply do not call this method
         public static DragDropData DragDrop(string id, out DragDrop dragDrop)
         {
             var hasElement = Instance.m_InteractDragDrops.TryGetValue(id, out var element);

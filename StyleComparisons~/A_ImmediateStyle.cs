@@ -43,9 +43,6 @@ namespace Editing.BotEditor.StyleComparisons
                     var hasDropped1 = ImmediateStyle.DragDrop("/Canvas/CanvasGroup/DragAndDrop0e99", out var component).IsMouseUp;
                     var hasDropped2 = ImmediateStyle.DragDrop("/Canvas/CanvasGroup/DragAndDrop (1)2173", out var component2).IsMouseUp;
 
-                    if (component.IsDragging) ImmediateStyle.FollowCursor(component.transform);
-                    if (component2.IsDragging) ImmediateStyle.FollowCursor(component2.transform);
-
                     if (radioIndex == 0) {
                         if (hasDropped1) {
                             component.transform.position = component.PinnedPosition;

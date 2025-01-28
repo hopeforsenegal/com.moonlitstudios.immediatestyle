@@ -5,7 +5,13 @@ using UnityEngine.UI;
 
 namespace MoonlitSystem.UI
 {
-    // In order to appear over other UI elements it must be the last sibling. So plan accordingly
+    // |Special caveat compared to the other UI elements|
+    // Instead of rendering, this is about simulation.
+    // So frames where this isn't called means that the Gameobject doesn't follow the cursor
+    //      So to make it drag and stay in place called PinnedPosition = dragged.transform.position every frame
+    //      Where as to make it drag and snap back don't update the PinnedPosition
+    //      To not have it drag at all simply do not call this method
+
     [DisallowMultipleComponent]
     [RequireComponent(typeof(RectTransform))]
     [RequireComponent(typeof(Graphic))]
@@ -16,9 +22,6 @@ namespace MoonlitSystem.UI
         , IDragHandler
     {
         public UnityEvent<DragDrop> OnReleased;
-        // We expect this behavior if we were a standard Unity component. However ImmediateStyle defaults to overriding this to be off.
-        // See 'ImmediateStyleProjectSettings.followCursorRetained' for more details and/or to change this for ImmediateStyle.
-        internal bool FollowMouseCursor = true;
         public Vector3 PinnedPosition { get; set; }
 
         public RectTransform RectTransform { get; private set; }
@@ -42,7 +45,7 @@ namespace MoonlitSystem.UI
             var mousePosition = Input.mousePosition;
 #endif
 
-            if (FollowMouseCursor && IsDragging) {
+            if (IsDragging) {
                 var v3 = Immediate.ImmediateStyle.CpyWithZ(mousePosition, 10f);
                 transform.position = v3;
                 // In order to appear over other UI elements it must be the last sibling. So plan accordingly                
