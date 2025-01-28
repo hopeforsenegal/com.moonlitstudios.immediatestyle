@@ -2,21 +2,21 @@
 The most important thing in programming are control structures. It's how you tell the computer what to do, when to do it, and how many times to do it.
 
 The most important two concepts in this paradigm are branch/jumping and looping/iterating.
-ImmediateStyle is built with these in mind.
-Below, we go over "If" and "For" and in this readme we try to plainly demonstrate these control structures.
+**Immediate Style** is built with these in mind.
+Below, we go over **_If_** and **_For_** and in this readme we try to plainly demonstrate these control structures.
 
-It's important to reiterate that these belong in the Update() function and that ImmediateStyle functions are intended to be called every frame.
+It's important to reiterate that these belong in the ```Update()``` function and that **Immediate Style** functions are intended to be called every frame.
 
 ### If Example
 ```cs  
-if(showing_button){
+if (showing_button) {
 	// The button renders and can take click events
 	button_clicked = ImmediateStyle.Button("Button").IsMouseDown;
-}else{
+} else {
 	// The button doesn't render nor can it have click events
 }
 
-if(showing_image){
+if (showing_image) {
 	// Only when showing_image is true does this image show
 	ImmediateStyle.Image("Image");
 }
@@ -51,7 +51,7 @@ ___
     };
     for (var i = 0; i < unique_guid_list.Length; i++) {
         var guid = unique_guid_list[i];
-		ImmediateStyle.DragDrop(guid, out _);
+	ImmediateStyle.DragDrop(guid, out _);
     }
 
     // Other times we can use a RootMapping to allow all guids to be the same 
@@ -63,10 +63,10 @@ ___
         // This component (well.. really all of these components) needs a to have a RootMapping. 
         // Each Rootmapping then specifies an "ID" which we use as the index.
         // We suggest using "Using Sibling Index for ID" in particular. 
-		ImmediateStyle.DragDrop(guid, out _); 
+	ImmediateStyle.DragDrop(guid, out _); 
     }
 ```
 
 If you are still confused then perhaps 
 https://caseymuratori.com/blog_0001
-will be better at explaining on what the intended goal is here
+will be better at explaining on what the intended goal is with programming things this way.
