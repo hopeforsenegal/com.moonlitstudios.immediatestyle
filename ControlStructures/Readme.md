@@ -3,9 +3,9 @@ The most important thing in programming are control structures. It's how you tel
 
 The most important two concepts in this paradigm are branch/jumping and looping/iterating.
 **Immediate Style** is built with these in mind.
-Below, we go over **_If_** and **_For_** and in this readme we try to plainly demonstrate these control structures.
+Below, we go over **_If_** and **_For Loop_** and in this readme we try to plainly demonstrate these control structures.
 
-It's important to reiterate that these belong in the ```Update()``` function and that **Immediate Style** functions are intended to be called every frame.
+It's important to reiterate that these belong in the ```Update()``` function since **Immediate Style** functions are intended to be called every frame.
 
 ### If Example
 ```cs  
@@ -31,7 +31,7 @@ if (showing_drag_drop) {
 }
 ```
 ___
-### For Example 
+### For Loop Example 
 ```cs  
 	// There are a few ways to deal with a set of the same thing 
 	// (like in GuessingGame.cs with the listing of previous answers)
