@@ -33,38 +33,38 @@ if (showing_drag_drop) {
 ___
 ### For Loop Example 
 ```cs  
-	// There are a few ways to deal with a set of the same thing 
-	// (like in GuessingGame.cs with the listing of previous answers)
+// There are a few ways to deal with a set of the same thing 
+// (like in GuessingGame.cs with the listing of previous answers)
 
-	// Sometimes the quickest way might be to just give unique ids to all things and just 
-	// iterate over the ids
-	string[] unique_guid_list = new[] {
-        "Unique1a3e",
-        "Unique29af0",
-        "Unique352d5",
-        "Unique4b866",
-        "Unique58c27",
-        "Unique6ba83",
-        "Unique7405f",
-        "Unique8efa3",
-        "Unique9ce93"
-    };
-    for (var i = 0; i < unique_guid_list.Length; i++) {
-        var guid = unique_guid_list[i];
+// Sometimes the quickest way might be to just give unique ids to all things and just 
+// iterate over the ids
+string[] unique_guid_list = new[] {
+	"Unique1a3e",
+	"Unique29af0",
+	"Unique352d5",
+	"Unique4b866",
+	"Unique58c27",
+	"Unique6ba83",
+	"Unique7405f",
+	"Unique8efa3",
+	"Unique9ce93"
+};
+for (var i = 0; i < unique_guid_list.Length; i++) {
+	var guid = unique_guid_list[i];
 	ImmediateStyle.DragDrop(guid, out _);
-    }
+}
 
-    // Other times we can use a RootMapping to allow all guids to be the same 
-    // but differ by a predetermined prefix
-    var prefix = "prefix";
-    const int number_of_same_count = 10;
-    for (var i = 0; i < number_of_same_count; i++) {
-        var guid = $"{prefix}{i}Same";
-        // This component (well.. really all of these components) needs a to have a RootMapping. 
-        // Each Rootmapping then specifies an "ID" which we use as the index.
-        // We suggest using "Using Sibling Index for ID" in particular. 
+// Other times we can use a RootMapping to allow all guids to be the same 
+// but differ by a predetermined prefix
+var prefix = "prefix";
+const int number_of_same_count = 10;
+for (var i = 0; i < number_of_same_count; i++) {
+	var guid = $"{prefix}{i}Same";
+	// This component (well.. really all of these components) needs a to have a RootMapping. 
+	// Each Rootmapping then specifies an "ID" which we use as the index.
+	// We suggest using "Using Sibling Index for ID" in particular. 
 	ImmediateStyle.DragDrop(guid, out _); 
-    }
+}
 ```
 
 If you are still confused then perhaps 
