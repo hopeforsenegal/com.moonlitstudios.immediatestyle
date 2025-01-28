@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 namespace MoonlitSystem.UI.Immediate
 {
-    // Just add a single ImmediateStyle singleton to your scene to use all the following methods
+    // Just have a ImmediateStyle singleton in your scene to use all the following methods
 
     public class ImmediateStyle : MonoBehaviour
     {
@@ -269,7 +269,7 @@ namespace MoonlitSystem.UI.Immediate
                 hasHitSubmit = hasPressedSubmitKeyCode
                  || (touchscreenKeyboard != null && touchscreenKeyboard.status == TouchScreenKeyboard.Status.Done);
                 isFocused = element.UIBehaviour.isFocused || element.WasFocused;
-                
+
                 if (isFocused) text = element.UIBehaviour.text;
                 if (!isFocused) element.UIBehaviour.text = text;
 
@@ -572,6 +572,13 @@ namespace MoonlitSystem.UI.Immediate
 
         internal static void Register<T>(T element, RootMapping elementRootMapping) where T : MonoBehaviour
         {
+            if (Instance == null) {
+                var go = new GameObject(nameof(ImmediateStyle));
+                Instance = go.AddComponent<ImmediateStyle>();
+                Debug.LogWarning($"{nameof(ImmediateStyle)} was added to the scene at runtime. It's better to just have an {nameof(ImmediateStyle)} Singleton in the scene ahead of time.");
+                // One of the reasons that you do not want to add a gameobject like this at runtime is that its a memory allocation
+                // and will make it more likely that you will have a Garbage Collection occur. Granted this is a one time allocation so its not that big of a deal.
+            }
             Debug.Assert(Instance, $"No GameObject with {nameof(ImmediateStyle)} Singleton Component is within the scene!");
             if (elementRootMapping == null) {
                 InnerRegister(element, string.Empty);
