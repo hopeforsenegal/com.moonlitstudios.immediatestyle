@@ -34,7 +34,7 @@ ___
 ### For Loop Example 
 ```cs  
 // There are a few ways to deal with a set of the same thing 
-// (like in GuessingGame.cs with the listing of previous answers)
+// (like in GuessingGame.cs with the listing of previous answers, here we are iterating over the "same type of GameObject")
 
 // Sometimes the quickest way might be to just give unique ids to all things and just 
 // iterate over the ids
