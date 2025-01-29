@@ -46,7 +46,7 @@ With this API you can (& more!)
 </p>
 
 ## Features
-1. Has a new component called **Element** that adds what you need to a GameObject for the new ImmediateStyle API to work. Instead of coding manually and then creating your Unity UI Components, we instead create your Unity UI Components and allow you to code generate (No more missing reference exceptions).
+1. Has a new component called **Element** that adds what you need to a GameObject for the new ImmediateStyle API to work. Instead of coding manually and then creating your Unity UI Components, we instead create your Unity UI Components and allow you to code generate (No more missing reference exceptions). No more writing boiler plate (whether you were writing Awake/Start/OnDestroy with callbacks or Inheriting _IPointerClickHandler_ just to respond to a click)
 * Use Code gen tools to make sure you only spend time coding functionality or doing layout. No more wasting time setting up references in the inspector.
 *  Works with every existing Unity UI component (including TextMeshPro) and is compatible with existing Classes, Callbacks, and Callbacks in the inspector for designers (So you trying it out doesn't involve rewriting your entire codebase).
 2. Has a new component called **Reference** that is useful for finding game objects (and Debug.Asserts if it could not be found). This is can code generate (to save you time typing) and it makes it easy to obtain a component (For Start/Awake) without having missing references in the inspector.
