@@ -16,10 +16,11 @@ namespace MoonlitSystem.Editors
 {
     public static class Builder
     {
-        public static void HandleUserChoice(Choice choice, Object[] targets, Type type)
+        public static void HandleUserChoice(Object[] targets, Type type, ChoiceData choiceData)
         {
-            switch (choice) {
-                case Choice.CopyID: Helper.ClipboardText = BuildConstantStatements(targets); break;
+            switch (choiceData.choice) {
+                case Choice.CopyConstStatement: Helper.ClipboardText = BuildConstantStatements(targets); break;
+                case Choice.CopyID: Helper.ClipboardText = choiceData.copyID; break;
                 case Choice.RegenerateRandomID: RegenerateRandomIDsForTargets(targets); break;
                 case Choice.UseGameObjectNameID: UseGameObjectNameIDsForTargets(targets); break;
                 case Choice.CopyCode: {
@@ -380,13 +381,19 @@ namespace MoonlitSystem.Editors
     {
         public enum Choice
         {
-            CopyID = 1,
+            CopyConstStatement = 1,
+            CopyID,
             CopyCode,
             RegenerateRandomID,
             UseGameObjectNameID,
             FileTemplate,
             ElementTemplate,
             ForLoopTemplate,
+        }
+        public struct ChoiceData
+        {
+            public Choice choice;
+            public string copyID;
         }
 
         private static readonly Color HighlightButton = new Color(235 / 255f, 235 / 255f, 255 / 255f);
@@ -458,25 +465,24 @@ namespace MoonlitSystem.Editors
             return true;
         }
 
-        public static Choice RenderUserSelections(Object[] targets, ref bool isIDOptionsExpanded)
+        public static ChoiceData RenderUserSelections(Object[] targets, ref bool isIDOptionsExpanded)
         {
-            var choice = RenderCodeSnippet(targets);
-            RenderGUIDOptions(ref isIDOptionsExpanded, ref choice);
-            return choice;
+            var choiceData = RenderCodeSnippet(targets);
+            choiceData = RenderGUIDOptions(ref isIDOptionsExpanded, choiceData);
+            return choiceData;
         }
 
-        private static Choice RenderCodeSnippet(Object[] targets)
+        private static ChoiceData RenderCodeSnippet(Object[] targets)
         {
-            Choice choice = default;
-            ElementDataEditor.Render(targets);
+            ChoiceData choiceData = ElementDataEditor.RenderRootmapAndGuid(targets);
             var originalColor = GUI.backgroundColor;
             GUI.backgroundColor = HighlightButton;
-            if (GUILayout.Button("Clipboard Copy Code Snippet")) choice = Choice.CopyCode;
+            if (GUILayout.Button("Clipboard Copy Code Snippet")) choiceData.choice = Choice.CopyCode;
             GUI.backgroundColor = originalColor;
-            return choice;
+            return choiceData;
         }
 
-        private static void RenderGUIDOptions(ref bool isIDOptionsExpanded, ref Choice choice)
+        private static ChoiceData RenderGUIDOptions(ref bool isIDOptionsExpanded, ChoiceData choiceData)
         {
             using (new EditorGUILayout.HorizontalScope()) {
                 isIDOptionsExpanded = EditorGUILayout.Foldout(isIDOptionsExpanded, string.Empty, true);
@@ -484,29 +490,31 @@ namespace MoonlitSystem.Editors
                 GUILayout.FlexibleSpace();
             }
             if (isIDOptionsExpanded) {
-                if (GUILayout.Button("Copy ID")) choice = Choice.CopyID;
-                if (GUILayout.Button("Regenerate ID")) choice = Choice.RegenerateRandomID;
-                if (GUILayout.Button("Use Game Object Name as ID")) choice = Choice.UseGameObjectNameID;
+                if (GUILayout.Button("Copy Const Statement")) choiceData.choice = Choice.CopyConstStatement;
+                GUILayout.Space(5);
+                if (GUILayout.Button("Regenerate ID")) choiceData.choice = Choice.RegenerateRandomID;
+                if (GUILayout.Button("Use Game Object Name as ID")) choiceData.choice = Choice.UseGameObjectNameID;
             }
+            return choiceData;
         }
 
-        public static Choice RenderCanvasGroupUserSelections(Object[] targets, ref bool isIDOptionsExpanded, ref bool isChildrenExpanded)
+        public static ChoiceData RenderCanvasGroupUserSelections(Object[] targets, ref bool isIDOptionsExpanded, ref bool isChildrenExpanded)
         {
-            var choice = RenderCodeSnippet(targets);
-            RenderCanvasGroupUserSelectionsInner(ref isChildrenExpanded, ref choice);
-            RenderGUIDOptions(ref isIDOptionsExpanded, ref choice);
-            return choice;
+            var choiceData = RenderCodeSnippet(targets);
+            choiceData = RenderCanvasGroupUserSelectionsInner(ref isChildrenExpanded, choiceData);
+            choiceData = RenderGUIDOptions(ref isIDOptionsExpanded, choiceData);
+            return choiceData;
         }
 
-        public static Choice RenderCanvas_JustCanvas_UserSelections(ref bool isIDOptionsExpanded, ref bool isChildrenExpanded)
+        public static ChoiceData RenderCanvas_JustCanvas_UserSelections(ref bool isIDOptionsExpanded, ref bool isChildrenExpanded)
         {
-            Choice choice = default;
-            RenderCanvasGroupUserSelectionsInner(ref isChildrenExpanded, ref choice);
-            RenderGUIDOptions(ref isIDOptionsExpanded, ref choice);
-            return choice;
+            ChoiceData choiceData = default;
+            choiceData = RenderCanvasGroupUserSelectionsInner(ref isChildrenExpanded, choiceData);
+            choiceData = RenderGUIDOptions(ref isIDOptionsExpanded, choiceData);
+            return choiceData;
         }
 
-        private static void RenderCanvasGroupUserSelectionsInner(ref bool isChildrenExpanded, ref Choice choice)
+        private static ChoiceData RenderCanvasGroupUserSelectionsInner(ref bool isChildrenExpanded, ChoiceData choiceData)
         {
             using (new EditorGUILayout.HorizontalScope()) {
                 isChildrenExpanded = EditorGUILayout.Foldout(isChildrenExpanded, string.Empty, true);
@@ -517,12 +525,13 @@ namespace MoonlitSystem.Editors
                 using (new EditorGUILayout.HorizontalScope()) {
                     var originalColor = GUI.backgroundColor;
                     GUI.backgroundColor = HighlightButton;
-                    if (GUILayout.Button("Clipboard Individual")) choice = Choice.ElementTemplate;
+                    if (GUILayout.Button("Clipboard Individual")) choiceData.choice = Choice.ElementTemplate;
                     GUI.backgroundColor = originalColor;
-                    if (GUILayout.Button("Clipboard For-Loop")) choice = Choice.ForLoopTemplate;
+                    if (GUILayout.Button("Clipboard For-Loop")) choiceData.choice = Choice.ForLoopTemplate;
                 }
-                if (GUILayout.Button("Create Full Code File")) choice = Choice.FileTemplate;
+                if (GUILayout.Button("Create Full Code File")) choiceData.choice = Choice.FileTemplate;
             }
+            return choiceData;
         }
 
         public static void ElementDestroy(GameObject gameObject, Object o)
@@ -550,7 +559,7 @@ namespace MoonlitSystem.Editors
         private GameObject m_ThisObjRef;
         private void OnEnable() => m_ThisObjRef = ((ElementButton)target).gameObject;
         private void OnDestroy() => ElementDestroy(m_ThisObjRef, target);
-        public override void OnInspectorGUI() => Builder.HandleUserChoice(RenderUserSelections(targets, ref isIDOptionsExpanded), targets, GetType());
+        public override void OnInspectorGUI() => Builder.HandleUserChoice(targets, GetType(), RenderUserSelections(targets, ref isIDOptionsExpanded));
     }
 
     [CustomEditor(typeof(ElementImage), true)]
@@ -561,7 +570,7 @@ namespace MoonlitSystem.Editors
         private GameObject m_ThisObjRef;
         private void OnEnable() => m_ThisObjRef = ((ElementImage)target).gameObject;
         private void OnDestroy() => ElementDestroy(m_ThisObjRef, target);
-        public override void OnInspectorGUI() => Builder.HandleUserChoice(RenderUserSelections(targets, ref isIDOptionsExpanded), targets, GetType());
+        public override void OnInspectorGUI() => Builder.HandleUserChoice(targets, GetType(), RenderUserSelections(targets, ref isIDOptionsExpanded));
     }
 
     [CustomEditor(typeof(ElementToggle), true)]
@@ -572,7 +581,7 @@ namespace MoonlitSystem.Editors
         private GameObject m_ThisObjRef;
         private void OnEnable() => m_ThisObjRef = ((ElementToggle)target).gameObject;
         private void OnDestroy() => ElementDestroy(m_ThisObjRef, target);
-        public override void OnInspectorGUI() => Builder.HandleUserChoice(RenderUserSelections(targets, ref isIDOptionsExpanded), targets, GetType());
+        public override void OnInspectorGUI() => Builder.HandleUserChoice(targets, GetType(), RenderUserSelections(targets, ref isIDOptionsExpanded));
     }
 
     [CustomEditor(typeof(ElementDragDrop), true)]
@@ -583,7 +592,7 @@ namespace MoonlitSystem.Editors
         private GameObject m_ThisObjRef;
         private void OnEnable() => m_ThisObjRef = ((ElementDragDrop)target).gameObject;
         private void OnDestroy() => ElementDestroy(m_ThisObjRef, target);
-        public override void OnInspectorGUI() => Builder.HandleUserChoice(RenderUserSelections(targets, ref isIDOptionsExpanded), targets, GetType());
+        public override void OnInspectorGUI() => Builder.HandleUserChoice(targets, GetType(), RenderUserSelections(targets, ref isIDOptionsExpanded));
     }
 
     [CustomEditor(typeof(ElementText), true)]
@@ -594,7 +603,7 @@ namespace MoonlitSystem.Editors
         private GameObject m_ThisObjRef;
         private void OnEnable() => m_ThisObjRef = ((ElementText)target).gameObject;
         private void OnDestroy() => ElementDestroy(m_ThisObjRef, target);
-        public override void OnInspectorGUI() => Builder.HandleUserChoice(RenderUserSelections(targets, ref isIDOptionsExpanded), targets, GetType());
+        public override void OnInspectorGUI() => Builder.HandleUserChoice(targets, GetType(), RenderUserSelections(targets, ref isIDOptionsExpanded));
     }
 
     [CustomEditor(typeof(ElementInputField), true)]
@@ -605,7 +614,7 @@ namespace MoonlitSystem.Editors
         private GameObject m_ThisObjRef;
         private void OnEnable() => m_ThisObjRef = ((ElementInputField)target).gameObject;
         private void OnDestroy() => ElementDestroy(m_ThisObjRef, target);
-        public override void OnInspectorGUI() => Builder.HandleUserChoice(RenderUserSelections(targets, ref isIDOptionsExpanded), targets, GetType());
+        public override void OnInspectorGUI() => Builder.HandleUserChoice(targets, GetType(), RenderUserSelections(targets, ref isIDOptionsExpanded));
     }
 
     [CustomEditor(typeof(ElementSlider), true)]
@@ -616,7 +625,7 @@ namespace MoonlitSystem.Editors
         private GameObject m_ThisObjRef;
         private void OnEnable() => m_ThisObjRef = ((ElementSlider)target).gameObject;
         private void OnDestroy() => ElementDestroy(m_ThisObjRef, target);
-        public override void OnInspectorGUI() => Builder.HandleUserChoice(RenderUserSelections(targets, ref isIDOptionsExpanded), targets, GetType());
+        public override void OnInspectorGUI() => Builder.HandleUserChoice(targets, GetType(), RenderUserSelections(targets, ref isIDOptionsExpanded));
     }
 
     [CustomEditor(typeof(ElementDropdown), true)]
@@ -627,7 +636,7 @@ namespace MoonlitSystem.Editors
         private GameObject m_ThisObjRef;
         private void OnEnable() => m_ThisObjRef = ((ElementDropdown)target).gameObject;
         private void OnDestroy() => ElementDestroy(m_ThisObjRef, target);
-        public override void OnInspectorGUI() => Builder.HandleUserChoice(RenderUserSelections(targets, ref isIDOptionsExpanded), targets, GetType());
+        public override void OnInspectorGUI() => Builder.HandleUserChoice(targets, GetType(), RenderUserSelections(targets, ref isIDOptionsExpanded));
     }
 
     [CustomEditor(typeof(ElementCanvasGroup), true)]
@@ -642,10 +651,10 @@ namespace MoonlitSystem.Editors
 
         public override void OnInspectorGUI()
         {
-            var choice = RenderCanvasGroupUserSelections(targets, ref isIDOptionsExpanded, ref isChildrenExpanded);
-            Builder.HandleUserChoice(choice, targets, GetType());
+            var choiceData = RenderCanvasGroupUserSelections(targets, ref isIDOptionsExpanded, ref isChildrenExpanded);
+            Builder.HandleUserChoice(targets, GetType(), choiceData);
             // Falls out and handles additional CanvasGroup only choices here (yea got lazy)
-            switch (choice) {
+            switch (choiceData.choice) {
                 case Choice.FileTemplate: CreateFileTemplate(); break;
                 case Choice.ElementTemplate: CreateTemplate(false); break;
                 case Choice.ForLoopTemplate: CreateTemplate(true); break;
@@ -845,10 +854,10 @@ namespace MoonlitSystem.Editors
 
         public override void OnInspectorGUI()
         {
-            var choice = RenderCanvas_JustCanvas_UserSelections(ref isIDOptionsExpanded, ref isChildrenExpanded);
-            Builder.HandleUserChoice(choice, targets, GetType());
+            var choiceData = RenderCanvas_JustCanvas_UserSelections(ref isIDOptionsExpanded, ref isChildrenExpanded);
+            Builder.HandleUserChoice(targets, GetType(), choiceData);
             // Falls out and handles additional CanvasGroup only choices here (yea got lazy)
-            switch (choice) {
+            switch (choiceData.choice) {
                 case Choice.FileTemplate: CreateFileTemplate(); break;
                 case Choice.ElementTemplate: CreateTemplate(false); break;
                 case Choice.ForLoopTemplate: CreateTemplate(true); break;
@@ -1035,7 +1044,7 @@ namespace MoonlitSystem.Editors
     public class ReferenceEditor : Editor
     {
         private bool isIDOptionsExpanded = false;
-        public override void OnInspectorGUI() => Builder.HandleUserChoice(RenderUserSelections(targets, ref isIDOptionsExpanded), targets, GetType());
+        public override void OnInspectorGUI() => Builder.HandleUserChoice(targets, GetType(), RenderUserSelections(targets, ref isIDOptionsExpanded));
     }
 
     public enum RootMappingChoice { UseRandomForID = 1, UseGameObjectNameForID, UseSiblingIndexForID }
