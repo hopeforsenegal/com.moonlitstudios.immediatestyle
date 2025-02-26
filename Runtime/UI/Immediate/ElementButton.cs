@@ -35,7 +35,7 @@ namespace MoonlitSystem.UI.Immediate
 
         protected void OnValidate()
         {
-            Debug.Assert(GetComponent<Button>() != null, "UIBehaviour was not set", this);
+            Debug.Assert(GetComponent<Button>() != null, $"{nameof(Button)} was not set on {name}", this);
         }
 
         protected void Start()

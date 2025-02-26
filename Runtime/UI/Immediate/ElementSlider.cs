@@ -19,7 +19,7 @@ namespace MoonlitSystem.UI.Immediate
         protected void OnValidate()
         {
             var behaviour = GetComponent<Slider>();
-            Debug.Assert(behaviour != null, $"{nameof(behaviour)} was not set", this);
+            Debug.Assert(behaviour != null, $"{nameof(Slider)} was not set on {name}", this);
         }
 
         protected void Start()

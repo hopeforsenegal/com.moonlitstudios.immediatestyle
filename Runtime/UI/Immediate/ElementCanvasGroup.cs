@@ -17,7 +17,7 @@ namespace MoonlitSystem.UI.Immediate
         protected void OnValidate()
         {
             var behaviour = GetComponent<CanvasGroup>();
-            Debug.Assert(behaviour != null, $"{nameof(behaviour)} was not set", this);
+            Debug.Assert(behaviour != null, $"{nameof(CanvasGroup)} was not set on {name}", this);
         }
 
         protected void Start()

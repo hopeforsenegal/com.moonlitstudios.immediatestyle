@@ -22,7 +22,7 @@ namespace MoonlitSystem.UI.Immediate
         protected void OnValidate()
         {
             var behaviour = GetComponent<Image>();
-            Debug.Assert(behaviour != null, $"{nameof(behaviour)} was not set", this);
+            Debug.Assert(behaviour != null, $"{nameof(Image)} was not set on {name}", this);
         }
 
         protected void Start()

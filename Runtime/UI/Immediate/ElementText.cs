@@ -32,7 +32,7 @@ namespace MoonlitSystem.UI.Immediate
             Debug.Assert(behaviour != null || behaviour2 != null, $"{nameof(behaviour)} was not set", this);
 #else
             var behaviour = GetComponent<Text>();
-            Debug.Assert(behaviour != null, $"{nameof(behaviour)} was not set", this);
+            Debug.Assert(behaviour != null, $"{nameof(Text)} was not set on {name}", this);
 #endif
         }
 
