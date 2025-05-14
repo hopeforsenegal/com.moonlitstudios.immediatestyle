@@ -199,6 +199,16 @@ namespace MoonlitSystem.UI.Immediate
             return new ToggleData { IsOn = isOn, IsClicked = isClicked };
         }
 
+        public static void FocusToggle(string id)
+        {
+            var hasElement = Instance.m_InteractToggles.TryGetValue(id, out var element);
+            Debug.Assert(hasElement, !hasElement ? $"{id} is not mapped. Did start get called? Does the caller need a root id?" : "");
+            if (hasElement)
+            {
+                element.UIBehaviour.Select();
+            }
+        }
+
         // |Special caveat compared to the other UI elements|
         // Instead of rendering, this is about simulation.
         // So frames where this isn't called means that the Gameobject doesn't follow the cursor
