@@ -56,7 +56,7 @@ for (var i = 0; i < unique_guid_list.Length; i++) {
 }
 
 // Other times we can use a RootMapping to allow all guids to be the same 
-// but differ by a predetermined prefix
+// but differ by a predetermined prefix (Great for times where you might have things in a prefab)
 var prefix = "prefix";
 const int number_of_same_count = 10;
 for (var i = 0; i < number_of_same_count; i++) {

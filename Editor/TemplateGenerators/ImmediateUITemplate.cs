@@ -240,8 +240,8 @@ if(component.IsDragging) ImmediateStyle.FollowCursor(component.transform);
                 if (string.IsNullOrWhiteSpace(build.RootMapping_ID)) {
                     code = code.Replace("{forloopstart}", @"
 // This code gen snippet requires a RootMapping component in order to reuse the same GUID.
-// This comment is here because you do no currently have a RootMapping component attached (so if you intended to, this is your reminder!).
-// Read Loop.cs for more info on different ways of looping incase you are actually intending to loop a different way.
+// This comment is here because you do not currently have a RootMapping component attached (so if you intended to, this is your reminder!).
+// Read *For Loop* example in the 'Control Structures' ReadMe for more info on different ways of looping incase you are actually intending to loop a different way.
 for (int i = 0; i < max; i++) {");
                 } else {
                     code = code.Replace("{forloopstart}", @"for (int i = 0; i < max; i++) {");
