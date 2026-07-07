@@ -83,6 +83,8 @@ namespace MoonlitSystem.UI.Immediate
         // from our typical 'auto update' of
         // the fields (alpha|blocksRaycasts|interactable) on
         // the Canvas Group (which normally happens in LateUpdate)
+        //
+        // TODO: investigate if this can just use a SetAlpha method instead since that could also be LateUpdate aware
         public delegate void UpdateCanvasGroupVisibilityFields(CanvasGroup canvasGroup);
         public static void CanvasGroup(string id, UpdateCanvasGroupVisibilityFields updateCanvasGroupInLateUpdate)
         {
