@@ -16,11 +16,13 @@ namespace MoonlitSystem.UI.Immediate
             RootMapping = RootMapping.GetFirstParentOrAssert(this);
         }
 
+#if !NO_VALIDATION
         protected void OnValidate()
         {
             var behaviour = GetComponent<Slider>();
             Debug.Assert(behaviour != null, $"{nameof(Slider)} was not set on {name}", this);
         }
+#endif
 
         protected void Start()
         {

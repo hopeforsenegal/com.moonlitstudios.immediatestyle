@@ -19,11 +19,13 @@ namespace MoonlitSystem.UI.Immediate
             RootMapping = RootMapping.GetFirstParentOrAssert(this);
         }
 
+#if !NO_VALIDATION
         protected void OnValidate()
         {
             var behaviour = GetComponent<Dropdown>();
             Debug.Assert(behaviour != null, $"{nameof(Dropdown)} was not set on {name}", this);
         }
+#endif
 
         protected void Start()
         {

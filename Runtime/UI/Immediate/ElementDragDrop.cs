@@ -15,11 +15,13 @@ namespace MoonlitSystem.UI.Immediate
             RootMapping = RootMapping.GetFirstParentOrAssert(this);
         }
 
+#if !NO_VALIDATION
         protected void OnValidate()
         {
             var behaviour = GetComponent<DragDrop>();
             Debug.Assert(behaviour != null, $"{nameof(DragDrop)} was not set on {name}", this);
         }
+#endif
 
         protected void Start()
         {

@@ -14,11 +14,13 @@ namespace MoonlitSystem.UI.Immediate
             RootMapping = RootMapping.GetFirstParentOrAssert(this);
         }
 
+#if !NO_VALIDATION
         protected void OnValidate()
         {
             var behaviour = GetComponent<CanvasGroup>();
             Debug.Assert(behaviour != null, $"{nameof(CanvasGroup)} was not set on {name}", this);
         }
+#endif
 
         protected void Start()
         {

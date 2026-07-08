@@ -32,6 +32,7 @@ namespace MoonlitSystem.UI.Immediate
             RootMapping = RootMapping.GetFirstParentOrAssert(this);
         }
 
+#if !NO_VALIDATION
         protected void OnValidate()
         {
 #if TMP_PRESENT
@@ -43,6 +44,7 @@ namespace MoonlitSystem.UI.Immediate
             Debug.Assert(behaviour != null, $"{nameof(InputField)} was not set on {name}", this);
 #endif
         }
+#endif
 
         protected void Start()
         {

@@ -33,10 +33,12 @@ namespace MoonlitSystem.UI.Immediate
             RootMapping = RootMapping.GetFirstParentOrAssert(this);
         }
 
+#if !NO_VALIDATION
         protected void OnValidate()
         {
             Debug.Assert(GetComponent<Button>() != null, $"{nameof(Button)} was not set on {name}", this);
         }
+#endif
 
         protected void Start()
         {

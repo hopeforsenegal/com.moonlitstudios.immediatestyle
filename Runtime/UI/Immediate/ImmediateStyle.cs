@@ -443,6 +443,7 @@ namespace MoonlitSystem.UI.Immediate
             }
         }
 
+#if !NO_VALIDATION
         protected void OnValidate()
         {
             var allRoots = FindObjectsOfType<RootMapping>();
@@ -456,6 +457,7 @@ namespace MoonlitSystem.UI.Immediate
                 uniqueIds.Add(item.ID);
             }
         }
+#endif
 
         protected void OnDestroy()
         {

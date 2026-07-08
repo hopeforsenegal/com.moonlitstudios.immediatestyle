@@ -18,11 +18,13 @@ namespace MoonlitSystem.UI.Immediate
             RootMapping = RootMapping.GetFirstParentOrAssert(this);
         }
 
+#if !NO_VALIDATION
         protected void OnValidate()
         {
             var behaviour = GetComponent<Toggle>();
             Debug.Assert(behaviour != null, $"{nameof(Toggle)} was not set on {name}", this);
         }
+#endif
 
         protected void Start()
         {
