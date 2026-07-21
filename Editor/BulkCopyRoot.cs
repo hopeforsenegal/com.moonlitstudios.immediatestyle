@@ -14,7 +14,8 @@ namespace MoonlitSystem
         {
             DisplayWizard("Bulk Copy + RootMap", typeof(BulkCopyRoot));
         }
-        void OnWizardUpdate()
+
+        private void OnWizardUpdate()
         {
             helpString = "Duplicates the currently selected GameObject.";
 
@@ -34,9 +35,9 @@ namespace MoonlitSystem
             }
         }
 
-        void OnWizardCreate()
+        private void OnWizardCreate()
         {
-            GameObject original = Selection.activeGameObject;
+            var original = Selection.activeGameObject;
             original.name = $"({original.transform.GetSiblingIndex() + 1})";
             var parentName = original.transform.parent.name;
             var originalRootMapping = original.GetComponent<RootMapping>();
@@ -48,9 +49,9 @@ namespace MoonlitSystem
             originalRootMapping.ID = $"{parentName}_{originalRootMapping.transform.GetSiblingIndex()}";
             EditorUtility.SetDirty(originalRootMapping);
 
-            for (int i = 0; i < numberOfCopies; i++)
+            for (var i = 0; i < numberOfCopies; i++)
             {
-                GameObject copy = (GameObject)PrefabUtility.InstantiatePrefab(original);
+                var copy = (GameObject)PrefabUtility.InstantiatePrefab(original);
 
                 if (copy == null)
                 {

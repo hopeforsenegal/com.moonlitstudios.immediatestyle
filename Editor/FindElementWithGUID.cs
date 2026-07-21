@@ -23,14 +23,15 @@ namespace MoonlitSystem
             if (GUILayout.Button("Find and Ping")) {
                 var objectsWithCustomComponent = FindObjectsOfType<BaseEditorData>();
                 var foundObject = objectsWithCustomComponent
-                    .FirstOrDefault(obj => obj.ElementData.ID == searchString);
+                    .FirstOrDefault(predicate: obj => obj.ElementData.ID == searchString);
 
                 if (foundObject != null) {
-                    Selection.activeGameObject = foundObject.gameObject;
+                    var foundGO = foundObject.gameObject;
+                    Selection.activeGameObject = foundGO;
 
-                    EditorGUIUtility.PingObject(foundObject.gameObject);
+                    EditorGUIUtility.PingObject(foundGO);
 
-                    Debug.Log($"Found and pinged: {foundObject.gameObject.name}");
+                    Debug.Log($"Found and pinged: {foundGO.name}");
                 } else {
                     Debug.Log("No matching object found.");
                 }

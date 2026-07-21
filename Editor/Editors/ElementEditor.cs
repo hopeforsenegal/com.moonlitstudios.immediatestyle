@@ -474,7 +474,7 @@ namespace MoonlitSystem.Editors
 
         private static ChoiceData RenderCodeSnippet(Object[] targets)
         {
-            ChoiceData choiceData = ElementDataEditor.RenderRootmapAndGuid(targets);
+            var choiceData = ElementDataEditor.RenderRootmapAndGuid(targets);
             var originalColor = GUI.backgroundColor;
             GUI.backgroundColor = HighlightButton;
             if (GUILayout.Button("Clipboard Copy Code Snippet")) choiceData.choice = Choice.CopyCode;
