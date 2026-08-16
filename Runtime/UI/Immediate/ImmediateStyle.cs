@@ -19,8 +19,10 @@ namespace MoonlitSystem.UI.Immediate
                 // Buttons may or may not have an image. And the image might be a sibling or it might be a child.
                 // This code is specifically for sibling images. If we have a child image and not a sibling we should not crash
                 // And we can assume that this child would have its own immediate call to color in that scenario
-                if (element.Image && Instance.m_HasSetColor) {
-                    element.Image.color = Instance.m_Color;
+                if (element.Image) {
+                    if (Instance.m_HasSetColor) element.Image.color = Instance.m_Color;
+                    if (Instance.m_HasSetScale) element.Image.transform.localScale = Instance.m_Scale;
+                    if (Instance.m_HasSetRotation) element.Image.transform.localEulerAngles = CpyWithZ(element.Image.transform.localEulerAngles, Instance.m_Rotation);
                 }
                 return new ButtonData
                 {
@@ -44,8 +46,10 @@ namespace MoonlitSystem.UI.Immediate
                 // Buttons may or may not have an image. And the image might be a sibling or it might be a child.
                 // This code is specifically for sibling images. If we have a child image and not a sibling we should not crash
                 // And we can assume that this child would have its own immediate call to color in that scenario
-                if (element.Image && Instance.m_HasSetColor) {
-                    element.Image.color = Instance.m_Color;
+                if (element.Image) {
+                    if (Instance.m_HasSetColor) element.Image.color = Instance.m_Color;
+                    if (Instance.m_HasSetScale) element.Image.transform.localScale = Instance.m_Scale;
+                    if (Instance.m_HasSetRotation) element.Image.transform.localEulerAngles = CpyWithZ(element.Image.transform.localEulerAngles, Instance.m_Rotation);
                 }
                 return new ButtonData
                 {
@@ -103,8 +107,10 @@ namespace MoonlitSystem.UI.Immediate
             Debug.Assert(hasElement, !hasElement ? $"{id} is not mapped. Did start get called? Does the caller need a root id?" : "");
             if (hasElement) {
                 element.ElementData.MarkedForDisplay = true;
-                if (Instance.m_HasSetColor) {
-                    element.Image.color = Instance.m_Color;
+                if (element.Image) {
+                    if (Instance.m_HasSetColor) element.Image.color = Instance.m_Color;
+                    if (Instance.m_HasSetScale) element.Image.transform.localScale = Instance.m_Scale;
+                    if (Instance.m_HasSetRotation) element.Image.transform.localEulerAngles = CpyWithZ(element.Image.transform.localEulerAngles, Instance.m_Rotation);
                 }
             }
         }
@@ -118,8 +124,10 @@ namespace MoonlitSystem.UI.Immediate
             if (hasElement) {
                 element.ElementData.MarkedForDisplay = true;
                 element.Image.sprite = sprite;
-                if (Instance.m_HasSetColor) {
-                    element.Image.color = Instance.m_Color;
+                if (element.Image) {
+                    if (Instance.m_HasSetColor) element.Image.color = Instance.m_Color;
+                    if (Instance.m_HasSetScale) element.Image.transform.localScale = Instance.m_Scale;
+                    if (Instance.m_HasSetRotation) element.Image.transform.localEulerAngles = CpyWithZ(element.Image.transform.localEulerAngles, Instance.m_Rotation);
                 }
             }
         }
@@ -133,8 +141,10 @@ namespace MoonlitSystem.UI.Immediate
             if (hasElement) {
                 element.ElementData.MarkedForDisplay = true;
                 image = element.Image;
-                if (Instance.m_HasSetColor) {
-                    element.Image.color = Instance.m_Color;
+                if (element.Image) {
+                    if (Instance.m_HasSetColor) element.Image.color = Instance.m_Color;
+                    if (Instance.m_HasSetScale) element.Image.transform.localScale = Instance.m_Scale;
+                    if (Instance.m_HasSetRotation) element.Image.transform.localEulerAngles = CpyWithZ(element.Image.transform.localEulerAngles, Instance.m_Rotation);
                 }
             }
         }
@@ -155,6 +165,28 @@ namespace MoonlitSystem.UI.Immediate
                     element.Text.color = Instance.m_Color;
 #endif
                 }
+                if (Instance.m_HasSetScale) {
+#if TMP_PRESENT
+                    if (element.Text == null) {
+                        element.TextPro.transform.localScale = Instance.m_Scale;
+                    } else {
+                        element.Text.transform.localScale = Instance.m_Scale;
+                    }
+#else
+                    element.Text.transform.localScale = Instance.m_Scale;
+#endif
+                }
+                if (Instance.m_HasSetRotation) {
+#if TMP_PRESENT
+                    if (element.Text == null) {
+                        element.TextPro.transform.localEulerAngles = CpyWithZ(element.TextPro.transform.localEulerAngles, Instance.m_Rotation);
+                    } else {
+                        element.Text.transform.localEulerAngles = CpyWithZ(element.Text.transform.localEulerAngles, Instance.m_Rotation);
+                    }
+#else
+                    element.Text.transform.localEulerAngles = CpyWithZ(element.Text.transform.localEulerAngles, Instance.m_Rotation);
+#endif
+                }
             }
         }
 
@@ -170,16 +202,34 @@ namespace MoonlitSystem.UI.Immediate
                     if (Instance.m_HasSetColor) {
                         element.TextPro.color = Instance.m_Color;
                     }
+                    if (Instance.m_HasSetScale) {
+                        element.TextPro.transform.localScale = Instance.m_Scale;
+                    }
+                    if (Instance.m_HasSetRotation) {
+                        element.TextPro.transform.localEulerAngles = CpyWithZ(element.Text.transform.localEulerAngles, Instance.m_Rotation);
+                    }
                 } else {
                     element.Text.text = text;
                     if (Instance.m_HasSetColor) {
                         element.Text.color = Instance.m_Color;
+                    }
+                    if (Instance.m_HasSetScale) {
+                        element.Text.transform.localScale = Instance.m_Scale;
+                    }
+                    if (Instance.m_HasSetRotation) {
+                        element.Text.transform.localEulerAngles = CpyWithZ(element.Text.transform.localEulerAngles, Instance.m_Rotation);
                     }
                 }
 #else
                 element.Text.text = text;
                 if (Instance.m_HasSetColor) {
                     element.Text.color = Instance.m_Color;
+                }
+                if (Instance.m_HasSetScale) {
+                    element.Text.transform.localScale = Instance.m_Scale;
+                }
+                if (Instance.m_HasSetRotation) {
+                    element.Text.transform.localEulerAngles = CpyWithZ(element.Text.transform.localEulerAngles, Instance.m_Rotation);
                 }
 #endif
             }
@@ -205,8 +255,7 @@ namespace MoonlitSystem.UI.Immediate
         {
             var hasElement = Instance.m_InteractToggles.TryGetValue(id, out var element);
             Debug.Assert(hasElement, !hasElement ? $"{id} is not mapped. Did start get called? Does the caller need a root id?" : "");
-            if (hasElement)
-            {
+            if (hasElement) {
                 element.UIBehaviour.Select();
             }
         }
@@ -370,6 +419,31 @@ namespace MoonlitSystem.UI.Immediate
             Instance.m_Color = Color.white;
         }
 
+        public static void SetScale(Vector2 scale)
+        {
+            Instance.m_HasSetScale = true;
+            Instance.m_Scale = scale;
+        }
+
+        public static void ClearScale()
+        {
+            Instance.m_HasSetScale = false;
+            Instance.m_Scale = Vector2.one;
+        }
+
+
+        public static void SetRotation(float rotation)
+        {
+            Instance.m_HasSetRotation = true;
+            Instance.m_Rotation = rotation;
+        }
+
+        public static void ClearRotation()
+        {
+            Instance.m_HasSetRotation = false;
+            Instance.m_Rotation = 0;
+        }
+
         // ReSharper disable NotAccessedField.Global
         public struct ButtonData
         {
@@ -425,6 +499,10 @@ namespace MoonlitSystem.UI.Immediate
         private readonly HashSet<string> m_RootMappings = new HashSet<string>();
         private bool m_HasSetColor;
         private Color m_Color;
+        private bool m_HasSetScale;
+        private Vector2 m_Scale;
+        private bool m_HasSetRotation;
+        private float m_Rotation;
 
         private static ImmediateStyle Instance
         {

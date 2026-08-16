@@ -5,6 +5,7 @@ using System.IO;
 using System.Text;
 using UnityEditor;
 using UnityEngine;
+// ReSharper disable StringLiteralTypo
 
 namespace MoonlitSystem.TemplateGenerators
 {
