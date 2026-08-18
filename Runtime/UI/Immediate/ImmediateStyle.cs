@@ -23,6 +23,7 @@ namespace MoonlitSystem.UI.Immediate
                     if (Instance.m_HasSetColor) element.Image.color = Instance.m_Color;
                     if (Instance.m_HasSetScale) element.Image.transform.localScale = Instance.m_Scale;
                     if (Instance.m_HasSetRotation) element.Image.transform.localEulerAngles = CpyWithZ(element.Image.transform.localEulerAngles, Instance.m_Rotation);
+                    if (Instance.m_HasSetLocalPosition) element.Image.transform.localPosition = Instance.m_LocalPosition;
                 }
                 return new ButtonData
                 {
@@ -50,6 +51,7 @@ namespace MoonlitSystem.UI.Immediate
                     if (Instance.m_HasSetColor) element.Image.color = Instance.m_Color;
                     if (Instance.m_HasSetScale) element.Image.transform.localScale = Instance.m_Scale;
                     if (Instance.m_HasSetRotation) element.Image.transform.localEulerAngles = CpyWithZ(element.Image.transform.localEulerAngles, Instance.m_Rotation);
+                    if (Instance.m_HasSetLocalPosition) element.Image.transform.localPosition = Instance.m_LocalPosition;
                 }
                 return new ButtonData
                 {
@@ -111,6 +113,7 @@ namespace MoonlitSystem.UI.Immediate
                     if (Instance.m_HasSetColor) element.Image.color = Instance.m_Color;
                     if (Instance.m_HasSetScale) element.Image.transform.localScale = Instance.m_Scale;
                     if (Instance.m_HasSetRotation) element.Image.transform.localEulerAngles = CpyWithZ(element.Image.transform.localEulerAngles, Instance.m_Rotation);
+                    if (Instance.m_HasSetLocalPosition) element.Image.transform.localPosition = Instance.m_LocalPosition;
                 }
             }
         }
@@ -128,6 +131,7 @@ namespace MoonlitSystem.UI.Immediate
                     if (Instance.m_HasSetColor) element.Image.color = Instance.m_Color;
                     if (Instance.m_HasSetScale) element.Image.transform.localScale = Instance.m_Scale;
                     if (Instance.m_HasSetRotation) element.Image.transform.localEulerAngles = CpyWithZ(element.Image.transform.localEulerAngles, Instance.m_Rotation);
+                    if (Instance.m_HasSetLocalPosition) element.Image.transform.localPosition = Instance.m_LocalPosition;
                 }
             }
         }
@@ -145,6 +149,7 @@ namespace MoonlitSystem.UI.Immediate
                     if (Instance.m_HasSetColor) element.Image.color = Instance.m_Color;
                     if (Instance.m_HasSetScale) element.Image.transform.localScale = Instance.m_Scale;
                     if (Instance.m_HasSetRotation) element.Image.transform.localEulerAngles = CpyWithZ(element.Image.transform.localEulerAngles, Instance.m_Rotation);
+                    if (Instance.m_HasSetLocalPosition) element.Image.transform.localPosition = Instance.m_LocalPosition;
                 }
             }
         }
@@ -187,6 +192,17 @@ namespace MoonlitSystem.UI.Immediate
                     element.Text.transform.localEulerAngles = CpyWithZ(element.Text.transform.localEulerAngles, Instance.m_Rotation);
 #endif
                 }
+                if (Instance.m_HasSetLocalPosition) {
+#if TMP_PRESENT
+                    if (element.Text == null) {
+                        element.TextPro.transform.localEulerAngles = Instance.m_LocalPosition;
+                    } else {
+                        element.Text.transform.localEulerAngles = Instance.m_LocalPosition;
+                    }
+#else
+                    element.Text.transform.localPosition = Instance.m_LocalPosition;
+#endif
+                }
             }
         }
 
@@ -208,6 +224,9 @@ namespace MoonlitSystem.UI.Immediate
                     if (Instance.m_HasSetRotation) {
                         element.TextPro.transform.localEulerAngles = CpyWithZ(element.Text.transform.localEulerAngles, Instance.m_Rotation);
                     }
+                    if (Instance.m_HasSetLocalPosition) {
+                        element.TextPro.transform.localPosition = Instance.m_LocalPosition;
+                    }
                 } else {
                     element.Text.text = text;
                     if (Instance.m_HasSetColor) {
@@ -218,6 +237,9 @@ namespace MoonlitSystem.UI.Immediate
                     }
                     if (Instance.m_HasSetRotation) {
                         element.Text.transform.localEulerAngles = CpyWithZ(element.Text.transform.localEulerAngles, Instance.m_Rotation);
+                    }
+                    if (Instance.m_HasSetLocalPosition) {
+                        element.Text.transform.localPosition = Instance.m_LocalPosition;
                     }
                 }
 #else
@@ -230,6 +252,9 @@ namespace MoonlitSystem.UI.Immediate
                 }
                 if (Instance.m_HasSetRotation) {
                     element.Text.transform.localEulerAngles = CpyWithZ(element.Text.transform.localEulerAngles, Instance.m_Rotation);
+                }
+                if (Instance.m_HasSetLocalPosition) {
+                    element.Text.transform.localPosition = Instance.m_LocalPosition;
                 }
 #endif
             }
@@ -419,7 +444,7 @@ namespace MoonlitSystem.UI.Immediate
             Instance.m_Color = Color.white;
         }
 
-        public static void SetScale(Vector2 scale)
+        public static void SetScale(Vector3 scale)
         {
             Instance.m_HasSetScale = true;
             Instance.m_Scale = scale;
@@ -428,7 +453,7 @@ namespace MoonlitSystem.UI.Immediate
         public static void ClearScale()
         {
             Instance.m_HasSetScale = false;
-            Instance.m_Scale = Vector2.one;
+            Instance.m_Scale = Vector3.one;
         }
 
 
@@ -442,6 +467,18 @@ namespace MoonlitSystem.UI.Immediate
         {
             Instance.m_HasSetRotation = false;
             Instance.m_Rotation = 0;
+        }
+
+        public static void SetLocalPosition(Vector3 localPosition)
+        {
+            Instance.m_HasSetLocalPosition = true;
+            Instance.m_LocalPosition = localPosition;
+        }
+
+        public static void ClearLocalPosition()
+        {
+            Instance.m_HasSetLocalPosition = false;
+            Instance.m_LocalPosition = Vector3.zero;
         }
 
         // ReSharper disable NotAccessedField.Global
@@ -500,9 +537,11 @@ namespace MoonlitSystem.UI.Immediate
         private bool m_HasSetColor;
         private Color m_Color;
         private bool m_HasSetScale;
-        private Vector2 m_Scale;
+        private Vector3 m_Scale;
         private bool m_HasSetRotation;
         private float m_Rotation;
+        private bool m_HasSetLocalPosition;
+        private Vector3 m_LocalPosition;
 
         private static ImmediateStyle Instance
         {
