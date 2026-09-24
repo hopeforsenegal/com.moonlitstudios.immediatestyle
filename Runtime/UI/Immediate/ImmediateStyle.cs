@@ -30,6 +30,7 @@ namespace MoonlitSystem.UI.Immediate
                     IsMouseDown = element.IsMouseDown,
                     IsMousePressed = element.IsMousePressed,
                     IsMouseHovering = element.IsHovering || element.IsSelect,
+                    IsMouseEnter = element.IsHoverEnter,
                     IsMouseUp = element.IsMouseUp,
                 };
             }
@@ -58,6 +59,7 @@ namespace MoonlitSystem.UI.Immediate
                     IsMouseDown = element.IsMouseDown,
                     IsMousePressed = element.IsMousePressed,
                     IsMouseHovering = element.IsHovering || element.IsSelect,
+                    IsMouseEnter = element.IsHoverEnter,
                     IsMouseUp = element.IsMouseUp,
                 };
             }
@@ -99,6 +101,7 @@ namespace MoonlitSystem.UI.Immediate
             if (hasElement) {
                 element.ElementData.MarkedForDisplay = true;
                 element.ElementData.UpdateCanvasGroupInLateUpdate = updateCanvasGroupInLateUpdate;
+                if (Instance.m_HasSetLocalPosition) element.transform.localPosition = Instance.m_LocalPosition;
             }
         }
 
@@ -484,6 +487,7 @@ namespace MoonlitSystem.UI.Immediate
         // ReSharper disable NotAccessedField.Global
         public struct ButtonData
         {
+            public bool IsMouseEnter { get; internal set; }
             public bool IsMouseHovering { get; internal set; }
             public bool IsMouseDown { get; internal set; }
             public bool IsMousePressed { get; internal set; }
@@ -602,6 +606,7 @@ namespace MoonlitSystem.UI.Immediate
 
                 entry.Value.ElementData.MarkedForDisplay = false;
                 entry.Value.IsMouseDown = false;
+                entry.Value.IsHoverEnter = false;
                 entry.Value.IsMouseUp = false;
             }
             foreach (var entry in m_InteractCanvasGroups) {

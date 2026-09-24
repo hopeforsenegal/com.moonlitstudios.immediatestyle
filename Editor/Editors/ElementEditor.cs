@@ -665,17 +665,17 @@ namespace MoonlitSystem.Editors
         {
             var element = (ElementCanvasGroup)target;
             ImmediateUITemplate.BuildParams buildParams = default;
-            buildParams.RootCanvasGroup.GameObject_Name = element.name;
-            buildParams.RootCanvasGroup.Element_ID = element.ElementData.ID;
-            buildParams.RootMapping_ID = element.GetComponent<RootMapping>() != null ? element.GetComponent<RootMapping>().ID : string.Empty;
-            buildParams.ForLoop = isForLoop;
+            buildParams.rootCanvasGroup.GameObject_Name = element.name;
+            buildParams.rootCanvasGroup.Element_ID = element.ElementData.ID;
+            buildParams.rootMappingID = element.GetComponent<RootMapping>() != null ? element.GetComponent<RootMapping>().ID : string.Empty;
+            buildParams.forLoop = isForLoop;
             {
                 var elements = element.GetComponentsInChildren<ElementText>();
                 var elementInfo = new List<ImmediateUITemplate.ElementInfo>();
                 foreach (var t in elements) {
                     elementInfo.Add(new ImmediateUITemplate.ElementInfo { GameObject_Name = t.name, Element_ID = t.ElementData.ID });
                 }
-                buildParams.Texts = elementInfo.ToArray();
+                buildParams.texts = elementInfo.ToArray();
             }
             {
                 var elements = element.GetComponentsInChildren<ElementImage>();
@@ -683,7 +683,7 @@ namespace MoonlitSystem.Editors
                 foreach (var t in elements) {
                     elementInfo.Add(new ImmediateUITemplate.ElementInfo { GameObject_Name = t.name, Element_ID = t.ElementData.ID });
                 }
-                buildParams.Images = elementInfo.ToArray();
+                buildParams.images = elementInfo.ToArray();
             }
             {
                 var elements = element.GetComponentsInChildren<ElementCanvasGroup>();
@@ -696,7 +696,7 @@ namespace MoonlitSystem.Editors
                 foreach (var t in elements) {
                     elementInfo.Add(new ImmediateUITemplate.ElementInfo { GameObject_Name = t.name, Element_ID = t.ElementData.ID });
                 }
-                buildParams.CanvasGroups = elementInfo.ToArray();
+                buildParams.canvasGroups = elementInfo.ToArray();
             }
             {
                 var elements = element.GetComponentsInChildren<ElementButton>();
@@ -704,7 +704,7 @@ namespace MoonlitSystem.Editors
                 foreach (var t in elements) {
                     elementInfo.Add(new ImmediateUITemplate.ElementInfo { GameObject_Name = t.name, Element_ID = t.ElementData.ID });
                 }
-                buildParams.Buttons = elementInfo.ToArray();
+                buildParams.buttons = elementInfo.ToArray();
             }
             {
                 var elements = element.GetComponentsInChildren<ElementToggle>();
@@ -712,7 +712,7 @@ namespace MoonlitSystem.Editors
                 foreach (var t in elements) {
                     elementInfo.Add(new ImmediateUITemplate.ElementInfo { GameObject_Name = t.name, Element_ID = t.ElementData.ID });
                 }
-                buildParams.Toggles = elementInfo.ToArray();
+                buildParams.toggles = elementInfo.ToArray();
             }
             {
                 var elements = element.GetComponentsInChildren<ElementSlider>();
@@ -720,7 +720,7 @@ namespace MoonlitSystem.Editors
                 foreach (var t in elements) {
                     elementInfo.Add(new ImmediateUITemplate.ElementInfo { GameObject_Name = t.name, Element_ID = t.ElementData.ID });
                 }
-                buildParams.Sliders = elementInfo.ToArray();
+                buildParams.sliders = elementInfo.ToArray();
             }
             {
                 var elements = element.GetComponentsInChildren<ElementDragDrop>();
@@ -728,7 +728,7 @@ namespace MoonlitSystem.Editors
                 foreach (var t in elements) {
                     elementInfo.Add(new ImmediateUITemplate.ElementInfo { GameObject_Name = t.name, Element_ID = t.ElementData.ID });
                 }
-                buildParams.DragDrops = elementInfo.ToArray();
+                buildParams.dragDrops = elementInfo.ToArray();
             }
             {
                 var elements = element.GetComponentsInChildren<ElementDropdown>();
@@ -736,7 +736,7 @@ namespace MoonlitSystem.Editors
                 foreach (var t in elements) {
                     elementInfo.Add(new ImmediateUITemplate.ElementInfo { GameObject_Name = t.name, Element_ID = t.ElementData.ID });
                 }
-                buildParams.Dropdowns = elementInfo.ToArray();
+                buildParams.dropdowns = elementInfo.ToArray();
             }
             {
                 var elements = element.GetComponentsInChildren<ElementInputField>();
@@ -744,7 +744,7 @@ namespace MoonlitSystem.Editors
                 foreach (var t in elements) {
                     elementInfo.Add(new ImmediateUITemplate.ElementInfo { GameObject_Name = t.name, Element_ID = t.ElementData.ID });
                 }
-                buildParams.InputFields = elementInfo.ToArray();
+                buildParams.inputFields = elementInfo.ToArray();
             }
 
             var code = ImmediateUITemplate.BuildString(buildParams, ImmediateUITemplate.Name.ElementsExtension);
@@ -756,16 +756,16 @@ namespace MoonlitSystem.Editors
         {
             var element = (ElementCanvasGroup)target;
             ImmediateUITemplate.BuildParams buildParams = default;
-            buildParams.RootCanvasGroup.GameObject_Name = element.name;
-            buildParams.RootCanvasGroup.Element_ID = element.ElementData.ID;
-            buildParams.RootMapping_ID = element.GetComponent<RootMapping>() != null ? element.GetComponent<RootMapping>().ID : string.Empty;
+            buildParams.rootCanvasGroup.GameObject_Name = element.name;
+            buildParams.rootCanvasGroup.Element_ID = element.ElementData.ID;
+            buildParams.rootMappingID = element.GetComponent<RootMapping>() != null ? element.GetComponent<RootMapping>().ID : string.Empty;
             {
                 var elements = element.GetComponentsInChildren<ElementText>();
                 var elementInfo = new List<ImmediateUITemplate.ElementInfo>();
                 foreach (var t in elements) {
                     elementInfo.Add(new ImmediateUITemplate.ElementInfo { GameObject_Name = t.name, Element_ID = t.ElementData.ID });
                 }
-                buildParams.Texts = elementInfo.ToArray();
+                buildParams.texts = elementInfo.ToArray();
             }
             {
                 var elements = element.GetComponentsInChildren<ElementImage>();
@@ -773,7 +773,7 @@ namespace MoonlitSystem.Editors
                 foreach (var t in elements) {
                     elementInfo.Add(new ImmediateUITemplate.ElementInfo { GameObject_Name = t.name, Element_ID = t.ElementData.ID });
                 }
-                buildParams.Images = elementInfo.ToArray();
+                buildParams.images = elementInfo.ToArray();
             }
             {
                 var elements = element.GetComponentsInChildren<ElementCanvasGroup>();
@@ -786,7 +786,7 @@ namespace MoonlitSystem.Editors
                 foreach (var t in elements) {
                     elementInfo.Add(new ImmediateUITemplate.ElementInfo { GameObject_Name = t.name, Element_ID = t.ElementData.ID });
                 }
-                buildParams.CanvasGroups = elementInfo.ToArray();
+                buildParams.canvasGroups = elementInfo.ToArray();
             }
             {
                 var elements = element.GetComponentsInChildren<ElementButton>();
@@ -794,7 +794,7 @@ namespace MoonlitSystem.Editors
                 foreach (var t in elements) {
                     elementInfo.Add(new ImmediateUITemplate.ElementInfo { GameObject_Name = t.name, Element_ID = t.ElementData.ID });
                 }
-                buildParams.Buttons = elementInfo.ToArray();
+                buildParams.buttons = elementInfo.ToArray();
             }
             {
                 var elements = element.GetComponentsInChildren<ElementToggle>();
@@ -802,7 +802,7 @@ namespace MoonlitSystem.Editors
                 foreach (var t in elements) {
                     elementInfo.Add(new ImmediateUITemplate.ElementInfo { GameObject_Name = t.name, Element_ID = t.ElementData.ID });
                 }
-                buildParams.Toggles = elementInfo.ToArray();
+                buildParams.toggles = elementInfo.ToArray();
             }
             {
                 var elements = element.GetComponentsInChildren<ElementSlider>();
@@ -810,7 +810,7 @@ namespace MoonlitSystem.Editors
                 foreach (var t in elements) {
                     elementInfo.Add(new ImmediateUITemplate.ElementInfo { GameObject_Name = t.name, Element_ID = t.ElementData.ID });
                 }
-                buildParams.Sliders = elementInfo.ToArray();
+                buildParams.sliders = elementInfo.ToArray();
             }
             {
                 var elements = element.GetComponentsInChildren<ElementDragDrop>();
@@ -818,7 +818,7 @@ namespace MoonlitSystem.Editors
                 foreach (var t in elements) {
                     elementInfo.Add(new ImmediateUITemplate.ElementInfo { GameObject_Name = t.name, Element_ID = t.ElementData.ID });
                 }
-                buildParams.DragDrops = elementInfo.ToArray();
+                buildParams.dragDrops = elementInfo.ToArray();
             }
             {
                 var elements = element.GetComponentsInChildren<ElementDropdown>();
@@ -826,7 +826,7 @@ namespace MoonlitSystem.Editors
                 foreach (var t in elements) {
                     elementInfo.Add(new ImmediateUITemplate.ElementInfo { GameObject_Name = t.name, Element_ID = t.ElementData.ID });
                 }
-                buildParams.Dropdowns = elementInfo.ToArray();
+                buildParams.dropdowns = elementInfo.ToArray();
             }
             {
                 var elements = element.GetComponentsInChildren<ElementInputField>();
@@ -834,7 +834,7 @@ namespace MoonlitSystem.Editors
                 foreach (var t in elements) {
                     elementInfo.Add(new ImmediateUITemplate.ElementInfo { GameObject_Name = t.name, Element_ID = t.ElementData.ID });
                 }
-                buildParams.InputFields = elementInfo.ToArray();
+                buildParams.inputFields = elementInfo.ToArray();
             }
 
             ImmediateUITemplate.Build(buildParams);
@@ -868,17 +868,17 @@ namespace MoonlitSystem.Editors
         {
             var element = (ElementCanvas)target;
             ImmediateUITemplate.BuildParams buildParams = default;
-            buildParams.RootCanvasGroup.GameObject_Name = element.name;
-            buildParams.RootCanvasGroup.Element_ID = element.ElementData.ID;
-            buildParams.RootMapping_ID = element.GetComponent<RootMapping>() != null ? element.GetComponent<RootMapping>().ID : string.Empty;
-            buildParams.ForLoop = isForLoop;
+            buildParams.rootCanvasGroup.GameObject_Name = element.name;
+            buildParams.rootCanvasGroup.Element_ID = element.ElementData.ID;
+            buildParams.rootMappingID = element.GetComponent<RootMapping>() != null ? element.GetComponent<RootMapping>().ID : string.Empty;
+            buildParams.forLoop = isForLoop;
             {
                 var elements = element.GetComponentsInChildren<ElementText>();
                 var elementInfo = new List<ImmediateUITemplate.ElementInfo>();
                 foreach (var t in elements) {
                     elementInfo.Add(new ImmediateUITemplate.ElementInfo { GameObject_Name = t.name, Element_ID = t.ElementData.ID });
                 }
-                buildParams.Texts = elementInfo.ToArray();
+                buildParams.texts = elementInfo.ToArray();
             }
             {
                 var elements = element.GetComponentsInChildren<ElementImage>();
@@ -886,7 +886,7 @@ namespace MoonlitSystem.Editors
                 foreach (var t in elements) {
                     elementInfo.Add(new ImmediateUITemplate.ElementInfo { GameObject_Name = t.name, Element_ID = t.ElementData.ID });
                 }
-                buildParams.Images = elementInfo.ToArray();
+                buildParams.images = elementInfo.ToArray();
             }
             {
                 var elements = element.GetComponentsInChildren<ElementCanvasGroup>();
@@ -894,7 +894,7 @@ namespace MoonlitSystem.Editors
                 foreach (var t in elements) {
                     elementInfo.Add(new ImmediateUITemplate.ElementInfo { GameObject_Name = t.name, Element_ID = t.ElementData.ID });
                 }
-                buildParams.CanvasGroups = elementInfo.ToArray();
+                buildParams.canvasGroups = elementInfo.ToArray();
             }
             {
                 var elements = element.GetComponentsInChildren<ElementButton>();
@@ -902,7 +902,7 @@ namespace MoonlitSystem.Editors
                 foreach (var t in elements) {
                     elementInfo.Add(new ImmediateUITemplate.ElementInfo { GameObject_Name = t.name, Element_ID = t.ElementData.ID });
                 }
-                buildParams.Buttons = elementInfo.ToArray();
+                buildParams.buttons = elementInfo.ToArray();
             }
             {
                 var elements = element.GetComponentsInChildren<ElementToggle>();
@@ -910,7 +910,7 @@ namespace MoonlitSystem.Editors
                 foreach (var t in elements) {
                     elementInfo.Add(new ImmediateUITemplate.ElementInfo { GameObject_Name = t.name, Element_ID = t.ElementData.ID });
                 }
-                buildParams.Toggles = elementInfo.ToArray();
+                buildParams.toggles = elementInfo.ToArray();
             }
             {
                 var elements = element.GetComponentsInChildren<ElementSlider>();
@@ -918,7 +918,7 @@ namespace MoonlitSystem.Editors
                 foreach (var t in elements) {
                     elementInfo.Add(new ImmediateUITemplate.ElementInfo { GameObject_Name = t.name, Element_ID = t.ElementData.ID });
                 }
-                buildParams.Sliders = elementInfo.ToArray();
+                buildParams.sliders = elementInfo.ToArray();
             }
             {
                 var elements = element.GetComponentsInChildren<ElementDragDrop>();
@@ -926,7 +926,7 @@ namespace MoonlitSystem.Editors
                 foreach (var t in elements) {
                     elementInfo.Add(new ImmediateUITemplate.ElementInfo { GameObject_Name = t.name, Element_ID = t.ElementData.ID });
                 }
-                buildParams.DragDrops = elementInfo.ToArray();
+                buildParams.dragDrops = elementInfo.ToArray();
             }
             {
                 var elements = element.GetComponentsInChildren<ElementDropdown>();
@@ -934,7 +934,7 @@ namespace MoonlitSystem.Editors
                 foreach (var t in elements) {
                     elementInfo.Add(new ImmediateUITemplate.ElementInfo { GameObject_Name = t.name, Element_ID = t.ElementData.ID });
                 }
-                buildParams.Dropdowns = elementInfo.ToArray();
+                buildParams.dropdowns = elementInfo.ToArray();
             }
             {
                 var elements = element.GetComponentsInChildren<ElementInputField>();
@@ -942,7 +942,7 @@ namespace MoonlitSystem.Editors
                 foreach (var t in elements) {
                     elementInfo.Add(new ImmediateUITemplate.ElementInfo { GameObject_Name = t.name, Element_ID = t.ElementData.ID });
                 }
-                buildParams.InputFields = elementInfo.ToArray();
+                buildParams.inputFields = elementInfo.ToArray();
             }
 
             var code = ImmediateUITemplate.BuildString(buildParams, ImmediateUITemplate.Name.ElementsExtension);
@@ -954,16 +954,16 @@ namespace MoonlitSystem.Editors
         {
             var element = (ElementCanvasGroup)target;
             ImmediateUITemplate.BuildParams buildParams = default;
-            buildParams.RootCanvasGroup.GameObject_Name = element.name;
-            buildParams.RootCanvasGroup.Element_ID = element.ElementData.ID;
-            buildParams.RootMapping_ID = element.GetComponent<RootMapping>() != null ? element.GetComponent<RootMapping>().ID : string.Empty;
+            buildParams.rootCanvasGroup.GameObject_Name = element.name;
+            buildParams.rootCanvasGroup.Element_ID = element.ElementData.ID;
+            buildParams.rootMappingID = element.GetComponent<RootMapping>() != null ? element.GetComponent<RootMapping>().ID : string.Empty;
             {
                 var elements = element.GetComponentsInChildren<ElementText>();
                 var elementInfo = new List<ImmediateUITemplate.ElementInfo>();
                 foreach (var t in elements) {
                     elementInfo.Add(new ImmediateUITemplate.ElementInfo { GameObject_Name = t.name, Element_ID = t.ElementData.ID });
                 }
-                buildParams.Texts = elementInfo.ToArray();
+                buildParams.texts = elementInfo.ToArray();
             }
             {
                 var elements = element.GetComponentsInChildren<ElementImage>();
@@ -971,7 +971,7 @@ namespace MoonlitSystem.Editors
                 foreach (var t in elements) {
                     elementInfo.Add(new ImmediateUITemplate.ElementInfo { GameObject_Name = t.name, Element_ID = t.ElementData.ID });
                 }
-                buildParams.Images = elementInfo.ToArray();
+                buildParams.images = elementInfo.ToArray();
             }
             {
                 var elements = element.GetComponentsInChildren<ElementCanvasGroup>();
@@ -984,7 +984,7 @@ namespace MoonlitSystem.Editors
                 foreach (var t in elements) {
                     elementInfo.Add(new ImmediateUITemplate.ElementInfo { GameObject_Name = t.name, Element_ID = t.ElementData.ID });
                 }
-                buildParams.CanvasGroups = elementInfo.ToArray();
+                buildParams.canvasGroups = elementInfo.ToArray();
             }
             {
                 var elements = element.GetComponentsInChildren<ElementButton>();
@@ -992,7 +992,7 @@ namespace MoonlitSystem.Editors
                 foreach (var t in elements) {
                     elementInfo.Add(new ImmediateUITemplate.ElementInfo { GameObject_Name = t.name, Element_ID = t.ElementData.ID });
                 }
-                buildParams.Buttons = elementInfo.ToArray();
+                buildParams.buttons = elementInfo.ToArray();
             }
             {
                 var elements = element.GetComponentsInChildren<ElementToggle>();
@@ -1000,7 +1000,7 @@ namespace MoonlitSystem.Editors
                 foreach (var t in elements) {
                     elementInfo.Add(new ImmediateUITemplate.ElementInfo { GameObject_Name = t.name, Element_ID = t.ElementData.ID });
                 }
-                buildParams.Toggles = elementInfo.ToArray();
+                buildParams.toggles = elementInfo.ToArray();
             }
             {
                 var elements = element.GetComponentsInChildren<ElementSlider>();
@@ -1008,7 +1008,7 @@ namespace MoonlitSystem.Editors
                 foreach (var t in elements) {
                     elementInfo.Add(new ImmediateUITemplate.ElementInfo { GameObject_Name = t.name, Element_ID = t.ElementData.ID });
                 }
-                buildParams.Sliders = elementInfo.ToArray();
+                buildParams.sliders = elementInfo.ToArray();
             }
             {
                 var elements = element.GetComponentsInChildren<ElementDragDrop>();
@@ -1016,7 +1016,7 @@ namespace MoonlitSystem.Editors
                 foreach (var t in elements) {
                     elementInfo.Add(new ImmediateUITemplate.ElementInfo { GameObject_Name = t.name, Element_ID = t.ElementData.ID });
                 }
-                buildParams.DragDrops = elementInfo.ToArray();
+                buildParams.dragDrops = elementInfo.ToArray();
             }
             {
                 var elements = element.GetComponentsInChildren<ElementDropdown>();
@@ -1024,7 +1024,7 @@ namespace MoonlitSystem.Editors
                 foreach (var t in elements) {
                     elementInfo.Add(new ImmediateUITemplate.ElementInfo { GameObject_Name = t.name, Element_ID = t.ElementData.ID });
                 }
-                buildParams.Dropdowns = elementInfo.ToArray();
+                buildParams.dropdowns = elementInfo.ToArray();
             }
             {
                 var elements = element.GetComponentsInChildren<ElementInputField>();
@@ -1032,7 +1032,7 @@ namespace MoonlitSystem.Editors
                 foreach (var t in elements) {
                     elementInfo.Add(new ImmediateUITemplate.ElementInfo { GameObject_Name = t.name, Element_ID = t.ElementData.ID });
                 }
-                buildParams.InputFields = elementInfo.ToArray();
+                buildParams.inputFields = elementInfo.ToArray();
             }
 
             ImmediateUITemplate.Build(buildParams);

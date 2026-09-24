@@ -150,18 +150,18 @@ if(component.IsDragging) ImmediateStyle.FollowCursor(component.transform);
 
         public struct BuildParams
         {
-            public string RootMapping_ID;
-            public ElementInfo RootCanvasGroup;
-            public ElementInfo[] Buttons;
-            public ElementInfo[] Toggles;
-            public ElementInfo[] Texts;
-            public ElementInfo[] Images;
-            public ElementInfo[] Sliders;
-            public ElementInfo[] InputFields;
-            public ElementInfo[] DragDrops;
-            public ElementInfo[] Dropdowns;
-            public ElementInfo[] CanvasGroups;
-            internal bool ForLoop;
+            public string rootMappingID;
+            public ElementInfo rootCanvasGroup;
+            public ElementInfo[] buttons;
+            public ElementInfo[] toggles;
+            public ElementInfo[] texts;
+            public ElementInfo[] images;
+            public ElementInfo[] sliders;
+            public ElementInfo[] inputFields;
+            public ElementInfo[] dragDrops;
+            public ElementInfo[] dropdowns;
+            public ElementInfo[] canvasGroups;
+            internal bool forLoop;
         }
 
         public static string RemoveExtraNewLines(string code)
@@ -181,23 +181,23 @@ if(component.IsDragging) ImmediateStyle.FollowCursor(component.transform);
             var templatePath = Name.GetTemplatePackagePath($"{extension}.cs.tmpl");
             var code = File.ReadAllText(templatePath);
             {
-                code = code.Replace("{name}", Builder.CleanString(build.RootCanvasGroup.GameObject_Name));
+                code = code.Replace("{name}", Builder.CleanString(build.rootCanvasGroup.GameObject_Name));
             }
             {
                 var constantIds = "";
                 var constantIdsNoConst = "";
                 var settings = ImmediateStyleSettings.LoadInstance(); // load instance again for the 15th time :-/
                 var allData = new List<ElementInfo>();
-                allData.AddRange(build.Buttons);
-                allData.AddRange(build.Toggles);
-                allData.AddRange(build.Texts);
-                allData.AddRange(build.Images);
-                allData.AddRange(build.Sliders);
-                allData.AddRange(build.InputFields);
-                allData.AddRange(build.DragDrops);
-                allData.AddRange(build.Dropdowns);
-                allData.AddRange(build.CanvasGroups);
-                allData.Add(build.RootCanvasGroup);
+                allData.AddRange(build.buttons);
+                allData.AddRange(build.toggles);
+                allData.AddRange(build.texts);
+                allData.AddRange(build.images);
+                allData.AddRange(build.sliders);
+                allData.AddRange(build.inputFields);
+                allData.AddRange(build.dragDrops);
+                allData.AddRange(build.dropdowns);
+                allData.AddRange(build.canvasGroups);
+                allData.Add(build.rootCanvasGroup);
 
                 if (!settings.inlineClipboardGUIDS) {
                     foreach (var elementInfo in allData) {
@@ -216,29 +216,29 @@ if(component.IsDragging) ImmediateStyle.FollowCursor(component.transform);
                 var buttonNames = "";
                 buttonNames += Builder.BuildEvent("Open") + Environment.NewLine;
                 buttonNames += Builder.BuildEvent("Close") + Environment.NewLine;
-                foreach (var button in build.Buttons) {
+                foreach (var button in build.buttons) {
                     var gameObjectName = Builder.NameWithoutTypeOtherwiseJustType(button.GameObject_Name, "Button");
                     buttonNames += Builder.BuildEvent(gameObjectName) + Environment.NewLine;
                 }
                 code = code.Replace("{button_events}", buttonNames);
 
                 var toggleNames = "";
-                foreach (var toggle in build.Toggles) {
+                foreach (var toggle in build.toggles) {
                     var gameObjectName = Builder.NameWithoutTypeOtherwiseJustType(toggle.GameObject_Name, "Toggle");
                     toggleNames += Builder.BuildEvent(gameObjectName) + Environment.NewLine;
                 }
                 code = code.Replace("{toggle_events}", toggleNames);
 
                 var inputFieldNames = "";
-                foreach (var inputField in build.InputFields) {
+                foreach (var inputField in build.inputFields) {
                     var gameObjectName = Builder.NameWithoutTypeOtherwiseJustType(inputField.GameObject_Name, "InputField");
                     inputFieldNames += Builder.BuildEvent(gameObjectName) + Environment.NewLine;
                 }
                 code = code.Replace("{inputfield_events}", inputFieldNames);
             }
 
-            if (build.ForLoop) {
-                if (string.IsNullOrWhiteSpace(build.RootMapping_ID)) {
+            if (build.forLoop) {
+                if (string.IsNullOrWhiteSpace(build.rootMappingID)) {
                     code = code.Replace("{forloopstart}", @"
 // This code gen snippet requires a RootMapping component in order to reuse the same GUID.
 // This comment is here because you do not currently have a RootMapping component attached (so if you intended to, this is your reminder!).
@@ -254,28 +254,28 @@ for (int i = 0; i < max; i++) {");
             }
 
             var extraConstant = "";
-            if (!string.IsNullOrWhiteSpace(build.RootMapping_ID)) {
-                var elementRootMappingID = build.RootMapping_ID;
+            if (!string.IsNullOrWhiteSpace(build.rootMappingID)) {
+                var elementRootMappingID = build.rootMappingID;
                 while (elementRootMappingID.Length > 0 && char.IsDigit(elementRootMappingID[elementRootMappingID.Length - 1])) {
                     elementRootMappingID = elementRootMappingID.Remove(elementRootMappingID.Length - 1);
                 }
                 code = code.Replace("{has_root_mapping}", $"const string elementrootmapping =  \"{elementRootMappingID}\";");
 
                 extraConstant = "elementrootmapping + ";
-                if (build.ForLoop) extraConstant += "i + ";
+                if (build.forLoop) extraConstant += "i + ";
             } else {
                 code = code.Replace("{has_root_mapping}", string.Empty);
             }
 
             {
-                var constant = Builder.BuildConstantStatement(extraConstant, build.RootCanvasGroup.Element_ID);
+                var constant = Builder.BuildConstantStatement(extraConstant, build.rootCanvasGroup.Element_ID);
                 var elementStatement = Builder.BuildCanvasGroupStatement(constant);
                 code = code.Replace("{root_canvas_group}", elementStatement + Environment.NewLine);
             }
 
             {
                 var texts = "";
-                foreach (var text in build.CanvasGroups) {
+                foreach (var text in build.canvasGroups) {
                     var constant = Builder.BuildConstantStatement(extraConstant, text.Element_ID);
                     var elementStatement = Builder.BuildCanvasGroupStatement(constant);
                     texts += elementStatement + Environment.NewLine;
@@ -284,7 +284,7 @@ for (int i = 0; i < max; i++) {");
             }
             {
                 var texts = "";
-                foreach (var text in build.Texts) {
+                foreach (var text in build.texts) {
                     var constant = Builder.BuildConstantStatement(extraConstant, text.Element_ID);
                     var elementStatement = Builder.BuildTextStatement(constant);
                     texts += elementStatement + Environment.NewLine;
@@ -293,7 +293,7 @@ for (int i = 0; i < max; i++) {");
             }
             {
                 var images = "";
-                foreach (var image in build.Images) {
+                foreach (var image in build.images) {
                     var constant = Builder.BuildConstantStatement(extraConstant, image.Element_ID);
                     var elementStatement = Builder.BuildImageStatement(constant);
                     images += elementStatement + Environment.NewLine;
@@ -302,14 +302,14 @@ for (int i = 0; i < max; i++) {");
             }
             {
                 var buttons = "";
-                foreach (var button in build.Buttons) {
+                foreach (var button in build.buttons) {
                     var gameObjectName = Builder.NameWithoutTypeOtherwiseJustType(button.GameObject_Name, "Button");
-                    buttons += Builder.BuildButtonReadEvent(Builder.CleanString(build.RootCanvasGroup.GameObject_Name), button.Element_ID, gameObjectName) + Environment.NewLine;
+                    buttons += Builder.BuildButtonReadEvent(Builder.CleanString(build.rootCanvasGroup.GameObject_Name), button.Element_ID, gameObjectName) + Environment.NewLine;
                 }
                 code = code.Replace("{buttons}", buttons);
 
                 var buttonsNoEvent = "";
-                foreach (var button in build.Buttons) {
+                foreach (var button in build.buttons) {
                     var constant = Builder.BuildConstantStatement(extraConstant, button.Element_ID);
                     var buttonStatement = Builder.BuildButtonStatement(constant);
                     buttonStatement = buttonStatement.Replace(";", "");
@@ -321,14 +321,14 @@ for (int i = 0; i < max; i++) {");
             }
             {
                 var toggles = "";
-                foreach (var toggle in build.Toggles) {
+                foreach (var toggle in build.toggles) {
                     var gameObjectName = Builder.NameWithoutTypeOtherwiseJustType(toggle.GameObject_Name, "Toggle");
-                    toggles += Builder.BuildToggleReadEvent(Builder.CleanString(build.RootCanvasGroup.GameObject_Name), toggle.Element_ID, gameObjectName) + Environment.NewLine;
+                    toggles += Builder.BuildToggleReadEvent(Builder.CleanString(build.rootCanvasGroup.GameObject_Name), toggle.Element_ID, gameObjectName) + Environment.NewLine;
                 }
                 code = code.Replace("{toggles}", toggles);
 
                 var buttonsNoEvent = "";
-                foreach (var button in build.Toggles) {
+                foreach (var button in build.toggles) {
                     var constant = Builder.BuildConstantStatement(extraConstant, button.Element_ID);
                     var buttonStatement = Builder.BuildToggleStatement(constant);
                     buttonStatement = buttonStatement.Replace(";", "");
@@ -340,14 +340,14 @@ for (int i = 0; i < max; i++) {");
             }
             {
                 var components = "";
-                foreach (var inputField in build.InputFields) {
+                foreach (var inputField in build.inputFields) {
                     var gameObjectName = Builder.NameWithoutTypeOtherwiseJustType(inputField.GameObject_Name, "InputField");
-                    components += Builder.BuildInputFieldsReadEvent(Builder.CleanString(build.RootCanvasGroup.GameObject_Name), inputField.Element_ID, gameObjectName) + Environment.NewLine;
+                    components += Builder.BuildInputFieldsReadEvent(Builder.CleanString(build.rootCanvasGroup.GameObject_Name), inputField.Element_ID, gameObjectName) + Environment.NewLine;
                 }
                 code = code.Replace("{inputfields}", components);
 
                 var buttonsNoEvent = "";
-                foreach (var button in build.InputFields) {
+                foreach (var button in build.inputFields) {
                     var constant = Builder.BuildConstantStatement(extraConstant, button.Element_ID);
                     var buttonStatement = Builder.BuildInputFieldStatement(constant);
                     buttonStatement = buttonStatement.Replace(";", "");
@@ -359,19 +359,19 @@ for (int i = 0; i < max; i++) {");
             }
             {
                 var additionalEvents = "";
-                foreach (var button in build.Buttons) {
+                foreach (var button in build.buttons) {
                     if (button.GameObject_Name.Contains("Close")) continue;
-                    additionalEvents += Builder.BuildUseEvent(Builder.CleanString(build.RootCanvasGroup.GameObject_Name), button.GameObject_Name.Replace("Button", ""));
+                    additionalEvents += Builder.BuildUseEvent(Builder.CleanString(build.rootCanvasGroup.GameObject_Name), button.GameObject_Name.Replace("Button", ""));
                 }
-                foreach (var inputField in build.InputFields) {
+                foreach (var inputField in build.inputFields) {
                     var gameObjectName = Builder.NameWithoutTypeOtherwiseJustType(inputField.GameObject_Name, "InputField");
-                    additionalEvents += Builder.BuildUseEvent(Builder.CleanString(build.RootCanvasGroup.GameObject_Name), gameObjectName);
+                    additionalEvents += Builder.BuildUseEvent(Builder.CleanString(build.rootCanvasGroup.GameObject_Name), gameObjectName);
                 }
                 code = code.Replace("{additional_events}", additionalEvents);
             }
             {
                 var components = "";
-                foreach (var text in build.Sliders) {
+                foreach (var text in build.sliders) {
                     var constant = Builder.BuildConstantStatement(extraConstant, text.Element_ID);
                     var elementStatement = Builder.BuildSliderStatement(constant);
                     components += elementStatement + Environment.NewLine;
@@ -380,7 +380,7 @@ for (int i = 0; i < max; i++) {");
             }
             {
                 var components = "";
-                foreach (var text in build.DragDrops) {
+                foreach (var text in build.dragDrops) {
                     var constant = Builder.BuildConstantStatement(extraConstant, text.Element_ID);
                     var elementStatement = Builder.BuildDragDropStatement(constant);
                     components += elementStatement + Environment.NewLine;
@@ -389,7 +389,7 @@ for (int i = 0; i < max; i++) {");
             }
             {
                 var components = "";
-                foreach (var text in build.Dropdowns) {
+                foreach (var text in build.dropdowns) {
                     var constant = Builder.BuildConstantStatement(extraConstant, text.Element_ID);
                     var elementStatement = Builder.BuildDropdownStatement(constant);
                     components += elementStatement + Environment.NewLine;
@@ -405,7 +405,7 @@ for (int i = 0; i < max; i++) {");
             var code = BuildString(build, Name.ScreenExtension);
             var path = Path.Combine(Application.dataPath, Name.AssetsPath);
             path = path.Substring(0, path.Length - Path.GetFileName(path).Length);
-            path = path + Builder.CleanString(build.RootCanvasGroup.GameObject_Name) + ".cs";
+            path = path + Builder.CleanString(build.rootCanvasGroup.GameObject_Name) + ".cs";
             code = RemoveExtraNewLines(code);
 
             File.WriteAllText(path, code);

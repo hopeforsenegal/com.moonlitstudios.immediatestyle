@@ -19,6 +19,7 @@ namespace MoonlitSystem.UI.Immediate
         public bool IsMouseDown { get; internal set; }
         public bool IsMousePressed { get; private set; }
         public bool IsMouseUp { get; internal set; }
+        public bool IsHoverEnter { get; internal set; }
         public bool IsHovering { get; private set; }
         public bool IsSelect { get; private set; }
 
@@ -64,6 +65,7 @@ namespace MoonlitSystem.UI.Immediate
 
         public void OnPointerEnter(PointerEventData eventData)
         {
+            IsHoverEnter = true;
             IsHovering = true;
         }
 
