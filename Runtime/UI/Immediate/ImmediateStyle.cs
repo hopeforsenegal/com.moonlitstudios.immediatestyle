@@ -81,6 +81,9 @@ namespace MoonlitSystem.UI.Immediate
             Debug.Assert(hasElement, !hasElement ? $"{id} is not mapped. Did start get called? Does the caller need a root id?" : "");
             if (hasElement) {
                 element.ElementData.MarkedForDisplay = true;
+                if (Instance.m_HasSetScale) element.transform.localScale = Instance.m_Scale;
+                if (Instance.m_HasSetRotation) element.transform.localEulerAngles = CpyWithZ(element.transform.localEulerAngles, Instance.m_Rotation);
+                if (Instance.m_HasSetLocalPosition) element.transform.localPosition = Instance.m_LocalPosition;
             }
         }
 
@@ -101,6 +104,8 @@ namespace MoonlitSystem.UI.Immediate
             if (hasElement) {
                 element.ElementData.MarkedForDisplay = true;
                 element.ElementData.UpdateCanvasGroupInLateUpdate = updateCanvasGroupInLateUpdate;
+                if (Instance.m_HasSetScale) element.transform.localScale = Instance.m_Scale;
+                if (Instance.m_HasSetRotation) element.transform.localEulerAngles = CpyWithZ(element.transform.localEulerAngles, Instance.m_Rotation);
                 if (Instance.m_HasSetLocalPosition) element.transform.localPosition = Instance.m_LocalPosition;
             }
         }
