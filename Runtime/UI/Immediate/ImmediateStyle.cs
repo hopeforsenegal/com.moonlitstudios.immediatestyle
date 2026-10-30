@@ -87,7 +87,7 @@ namespace MoonlitSystem.UI.Immediate
             }
         }
 
-        // Because the immediate style nature updates several fields in LateUpdate
+        // Because our implimentation updates several fields in LateUpdate
         // we need to give you a way to overwrite that default behaviour easily if you want
         //
         // To be clear we need this if you want to diverge behavior
@@ -577,7 +577,7 @@ namespace MoonlitSystem.UI.Immediate
             // if we have an exception then one of our roots have the same name
             foreach (var item in allRoots) {
                 if (uniqueIds.Contains(item.ID)) {
-                    Debug.LogError($"You have a {nameof(RootMapping)} with the same ID '{item.ID}'. Ignore if you have not made each Prefab or clone unique yet.");
+                    Debug.LogError($"You have a {nameof(RootMapping)} called {item.name} with the same ID '{item.ID}'. Ignore if you have not made each Prefab or clone unique yet.", item);
                     return;
                 }
                 uniqueIds.Add(item.ID);
